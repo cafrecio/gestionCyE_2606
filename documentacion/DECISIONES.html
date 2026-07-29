@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mapa visual de decisiones del proyecto GestionCyE">
+  <title>GestionCyE · Mapa de decisiones</title>
+  <style>
+    :root {
+      --ink: #14212b;
+      --muted: #66737d;
+      --paper: #f5f3ed;
+      --panel: #fffdf8;
+      --navy: #142a36;
+      --navy-2: #1d3a47;
+      --teal: #16857b;
+      --teal-soft: #dff2ee;
+      --amber: #d58b28;
+      --amber-soft: #fff0d7;
+      --red: #b65146;
+      --red-soft: #f9e4e0;
+      --blue: #3978a9;
+      --blue-soft: #e3eef7;
+      --line: #dedbd2;
+      --shadow: 0 14px 36px rgba(20, 42, 54, .08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    button, input { font: inherit; }
+    a { color: inherit; }
+
+    .layout { min-height: 100vh; }
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: 272px;
+      padding: 30px 22px;
+      color: #eef7f5;
+      background:
+        radial-gradient(circle at 15% 0%, rgba(46, 167, 148, .22), transparent 34%),
+        var(--navy);
+      overflow-y: auto;
+      z-index: 10;
+    }
+    .brand { display: flex; gap: 13px; align-items: center; margin-bottom: 34px; }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      color: white;
+      background: var(--teal);
+      font-weight: 800;
+      letter-spacing: -.04em;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, .16);
+    }
+    .brand strong { display: block; font-size: 18px; letter-spacing: -.02em; }
+    .brand span { display: block; color: #a9c1c5; font-size: 12px; }
+    .nav-label {
+      margin: 22px 10px 9px;
+      color: #7899a0;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+    .nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      margin: 3px 0;
+      border-radius: 10px;
+      color: #c6d8da;
+      text-decoration: none;
+      font-size: 14px;
+      transition: .18s ease;
+    }
+    .nav a::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border: 1.5px solid #6f9ca0;
+      border-radius: 50%;
+    }
+    .nav a:hover, .nav a.active { color: white; background: var(--navy-2); }
+    .nav a.active::before { border-color: var(--teal); background: var(--teal); }
+    .sidebar-note {
+      padding: 15px;
+      margin-top: 30px;
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 13px;
+      color: #b7cccf;
+      background: rgba(255, 255, 255, .04);
+      font-size: 12px;
+    }
+
+    main { margin-left: 272px; }
+    .hero {
+      position: relative;
+      padding: 64px clamp(28px, 6vw, 86px) 52px;
+      color: white;
+      background: linear-gradient(120deg, #1a3542 0%, #214957 65%, #266458 100%);
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      right: -90px;
+      top: -165px;
+      border: 65px solid rgba(255, 255, 255, .045);
+      border-radius: 50%;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #9fe0d3;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 24px; height: 2px; background: #54c4ad; }
+    h1 {
+      max-width: 820px;
+      margin: 16px 0 14px;
+      font-size: clamp(38px, 6vw, 72px);
+      line-height: .98;
+      letter-spacing: -.055em;
+    }
+    .hero p { max-width: 720px; margin: 0; color: #c8dbdc; font-size: 18px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+    .hero-meta span {
+      padding: 7px 11px;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 999px;
+      background: rgba(255,255,255,.07);
+      font-size: 12px;
+    }
+
+    .content { max-width: 1260px; margin: 0 auto; padding: 42px clamp(22px, 5vw, 70px) 90px; }
+    section { scroll-margin-top: 22px; margin-bottom: 64px; }
+    .section-head { display: flex; justify-content: space-between; gap: 24px; align-items: end; margin-bottom: 22px; }
+    .section-head h2 { margin: 0; font-size: clamp(27px, 3vw, 40px); letter-spacing: -.045em; }
+    .section-head p { max-width: 520px; margin: 0; color: var(--muted); font-size: 14px; }
+
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: -74px; position: relative; z-index: 2; }
+    .stat { padding: 21px; border: 1px solid var(--line); border-radius: 15px; background: var(--panel); box-shadow: var(--shadow); }
+    .stat strong { display: block; font-size: 28px; line-height: 1; letter-spacing: -.04em; }
+    .stat span { display: block; margin-top: 8px; color: var(--muted); font-size: 12px; }
+
+    .problem-grid, .split, .decision-grid, .module-grid { display: grid; gap: 16px; }
+    .problem-grid { grid-template-columns: 1.25fr .75fr; }
+    .split { grid-template-columns: 1fr 1fr; }
+    .decision-grid { grid-template-columns: repeat(3, 1fr); }
+    .module-grid { grid-template-columns: repeat(4, 1fr); }
+    .card { border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); box-shadow: 0 7px 22px rgba(20,42,54,.045); }
+    .card-pad { padding: 24px; }
+    .quote-card {
+      min-height: 270px;
+      padding: 34px;
+      color: white;
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .quote-card blockquote { margin: 0; font-size: clamp(24px, 3vw, 38px); line-height: 1.08; letter-spacing: -.045em; }
+    .quote-card footer { color: #9fb8bc; font-size: 13px; }
+    .signal-list { display: grid; gap: 12px; }
+    .signal {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 13px;
+      align-items: center;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #fff;
+    }
+    .signal b { display: block; font-size: 14px; }
+    .signal span { color: var(--muted); font-size: 12px; }
+    .signal-icon { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 11px; background: var(--amber-soft); color: #9a6117; font-weight: 800; }
+
+    .owner-card { overflow: hidden; }
+    .owner-top { padding: 22px 24px; color: white; background: var(--navy); }
+    .owner-top.alt { background: var(--teal); }
+    .owner-top small { color: #b8d0d2; text-transform: uppercase; letter-spacing: .1em; font-weight: 700; }
+    .owner-top.alt small { color: #d2f3ec; }
+    .owner-top h3 { margin: 5px 0 0; font-size: 25px; }
+    .owner-list { margin: 0; padding: 22px 24px 24px 44px; color: var(--muted); }
+    .owner-list li { margin: 8px 0; padding-left: 4px; }
+
+    .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+    .flow-step { position: relative; min-height: 184px; padding: 20px; border: 1px solid var(--line); border-radius: 15px; background: var(--panel); }
+    .flow-step:not(:last-child)::after {
+      content: "›";
+      position: absolute;
+      right: -10px;
+      top: 72px;
+      z-index: 2;
+      width: 20px;
+      height: 34px;
+      color: var(--teal);
+      background: var(--paper);
+      font-size: 30px;
+      font-weight: 300;
+      text-align: center;
+    }
+    .step-no { display: grid; place-items: center; width: 31px; height: 31px; border-radius: 9px; color: white; background: var(--teal); font-size: 12px; font-weight: 800; }
+    .flow-step h3 { margin: 20px 0 7px; font-size: 16px; }
+    .flow-step p { margin: 0; color: var(--muted); font-size: 12px; }
+
+    .layers { display: grid; gap: 9px; }
+    .layer { display: grid; grid-template-columns: 170px 1fr auto; gap: 18px; align-items: center; padding: 18px 20px; border-radius: 13px; background: white; border: 1px solid var(--line); }
+    .layer strong { font-size: 14px; }
+    .layer p { margin: 0; color: var(--muted); font-size: 13px; }
+    .layer-tag { padding: 5px 9px; border-radius: 999px; color: var(--teal); background: var(--teal-soft); font-size: 11px; font-weight: 800; }
+
+    .toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 18px; }
+    .search { flex: 1 1 260px; min-width: 0; padding: 11px 14px; border: 1px solid var(--line); border-radius: 11px; color: var(--ink); background: white; outline: none; }
+    .search:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(22,133,123,.12); }
+    .filter { padding: 9px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); background: transparent; cursor: pointer; }
+    .filter:hover, .filter.active { color: white; border-color: var(--navy); background: var(--navy); }
+
+    .decision { padding: 21px; transition: .18s ease; }
+    .decision:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .decision[hidden] { display: none; }
+    .decision-top { display: flex; justify-content: space-between; gap: 10px; align-items: start; }
+    .decision h3 { margin: 12px 0 8px; font-size: 17px; }
+    .decision p { margin: 0; color: var(--muted); font-size: 13px; }
+    .topic { color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .badge { flex: 0 0 auto; padding: 5px 8px; border-radius: 999px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+    .badge.ok { color: #116b63; background: var(--teal-soft); }
+    .badge.pending { color: #8c5915; background: var(--amber-soft); }
+    .badge.no { color: #923e35; background: var(--red-soft); }
+
+    .api-card { display: grid; grid-template-columns: 110px 1fr auto; gap: 18px; align-items: center; padding: 18px 20px; border-top: 1px solid var(--line); }
+    .api-card:first-child { border-top: 0; }
+    .verb { width: max-content; padding: 6px 9px; border-radius: 8px; color: white; background: var(--blue); font-size: 11px; font-weight: 900; }
+    .api-card code { font-size: 13px; font-weight: 700; }
+    .api-card p { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+    .api-status { white-space: nowrap; color: var(--teal); font-size: 11px; font-weight: 800; }
+    .api-status.off { color: var(--red); }
+
+    .module { min-height: 118px; padding: 18px; }
+    .module span { display: block; width: 22px; height: 4px; margin-bottom: 17px; border-radius: 3px; background: var(--amber); }
+    .module strong { display: block; font-size: 14px; }
+    .module small { display: block; margin-top: 5px; color: var(--muted); }
+
+    details { border-top: 1px solid var(--line); background: var(--panel); }
+    details:first-child { border-top: 0; border-radius: var(--radius) var(--radius) 0 0; }
+    details:last-child { border-radius: 0 0 var(--radius) var(--radius); }
+    summary { padding: 18px 22px; cursor: pointer; font-weight: 750; list-style: none; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; float: right; color: var(--teal); font-size: 20px; font-weight: 400; }
+    details[open] summary::after { content: "−"; }
+    details div { padding: 0 22px 20px; color: var(--muted); font-size: 13px; }
+    details ul { margin: 4px 0 0; padding-left: 20px; }
+
+    .next {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 28px;
+      padding: 30px;
+      color: white;
+      background: linear-gradient(120deg, var(--navy), #23584e);
+    }
+    .next-label { color: #92d7ca; font-size: 11px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+    .next h2 { margin: 0 0 10px; font-size: 28px; letter-spacing: -.035em; }
+    .next p { max-width: 700px; margin: 0; color: #c5dcda; }
+    .next ol { margin: 18px 0 0; padding-left: 20px; color: #e7f1f0; }
+    .next li { margin: 5px 0; }
+
+    .empty { display: none; padding: 25px; border: 1px dashed var(--line); border-radius: 14px; color: var(--muted); text-align: center; }
+    .footer { padding: 24px clamp(22px, 5vw, 70px); margin-left: 272px; color: var(--muted); border-top: 1px solid var(--line); font-size: 12px; }
+
+    @media (max-width: 1040px) {
+      .decision-grid { grid-template-columns: repeat(2, 1fr); }
+      .module-grid { grid-template-columns: repeat(3, 1fr); }
+      .flow { grid-template-columns: 1fr; }
+      .flow-step { min-height: auto; }
+      .flow-step:not(:last-child)::after { content: "↓"; right: auto; left: 25px; top: auto; bottom: -23px; width: 28px; height: 24px; font-size: 17px; }
+    }
+
+    @media (max-width: 780px) {
+      .sidebar { position: static; width: auto; padding: 17px 18px; }
+      .brand { margin-bottom: 14px; }
+      .nav-label, .sidebar-note { display: none; }
+      .nav { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 3px; }
+      .nav a { white-space: nowrap; }
+      main, .footer { margin-left: 0; }
+      .hero { padding-top: 46px; }
+      .stats { grid-template-columns: repeat(2, 1fr); margin-top: -38px; }
+      .problem-grid, .split { grid-template-columns: 1fr; }
+      .layer { grid-template-columns: 1fr; gap: 6px; }
+      .layer-tag { width: max-content; }
+      .next { grid-template-columns: 1fr; gap: 10px; }
+    }
+
+    @media (max-width: 540px) {
+      .content { padding-inline: 16px; }
+      .stats, .decision-grid, .module-grid { grid-template-columns: 1fr; }
+      .section-head { display: block; }
+      .section-head p { margin-top: 8px; }
+      .api-card { grid-template-columns: 78px 1fr; }
+      .api-status { grid-column: 2; }
+    }
+
+    @media print {
+      .sidebar, .toolbar { display: none; }
+      main, .footer { margin-left: 0; }
+      .hero { color: var(--ink); background: white; padding: 20px 0; }
+      .hero p { color: var(--muted); }
+      .content { padding: 20px 0; }
+      .stats { margin-top: 0; }
+      .card, .stat { box-shadow: none; break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar" aria-label="Navegación principal">
+      <div class="brand">
+        <div class="brand-mark">GC</div>
+        <div><strong>GestionCyE</strong><span>Mapa de decisiones</span></div>
+      </div>
+      <div class="nav-label">Proyecto</div>
+      <nav class="nav">
+        <a href="#resumen" class="active">Resumen</a>
+        <a href="#problema">Problema</a>
+        <a href="#limites">Responsabilidades</a>
+        <a href="#flujo">Flujo real</a>
+        <a href="#arquitectura">Arquitectura</a>
+        <a href="#decisiones">Decisiones</a>
+        <a href="#api">Datos e ISIS</a>
+        <a href="#modulos">Módulos</a>
+        <a href="#pendientes">Pendientes</a>
+        <a href="#proximo">Próximo paso</a>
+      </nav>
+      <div class="sidebar-note">
+        Documento vivo. Si cambia una decisión, deben actualizarse este panel y el contexto para IA.
+      </div>
+    </aside>
+
+    <main>
+      <header class="hero" id="resumen">
+        <div class="eyebrow">Diseño conceptual</div>
+        <h1>Ordenar la operación sin duplicar el trabajo.</h1>
+        <p>GestionCyE será la capa de coordinación sobre ISIS: tareas internas claras, datos reales del ERP y una vista útil para cada persona.</p>
+        <div class="hero-meta">
+          <span>Actualizado 22·07·2026</span>
+          <span>Estado: sin implementación</span>
+          <span>Fuente central: ISIS Gestión</span>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="stats" aria-label="Resumen del proyecto">
+          <article class="stat"><strong>1</strong><span>ERP que gobierna los datos centrales</span></article>
+          <article class="stat"><strong>4</strong><span>capas del modelo híbrido de sincronización</span></article>
+          <article class="stat"><strong>2</strong><span>consultas de pedidos adoptadas y probadas</span></article>
+          <article class="stat"><strong>0</strong><span>módulos implementados hasta hoy</span></article>
+        </div>
+
+        <section id="problema">
+          <div class="section-head">
+            <h2>El problema no es el correo.</h2>
+            <p>El correo es el síntoma. Falta una capa que convierta pedidos internos en trabajo visible, verificable y ordenado.</p>
+          </div>
+          <div class="problem-grid">
+            <article class="card quote-card">
+              <blockquote>“Necesito saber qué debía pasar, quién debía hacerlo y qué está trabado, sin leer 150 mails.”</blockquote>
+              <footer>Problema operativo que origina GestionCyE</footer>
+            </article>
+            <div class="signal-list">
+              <div class="signal"><div class="signal-icon">01</div><div><b>Información fragmentada</b><span>ISIS, correos, planillas y memoria de las personas.</span></div></div>
+              <div class="signal"><div class="signal-icon">02</div><div><b>Doble trabajo</b><span>Ejecutar en ISIS y además responder o marcar manualmente.</span></div></div>
+              <div class="signal"><div class="signal-icon">03</div><div><b>Visibilidad sin control</b><span>Estar copiado en todo no permite detectar excepciones.</span></div></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="limites">
+          <div class="section-head">
+            <h2>Una frontera clara.</h2>
+            <p>ISIS y GestionCyE no compiten. Cada sistema tiene una responsabilidad distinta.</p>
+          </div>
+          <div class="split">
+            <article class="card owner-card">
+              <div class="owner-top"><small>Fuente de verdad</small><h3>ISIS Gestión</h3></div>
+              <ul class="owner-list">
+                <li>Crea clientes, artículos y documentos comerciales.</li>
+                <li>Conserva códigos y datos centrales.</li>
+                <li>Controla facturación, remisión y cobranza.</li>
+                <li>Expone información mediante API.</li>
+              </ul>
+            </article>
+            <article class="card owner-card">
+              <div class="owner-top alt"><small>Capa operativa</small><h3>GestionCyE</h3></div>
+              <ul class="owner-list">
+                <li>Replica datos necesarios sin cambiarlos.</li>
+                <li>Crea solicitudes y tareas internas.</li>
+                <li>Muestra paneles por persona y sector.</li>
+                <li>Detecta resultados de ISIS y señala excepciones.</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section id="flujo">
+          <div class="section-head">
+            <h2>Del pedido a la tarea, sin memoria.</h2>
+            <p>Ejemplo de referencia: Laura pide a Stella una factura anticipada.</p>
+          </div>
+          <div class="flow">
+            <article class="flow-step"><div class="step-no">1</div><h3>Laura crea</h3><p>El pedido nace en ISIS, única fuente de creación.</p></article>
+            <article class="flow-step"><div class="step-no">2</div><h3>Gestión busca</h3><p>Muestra pedidos recientes de Laura. Ella no escribe ni memoriza números.</p></article>
+            <article class="flow-step"><div class="step-no">3</div><h3>Sincroniza</h3><p>Trae pedido, cliente y artículos completos desde ISIS.</p></article>
+            <article class="flow-step"><div class="step-no">4</div><h3>Crea tarea</h3><p>Stella recibe “Factura anticipada” inmediatamente en su tablero.</p></article>
+            <article class="flow-step"><div class="step-no">5</div><h3>Verifica</h3><p>Cuando la factura aparece en ISIS, Gestión detecta el cumplimiento.</p></article>
+          </div>
+        </section>
+
+        <section id="arquitectura">
+          <div class="section-head">
+            <h2>Sincronización híbrida.</h2>
+            <p>La lentitud de ISIS exige una copia local, pero la operación real exige respuestas inmediatas.</p>
+          </div>
+          <div class="layers">
+            <div class="layer"><strong>Base local</strong><p>Sirve paneles rápidos y evita bloquear la interfaz por consultas masivas.</p><span class="layer-tag">velocidad</span></div>
+            <div class="layer"><strong>Consulta puntual</strong><p>Se dispara cuando una acción necesita un pedido o maestro nuevo.</p><span class="layer-tag">operación real</span></div>
+            <div class="layer"><strong>Registros activos</strong><p>Pedidos recientes y pendientes se refrescan para detectar cambios.</p><span class="layer-tag">seguimiento</span></div>
+            <div class="layer"><strong>Barrido masivo</strong><p>Actualiza maestros fuera del camino interactivo y preferentemente fuera de horario.</p><span class="layer-tag">cobertura</span></div>
+          </div>
+        </section>
+
+        <section id="decisiones">
+          <div class="section-head">
+            <h2>Explorador de decisiones.</h2>
+            <p>Filtrá por estado o buscá un concepto. Las decisiones descartadas permanecen visibles para no repetir errores.</p>
+          </div>
+          <div class="toolbar">
+            <input id="search" class="search" type="search" placeholder="Buscar: pedido, cliente, sincronización…" aria-label="Buscar decisiones">
+            <button class="filter active" data-filter="all">Todas</button>
+            <button class="filter" data-filter="ok">Acordadas</button>
+            <button class="filter" data-filter="pending">Pendientes</button>
+            <button class="filter" data-filter="no">Descartadas</button>
+          </div>
+          <div class="decision-grid" id="decisionGrid">
+            <article class="card decision" data-status="ok" data-search="producto isis complementar coordinación">
+              <div class="decision-top"><span class="topic">Producto</span><span class="badge ok">Acordada</span></div>
+              <h3>Complementar, no reemplazar</h3><p>ISIS conserva la operación central. Gestión agrega coordinación, paneles y trazabilidad.</p>
+            </article>
+            <article class="card decision" data-status="ok" data-search="pedido línea unidad principal">
+              <div class="decision-top"><span class="topic">Modelo comercial</span><span class="badge ok">Acordada</span></div>
+              <h3>Pedido como unidad principal</h3><p>La línea se usa para abastecimiento, parciales y excepciones; no domina el flujo habitual.</p>
+            </article>
+            <article class="card decision" data-status="ok" data-search="panel perfiles vendedor dirección sectores">
+              <div class="decision-top"><span class="topic">Experiencia</span><span class="badge ok">Acordada</span></div>
+              <h3>Varias vistas, un mismo proceso</h3><p>Cada perfil ve lo necesario. Dirección ve todo organizado, no todo mezclado.</p>
+            </article>
+            <article class="card decision" data-status="ok" data-search="tiempo real consulta puntual base local">
+              <div class="decision-top"><span class="topic">Sincronización</span><span class="badge ok">Acordada</span></div>
+              <h3>Modelo híbrido</h3><p>Base local rápida, consultas puntuales y refresco de registros activos.</p>
+            </article>
+            <article class="card decision" data-status="ok" data-search="clientes artículos isis fuente verdad códigos">
+              <div class="decision-top"><span class="topic">Datos maestros</span><span class="badge ok">Acordada</span></div>
+              <h3>ISIS gobierna los maestros</h3><p>Gestión replica datos completos, conserva códigos y complementa en estructuras separadas.</p>
+            </article>
+            <article class="card decision" data-status="ok" data-search="transacción atómica idempotente dependencias">
+              <div class="decision-top"><span class="topic">Calidad</span><span class="badge ok">Acordada</span></div>
+              <h3>Importación completa</h3><p>Sin registros parciales, sin completar después y sin duplicados al reintentar.</p>
+            </article>
+            <article class="card decision" data-status="no" data-search="api pedidos consolidado endpoint">
+              <div class="decision-top"><span class="topic">API</span><span class="badge no">Descartada</span></div>
+              <h3>GET consolidado de pedidos</h3><p>Devolvió vacío. Cabecera y detalle ya funcionan; no se invertirá más tiempo por ahora.</p>
+            </article>
+            <article class="card decision" data-status="no" data-search="usuario memorizar número pedido">
+              <div class="decision-top"><span class="topic">Experiencia</span><span class="badge no">Descartada</span></div>
+              <h3>Escribir el número de pedido</h3><p>Gestión debe mostrar pedidos recientes para seleccionar. La integración no se delega al usuario.</p>
+            </article>
+            <article class="card decision" data-status="no" data-search="cliente artículo mínimo completar después manual">
+              <div class="decision-top"><span class="topic">Calidad</span><span class="badge no">Descartada</span></div>
+              <h3>Datos mínimos para completar luego</h3><p>Nadie completará hacia atrás. Si se importa, se importa completo desde ISIS.</p>
+            </article>
+            <article class="card decision" data-status="pending" data-search="identificadores regis cliente artículo pedido">
+              <div class="decision-top"><span class="topic">Identidad</span><span class="badge pending">Pendiente</span></div>
+              <h3>Claves técnicas estables</h3><p>Falta confirmar alcance y permanencia de regis_PedCliCab, regis_Cli y regis_Arti.</p>
+            </article>
+            <article class="card decision" data-status="pending" data-search="factura remito recibo nota credito debito relaciones">
+              <div class="decision-top"><span class="topic">Documentos</span><span class="badge pending">Pendiente</span></div>
+              <h3>Relaciones documentales</h3><p>Falta mapear cómo la API vincula pedido, factura, remito, recibo, NC y ND.</p>
+            </article>
+            <article class="card decision" data-status="pending" data-search="panel tablero primera vista ventas">
+              <div class="decision-top"><span class="topic">Interfaz</span><span class="badge pending">Pendiente</span></div>
+              <h3>Primer panel concreto</h3><p>Sabemos quién debe ver qué; todavía no se definió la composición visual final.</p>
+            </article>
+          </div>
+          <div class="empty" id="emptyState">No hay decisiones que coincidan con la búsqueda.</div>
+        </section>
+
+        <section id="api">
+          <div class="section-head">
+            <h2>Estado de datos e ISIS.</h2>
+            <p>Lo probado pesa más que lo prometido por el diccionario.</p>
+          </div>
+          <div class="card">
+            <div class="api-card"><span class="verb">GET</span><div><code>ISIS_PedidoClteCab_VW</code><p>Cabeceras; probado con pedido 25888.</p></div><span class="api-status">Adoptado</span></div>
+            <div class="api-card"><span class="verb">GET</span><div><code>ISIS_PedidoClteDet_VW</code><p>Líneas; combinación estándar existente.</p></div><span class="api-status">Adoptado</span></div>
+            <div class="api-card"><span class="verb">GET</span><div><code>ISIS_API_Pedidos</code><p>Cabecera + detalle; las pruebas devolvieron vacío.</p></div><span class="api-status off">Descartado por ahora</span></div>
+            <div class="api-card"><span class="verb" style="background:#8a679d">POST</span><div><code>ISIS_Pedido</code><p>Inserta pedidos; fuera del alcance inicial de solo lectura.</p></div><span class="api-status off">No usar aún</span></div>
+          </div>
+          <div class="split" style="margin-top:16px">
+            <article class="card card-pad"><span class="topic">Empresa confirmada</span><h3 style="font-size:30px;margin:10px 0 3px">1 · CyE</h3><p style="margin:0;color:var(--muted);font-size:13px">Código, descripción y abreviatura verificados mediante API.</p></article>
+            <article class="card card-pad"><span class="topic">Consulta estándar</span><h3 style="margin:10px 0 3px">pedCab + pedDet</h3><p style="margin:0;color:var(--muted);font-size:13px">Unión por idPedCab. pedLine = numPed-idPedDet.</p></article>
+          </div>
+        </section>
+
+        <section id="modulos">
+          <div class="section-head">
+            <h2>Mapa de módulos.</h2>
+            <p>Son candidatos, no un alcance aprobado. Se diseñarán a partir de flujos reales.</p>
+          </div>
+          <div class="module-grid">
+            <article class="card module"><span></span><strong>Logística</strong><small>Coordinación y movimientos.</small></article>
+            <article class="card module"><span></span><strong>Despacho</strong><small>Preparación y entrega.</small></article>
+            <article class="card module"><span></span><strong>Compras</strong><small>Productivas y no productivas.</small></article>
+            <article class="card module"><span></span><strong>Stock</strong><small>Disponibilidad y control.</small></article>
+            <article class="card module"><span></span><strong>Cobranzas</strong><small>Seguimiento operativo.</small></article>
+            <article class="card module"><span></span><strong>Conciliaciones</strong><small>Bancarias e impositivas.</small></article>
+            <article class="card module"><span></span><strong>Reportes</strong><small>Indicadores y excepciones.</small></article>
+            <article class="card module"><span></span><strong>Flujo de caja</strong><small>Proyección financiera.</small></article>
+            <article class="card module"><span></span><strong>Recepción</strong><small>Ingreso y derivación.</small></article>
+            <article class="card module"><span></span><strong>Taller</strong><small>Trabajo interno y terceros.</small></article>
+            <article class="card module"><span></span><strong>Cuentas a cobrar</strong><small>Visibilidad por cliente.</small></article>
+            <article class="card module"><span></span><strong>Bancos</strong><small>Operación y seguimiento.</small></article>
+          </div>
+        </section>
+
+        <section id="pendientes">
+          <div class="section-head">
+            <h2>Lo que todavía no sabemos.</h2>
+            <p>Las preguntas abiertas evitan que una suposición se transforme en arquitectura.</p>
+          </div>
+          <div class="card">
+            <details open><summary>Identidad y sincronización</summary><div><ul><li>Unicidad y permanencia de regis_PedCliCab, regis_Cli y regis_Arti.</li><li>Mecanismo confiable para detectar cambios, bajas y códigos modificados.</li><li>Ventana y frecuencia de actualización de pedidos activos.</li></ul></div></details>
+            <details><summary>Relaciones comerciales</summary><div><ul><li>Vínculo exacto entre pedido, factura, remito, recibo, NC y ND.</li><li>Dato que demuestra el cumplimiento de cada solicitud.</li><li>Valores reales de estados y campos de vigencia.</li></ul></div></details>
+            <details><summary>Personas y paneles</summary><div><ul><li>Relación entre usuario, vendedor y sector.</li><li>Primera vista concreta para Ventas y Facturación.</li><li>Qué excepciones necesita ver dirección en el primer pantallazo.</li></ul></div></details>
+          </div>
+        </section>
+
+        <section id="proximo">
+          <article class="card next">
+            <div class="next-label">Próximo paso</div>
+            <div>
+              <h2>Mapear una factura anticipada de punta a punta.</h2>
+              <p>Antes de decidir tecnología o tablas definitivas, hay que confirmar el primer flujo que produce valor real.</p>
+              <ol>
+                <li>Qué ve Laura y cómo elige el pedido.</li>
+                <li>Qué datos se sincronizan.</li>
+                <li>Qué recibe Stella.</li>
+                <li>Qué dato de ISIS confirma la factura.</li>
+                <li>Qué excepciones bloquean el proceso.</li>
+              </ol>
+            </div>
+          </article>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer">GestionCyE · Documento vivo · La referencia técnica completa está en CONTEXTO_IA.md</footer>
+  </div>
+
+  <script>
+    const search = document.getElementById('search');
+    const filters = [...document.querySelectorAll('.filter')];
+    const cards = [...document.querySelectorAll('.decision')];
+    const empty = document.getElementById('emptyState');
+    let activeFilter = 'all';
+
+    function normalize(value) {
+      return value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    function applyDecisionFilters() {
+      const term = normalize(search.value.trim());
+      let visible = 0;
+      cards.forEach(card => {
+        const statusMatch = activeFilter === 'all' || card.dataset.status === activeFilter;
+        const text = normalize(card.textContent + ' ' + (card.dataset.search || ''));
+        const searchMatch = !term || text.includes(term);
+        card.hidden = !(statusMatch && searchMatch);
+        if (!card.hidden) visible += 1;
+      });
+      empty.style.display = visible ? 'none' : 'block';
+    }
+
+    search.addEventListener('input', applyDecisionFilters);
+    filters.forEach(button => button.addEventListener('click', () => {
+      activeFilter = button.dataset.filter;
+      filters.forEach(item => item.classList.toggle('active', item === button));
+      applyDecisionFilters();
+    }));
+
+    const sections = [...document.querySelectorAll('main [id]')];
+    const navLinks = [...document.querySelectorAll('.nav a')];
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + visible.target.id));
+    }, { rootMargin: '-18% 0px -68% 0px', threshold: [0, .15, .4] });
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>

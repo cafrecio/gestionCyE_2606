@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arquitectura · GestionCyE v2.0</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7fa;
+      --surface: #fff;
+      --text: #172033;
+      --muted: #5d6879;
+      --line: #dfe5ec;
+      --accent: #275efe;
+      --warning: #8a5b00;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+    header, main { width: min(100% - 32px, 960px); margin-inline: auto; }
+    header { padding: 48px 0 24px; }
+    h1 { margin: 0 0 8px; font-size: clamp(2rem, 5vw, 3rem); }
+    h2 { margin-top: 0; }
+    .subtitle, .muted { color: var(--muted); }
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      padding: 12px 16px;
+      background: rgba(255,255,255,.95);
+      border-block: 1px solid var(--line);
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    nav div { width: min(100%, 960px); margin: auto; }
+    nav a { color: var(--accent); margin-right: 18px; text-decoration: none; }
+    main { padding: 24px 0 64px; }
+    section {
+      margin-bottom: 20px;
+      padding: 24px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+    }
+    .item { padding: 14px; background: var(--bg); border-radius: 10px; }
+    .item strong { display: block; margin-bottom: 3px; }
+    .warning { color: var(--warning); border-left: 4px solid #e2a400; padding-left: 14px; }
+    li + li { margin-top: 7px; }
+    code { background: #edf1f6; padding: 2px 5px; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Arquitectura</h1>
+    <p class="subtitle">GestionCyE v2.0 · Resumen humano de decisiones y pendientes</p>
+  </header>
+
+  <nav aria-label="Secciones">
+    <div>
+      <a href="#criterio">Criterio</a>
+      <a href="#repositorios">Repositorios</a>
+      <a href="#api">API ISIS</a>
+      <a href="#tecnologias">Tecnologías</a>
+      <a href="#vps">VPS</a>
+      <a href="#compartido">Uso compartido</a>
+      <a href="#seguridad">Seguridad</a>
+      <a href="#pendientes">Pendientes</a>
+    </div>
+  </nav>
+
+  <main>
+    <section id="criterio">
+      <h2>Criterio general</h2>
+      <ul>
+        <li>ISIS seguirá siendo el sistema base.</li>
+        <li>GestionCyE será un sistema web complementario.</li>
+        <li>Tomará información de la API de ISIS y generará información propia.</li>
+        <li>Producción se ejecutará en un VPS existente.</li>
+        <li>El detalle de entidades y campos se define en el trabajo “Datos”.</li>
+      </ul>
+      <p><strong>Separación:</strong> “Datos” evalúa endpoints, campos, relaciones, volúmenes, tiempos y reglas funcionales. “Arquitectura” elige tecnologías y componentes usando esos resultados.</p>
+    </section>
+
+    <section id="repositorios">
+      <h2>Repositorios</h2>
+      <div class="grid">
+        <div class="item"><strong>Proyecto anterior</strong><a href="https://github.com/cafrecio/Gestion_CyE">cafrecio/Gestion_CyE</a><br><span class="muted">Referencia para reutilización selectiva</span></div>
+        <div class="item"><strong>GestionCyE v2.0</strong><a href="https://github.com/cafrecio/gestionCyE_2606">cafrecio/gestionCyE_2606</a><br><span class="muted">Repositorio oficial del nuevo desarrollo</span></div>
+      </div>
+      <p>El proyecto se guardará progresivamente mediante commits verificables. La carpeta local todavía debe conectarse al repositorio nuevo.</p>
+    </section>
+
+    <section id="api">
+      <h2>Acceso a la API de ISIS</h2>
+      <ul>
+        <li>Existe una API key funcional con acceso a datos reales.</li>
+        <li>La API puede consumirse desde diferentes computadoras y redes.</li>
+        <li>Actualmente varios Excel obtienen información desde la API.</li>
+        <li>La exploración inicial puede hacerse localmente, sin esperar el despliegue en el VPS.</li>
+      </ul>
+      <h3>Actualización requerida</h3>
+      <ul>
+        <li>Se conservarán al menos los últimos tres años de información.</li>
+        <li>Primero habrá una carga histórica.</li>
+        <li>Después habrá sincronizaciones incrementales continuas.</li>
+        <li>Lo creado en ISIS deberá aparecer en GestionCyE en menos de un minuto.</li>
+      </ul>
+      <h3>Condición de funcionamiento</h3>
+      <p>Las consultas serán pequeñas y se ejecutarán en segundo plano. Las pantallas trabajarán sobre datos locales para no quedar esperando a ISIS.</p>
+      <p>ISIS permite modificar, anular y eliminar registros, pero no ofrece una fecha de modificación utilizable.</p>
+      <ul>
+        <li>Descargar automáticamente registros nuevos.</li>
+        <li>Releer automáticamente el conjunto operativo activo.</li>
+        <li>Permitir que el usuario actualice un registro puntual.</li>
+        <li>No releer periódicamente todo el histórico.</li>
+      </ul>
+      <p class="warning">Un registro histórico modificado o eliminado puede quedar desactualizado hasta su actualización puntual. Se mostrará su fecha de última sincronización.</p>
+      <p>“Activo”, “pendiente” o “cerrado” podrá ser un estado calculado por GestionCyE; no se asume que ISIS lo entregue resuelto.</p>
+      <h3>Entidades confirmadas</h3>
+      <div class="grid">
+        <div class="item"><strong>Pedidos</strong>Cabecera y detalle</div>
+        <div class="item"><strong>Facturas</strong>Cabecera, detalle y anticipadas</div>
+        <div class="item"><strong>Remitos</strong>Cabecera y detalle</div>
+        <div class="item"><strong>Clientes</strong>Dato maestro necesario</div>
+        <div class="item"><strong>Productos</strong>Dato maestro necesario</div>
+      </div>
+      <p>Clientes y productos requieren otra estrategia: sus códigos no son autoincrementales.</p>
+      <p class="warning">Clientes tiene más de 8.000 registros y una descarga completa demora casi un minuto. Se descarta repetirla cada minuto.</p>
+      <p class="muted">“Fecha de última factura” no equivale a “fecha de modificación”. Falta probar filtros, volumen y tiempos reales.</p>
+    </section>
+
+    <section id="tecnologias">
+      <h2>Tecnologías elegidas</h2>
+      <div class="grid">
+        <div class="item"><strong>Backend</strong>Laravel en versión vigente</div>
+        <div class="item"><strong>Frontend</strong>React</div>
+        <div class="item"><strong>Base de datos</strong>PostgreSQL</div>
+        <div class="item"><strong>Sincronización</strong>Tareas programadas y colas de Laravel</div>
+        <div class="item"><strong>Proyecto anterior</strong>Referencia y reutilización selectiva; no será la base directa</div>
+      </div>
+      <p>Laravel manejará reglas, usuarios, permisos, base de datos e integración con ISIS. React no consultará ISIS directamente.</p>
+      <p>Codex programará directamente sobre el proyecto, instalará lo necesario y verificará los cambios. No habrá que copiar y pegar código desde el chat.</p>
+      <p class="muted">Las tareas pesadas se ejecutarán fuera de las solicitudes del usuario para no bloquear la aplicación.</p>
+    </section>
+
+    <section id="vps">
+      <h2>VPS de producción</h2>
+      <div class="grid">
+        <div class="item"><strong>Estado</strong>Operativo; GestionCyE aún no desplegado</div>
+        <div class="item"><strong>Sistema operativo</strong>AlmaLinux 9</div>
+        <div class="item"><strong>Ubicación</strong>United States - Boston 2</div>
+        <div class="item"><strong>Host</strong><code>srv1753195.hstgr.cloud</code></div>
+        <div class="item"><strong>IPv4</strong><code>2.25.204.38</code></div>
+        <div class="item"><strong>Usuario SSH mostrado</strong><code>root</code></div>
+        <div class="item"><strong>Backup configurado</strong>Semanal</div>
+        <div class="item"><strong>CPU</strong>1 núcleo</div>
+        <div class="item"><strong>Memoria</strong>4 GB</div>
+        <div class="item"><strong>Disco</strong>50 GB</div>
+        <div class="item"><strong>Ancho de banda</strong>4 TB</div>
+      </div>
+      <p class="muted">Hostinger se infiere del dominio del nombre de host; no se registró como dato confirmado independiente.</p>
+      <p class="warning">Un núcleo puede ser insuficiente para hasta cuatro aplicaciones, PostgreSQL y sincronizaciones simultáneas. Debe medirse antes del despliegue.</p>
+      <h3>Computadora de desarrollo</h3>
+      <div class="grid">
+        <div class="item"><strong>Procesador</strong>Intel Core i7-13700H · 14 núcleos / 20 lógicos</div>
+        <div class="item"><strong>Memoria</strong>63,5 GB</div>
+        <div class="item"><strong>Disco principal</strong>638,2 GB libres</div>
+        <div class="item"><strong>Sistema</strong>Windows 11 Pro 64 bits</div>
+      </div>
+      <p>La computadora local tiene capacidad suficiente para trabajar con Docker.</p>
+    </section>
+
+    <section id="compartido">
+      <h2>VPS compartido</h2>
+      <p>El servidor alojará GestionCyE y otros programas. Hay dos programas adicionales previstos y el objetivo posible es llegar a cuatro en total. Todavía no fueron desplegados.</p>
+      <ul>
+        <li>Los otros programas tendrán poca carga.</li>
+        <li>Patín funcionará principalmente fuera del horario de GestionCyE.</li>
+        <li>El taller de reparaciones tendrá menos de 1.000 trabajos anuales.</li>
+      </ul>
+      <p><strong>Implicancia:</strong> cada programa deberá quedar separado en dominios, configuraciones, procesos, credenciales, datos y backups.</p>
+      <p><strong>Decisión:</strong> utilizar Docker en desarrollo y producción para aislar los programas y mantener entornos consistentes.</p>
+      <p class="muted">Se monitorearán CPU, memoria y disco. Si no alcanza, se ampliará el plan del VPS.</p>
+    </section>
+
+    <section id="seguridad">
+      <h2>Observaciones importantes</h2>
+      <p class="warning">La aplicación no deberá operar normalmente como <code>root</code>.</p>
+      <p>El backup semanal existe, pero todavía no sabemos qué cubre, cuánto conserva ni si su restauración fue probada.</p>
+    </section>
+
+    <section id="pendientes">
+      <h2>Próximas decisiones</h2>
+      <ol>
+        <li>Relevar servicios instalados y activos en el VPS.</li>
+        <li>Elegir backend, servidor web y base de datos.</li>
+        <li>Definir cómo se almacenará y sincronizará la información de ISIS.</li>
+        <li>Definir seguridad, secretos, despliegue, monitoreo y recuperación.</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>
