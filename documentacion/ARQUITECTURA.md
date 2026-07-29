@@ -42,7 +42,7 @@ componentes y mecanismos de ejecución.
 - Repositorio oficial de GestionCyE v2.0:
   `https://github.com/cafrecio/gestionCyE_2606`
 - El nuevo proyecto se guardará progresivamente mediante commits verificables.
-- La carpeta local todavía no está inicializada como repositorio Git.
+- La carpeta local está conectada al repositorio oficial, sobre la rama `main`.
 
 ## 3. Infraestructura confirmada
 
