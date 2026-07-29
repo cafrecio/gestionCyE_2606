@@ -360,3 +360,23 @@ desarrollo si se decide hacerlo.
   navegador.
 - Un IDE es opcional para que el usuario inspeccione el código; Codex no lo
   necesita para desarrollar.
+
+### Ciclo de entrega
+
+El desarrollo se organizará en versiones pequeñas, completas y entregables en
+sprints cortos.
+
+Cada versión seguirá este orden:
+
+1. Definir un alcance corto y cerrado.
+2. Definir casos de uso: usuario, necesidad, motivo, información y acción.
+3. Diseñar la estructura funcional de cada vista, sin buscar todavía el acabado
+   visual definitivo.
+4. Implementar una versión funcional de punta a punta.
+5. Validar que el flujo resuelva el trabajo real.
+6. Aplicar y validar el diseño visual definitivo.
+7. Incorporar los patrones aprobados al sistema de diseño.
+8. Reutilizar esos patrones en las siguientes vistas.
+
+Una versión no se considerará terminada por tener pantallas aisladas. Debe
+resolver un caso de uso completo y poder demostrarse en el navegador.
