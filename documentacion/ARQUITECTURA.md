@@ -27,6 +27,17 @@ También corresponde al trabajo **Datos**:
 Este documento utilizará esos resultados como requisitos para elegir tecnologías,
 componentes y mecanismos de ejecución.
 
+### Organización de los chats
+
+- Cada chat del proyecto tendrá un único tema.
+- Su nombre indicará claramente el tema trabajado.
+- **DATOS** define qué información existe en ISIS, qué información genera
+  GestionCyE y cómo se organiza.
+- **ARQUITECTURA** define tecnologías, componentes, infraestructura, despliegue y
+  reglas estructurales.
+- Las decisiones no se duplicarán entre chats: arquitectura consumirá las
+  definiciones producidas por datos.
+
 ## 2. Criterio general
 
 - ISIS continúa siendo el sistema base.
