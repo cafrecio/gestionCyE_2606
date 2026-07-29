@@ -35,6 +35,8 @@ componentes y mecanismos de ejecución.
   GestionCyE y cómo se organiza.
 - **ARQUITECTURA** define tecnologías, componentes, infraestructura, despliegue y
   reglas estructurales.
+- **DISEÑO UX-UI** definirá experiencia de uso, navegación, sistema visual,
+  prototipos y validación de pantallas.
 - Las decisiones no se duplicarán entre chats: arquitectura consumirá las
   definiciones producidas por datos.
 
@@ -298,6 +300,33 @@ desarrollo si se decide hacerlo.
 - No consultará directamente la API de ISIS.
 - TypeScript se utilizará para describir estructuras de datos y detectar errores
   antes de ejecutar la aplicación.
+
+### Criterios de diseño UX/UI
+
+- El diseño visual es una parte prioritaria del proyecto, no una decoración
+  posterior.
+- Se diseñará y validará visualmente antes de consolidar cada pantalla.
+- Se utilizarán skills oficiales de Figma para generar diseños, establecer reglas
+  del sistema visual e implementar los diseños aprobados.
+- Figma será la herramienta propuesta para prototipos y sistema de diseño. Su
+  plugin todavía debe conectarse.
+- Tailwind podrá utilizarse como herramienta de estilos, pero no determinará la
+  identidad visual.
+- Se evaluará Radix como base de componentes accesibles y sin estilo impuesto.
+- Los componentes de shadcn podrán reutilizarse selectivamente como código base;
+  no se utilizará una plantilla genérica completa.
+- Se evitarán:
+  - Pantallas formadas por acumulaciones de tablas blancas.
+  - Botones genéricos repetidos.
+  - Apariencia de panel administrativo antiguo.
+  - Uso decorativo excesivo de tarjetas, bordes y colores.
+- Se priorizarán:
+  - Jerarquía visual clara.
+  - Información operativa agrupada por contexto.
+  - Acciones situadas junto al trabajo correspondiente.
+  - Tableros, flujos, líneas de tiempo y vistas divididas cuando sean más útiles
+    que una tabla.
+  - Tablas solamente cuando permitan comparar datos densos con precisión.
 
 #### Alternativas descartadas
 
