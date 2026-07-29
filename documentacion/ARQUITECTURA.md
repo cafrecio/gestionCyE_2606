@@ -266,6 +266,7 @@ desarrollo si se decide hacerlo.
 | Confirmada | Backend desarrollado con una versión vigente de Laravel. |
 | Confirmada | Interfaz desarrollada con React. |
 | Confirmada | PostgreSQL será el motor de base de datos. |
+| Confirmada | Laravel y React se integrarán mediante Inertia dentro de una sola aplicación. |
 | Confirmada | Se creará un proyecto nuevo; no se continuará directamente sobre el Laravel 10 anterior. |
 | Confirmada | Del sistema anterior se reutilizarán selectivamente conceptos o código útil, después de revisarlo. |
 | Confirmada | Las sincronizaciones se ejecutarán mediante tareas programadas y colas de Laravel. |
@@ -288,8 +289,17 @@ desarrollo si se decide hacerlo.
 ### Frontend
 
 - React.
-- Consumirá las funciones expuestas por Laravel.
+- Se integrará con Laravel mediante Inertia.
+- Laravel y React vivirán en el mismo proyecto y se desplegarán juntos.
+- Laravel conservará el control de rutas, autenticación, permisos y entrega de
+  datos a las pantallas React.
 - No consultará directamente la API de ISIS.
+
+#### Alternativas descartadas
+
+- React como aplicación separada consumiendo una API Laravel: agrega dos
+  despliegues, autenticación separada y mayor complejidad sin una ventaja actual.
+- Next.js separado: no aporta valor suficiente para una aplicación interna.
 
 ### Base de datos
 
