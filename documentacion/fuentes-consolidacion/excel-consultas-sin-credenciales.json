@@ -1,0 +1,530 @@
+{
+  "source": "Z:\\Gestion CyE\\10 ISIS\\GestionCyEBase 2604_v1.22.xlsm",
+  "sha256": "9ADB4301CA64A0E9ED26BE170A074A6F5667A892EED2C886D17FAB91EFB13A1E",
+  "extractedAt": "2026-09-17T08:05:55.9746359-03:00",
+  "queries": [
+    {
+      "name": "artStck",
+      "endpoints": [],
+      "formula": "let\r\n    Origen = Table.NestedJoin(artBase, {\"codArt\"}, stckBase, {\"codArt\"}, \"stckBase\", JoinKind.LeftOuter),\r\n    #\"Se expandió stckBase\" = Table.ExpandTableColumn(Origen, \"stckBase\", {\"stokU1\", \"stckU2\"}, {\"stckBase.stokU1\", \"stckBase.stckU2\"}),\r\n    #\"Filas ordenadas\" = Table.Sort(#\"Se expandió stckBase\",{{\"codArt\", Order.Ascending}})\r\nin\r\n    #\"Filas ordenadas\""
+    },
+    {
+      "name": "artBase",
+      "endpoints": [
+        "https://sistemaisis.ar:8103/api/ISIS_Articulo_VW"
+      ],
+      "formula": "let\r\n    Origen = FUENTE_API_SIN_CREDENCIALES,\n    #\"Convertida en tabla\" = Table.FromList(Origen, Splitter.SplitByNothing(), null, null, ExtraValues.Error),\r\n    #\"Se expandió Column1\" = Table.ExpandRecordColumn(#\"Convertida en tabla\", \"Column1\", {\"regisArti\", \"codInternoArti\", \"descripcionArti\", \"descriBusArti\", \"senInhabilitadoArti\", \"calificacion\", \"clasificaArti\", \"tipoArti\", \"facturaArti\", \"codigoArtiGrupo\", \"codigArtFami1\", \"descrArtFami1\", \"codigArtFami2\", \"descrArtFami2\", \"despachoArti\", \"partidaLoteArti\", \"nroSerieArti\", \"codigNivelInt1\", \"descrNivelInt1\", \"codigNivelInt2\", \"descrNivelInt2\", \"codigNivelInt3\", \"descrNivelInt3\", \"codigNivelInt4\", \"descrNivelInt4\", \"codigNivelInt5\", \"descrNivelInt5\", \"diasReaproviArti\", \"descrUnidadMedidaPri\", \"pesoPriArti\", \"descrUniMedidaPesoPri\", \"volumenPriArti\", \"descrUniMedidaVolumenPri\", \"stMinimoPriArti\", \"stIdealPriArti\", \"loteCpraPriArti\", \"ptoPedidoPriArti\", \"cantPalletPriArti1\", \"cantPalletPriArti2\", \"cantPalletPriArti3\", \"cantBultoPriArti\", \"descrUnidadMedidaSecu\", \"factorConveArti\", \"pesoSecuArti\", \"descrUniMedidaPesoSecu\", \"volumenSecuArti\", \"descrUniMedidaVolumenSecu\", \"stMinimoSecuArti\", \"stIdealSecuArti\", \"loteCpraSecuArti\", \"ptoPedidoSecuArti\", \"cantPalletSecuArti1\", \"cantPalletSecuArti2\", \"cantPalletSecuArti3\", \"cantBultoSecuArti\", \"tasaIva\", \"codigoActEcoVenta\", \"descripcionActEcoVenta\", \"codigoActEcoCompra\", \"descripcionActEcoCompra\", \"usaFactorConvePrecio\", \"codigGrupoComi\", \"descrGrupoComi\", \"tipoPreVtaArti\", \"tipoPreCpraArti\", \"codBarraArti\"}, {\"Column1.regisArti\", \"Column1.codInternoArti\", \"Column1.descripcionArti\", \"Column1.descriBusArti\", \"Column1.senInhabilitadoArti\", \"Column1.calificacion\", \"Column1.clasificaArti\", \"Column1.tipoArti\", \"Column1.facturaArti\", \"Column1.codigoArtiGrupo\", \"Column1.codigArtFami1\", \"Column1.descrArtFami1\", \"Column1.codigArtFami2\", \"Column1.descrArtFami2\", \"Column1.despachoArti\", \"Column1.partidaLoteArti\", \"Column1.nroSerieArti\", \"Column1.codigNivelInt1\", \"Column1.descrNivelInt1\", \"Column1.codigNivelInt2\", \"Column1.descrNivelInt2\", \"Column1.codigNivelInt3\", \"Column1.descrNivelInt3\", \"Column1.codigNivelInt4\", \"Column1.descrNivelInt4\", \"Column1.codigNivelInt5\", \"Column1.descrNivelInt5\", \"Column1.diasReaproviArti\", \"Column1.descrUnidadMedidaPri\", \"Column1.pesoPriArti\", \"Column1.descrUniMedidaPesoPri\", \"Column1.volumenPriArti\", \"Column1.descrUniMedidaVolumenPri\", \"Column1.stMinimoPriArti\", \"Column1.stIdealPriArti\", \"Column1.loteCpraPriArti\", \"Column1.ptoPedidoPriArti\", \"Column1.cantPalletPriArti1\", \"Column1.cantPalletPriArti2\", \"Column1.cantPalletPriArti3\", \"Column1.cantBultoPriArti\", \"Column1.descrUnidadMedidaSecu\", \"Column1.factorConveArti\", \"Column1.pesoSecuArti\", \"Column1.descrUniMedidaPesoSecu\", \"Column1.volumenSecuArti\", \"Column1.descrUniMedidaVolumenSecu\", \"Column1.stMinimoSecuArti\", \"Column1.stIdealSecuArti\", \"Column1.loteCpraSecuArti\", \"Column1.ptoPedidoSecuArti\", \"Column1.cantPalletSecuArti1\", \"Column1.cantPalletSecuArti2\", \"Column1.cantPalletSecuArti3\", \"Column1.cantBultoSecuArti\", \"Column1.tasaIva\", \"Column1.codigoActEcoVenta\", \"Column1.descripcionActEcoVenta\", \"Column1.codigoActEcoCompra\", \"Column1.descripcionActEcoCompra\", \"Column1.usaFactorConvePrecio\", \"Column1.codigGrupoComi\", \"Column1.descrGrupoComi\", \"Column1.tipoPreVtaArti\", \"Column1.tipoPreCpraArti\", \"Column1.codBarraArti\"}),\r\n\r\n    // Paso 1: Filtrar solo artículos activos\r\n    #\"Filtrar activos\" = Table.SelectRows(#\"Se expandió Column1\", each [Column1.senInhabilitadoArti] = \"No\"),\r\n\r\n    // Paso 2: Quitar columnas innecesarias\r\n    #\"Quitar columnas\" = Table.SelectColumns(#\"Filtrar activos\", {\r\n        \"Column1.regisArti\",\r\n        \"Column1.codInternoArti\",\r\n        \"Column1.descripcionArti\",\r\n        \"Column1.descriBusArti\",\r\n        \"Column1.descrNivelInt1\",\r\n        \"Column1.descrNivelInt2\",\r\n        \"Column1.descrNivelInt3\",\r\n        \"Column1.descrNivelInt4\",\r\n        \"Column1.descrNivelInt5\"\r\n    }),\r\n\r\n    // Paso 3: Renombrar columnas\r\n    #\"Renombrar columnas\" = Table.RenameColumns(#\"Quitar columnas\", {\r\n        {\"Column1.regisArti\",      \"idArt\"},\r\n        {\"Column1.codInternoArti\", \"codArt\"},\r\n        {\"Column1.descripcionArti\",\"descArt\"},\r\n        {\"Column1.descriBusArti\",  \"descBusArt\"},\r\n        {\"Column1.descrNivelInt1\", \"nivelArt1\"},\r\n        {\"Column1.descrNivelInt2\", \"nivelArt2\"},\r\n        {\"Column1.descrNivelInt3\", \"nivelArt3\"},\r\n        {\"Column1.descrNivelInt4\", \"nivelArt4\"},\r\n        {\"Column1.descrNivelInt5\", \"nivelArt5\"}\r\n    }),\r\n\r\n    // Paso 4: Reordenar columnas según orden del Excel\r\n   #\"Reordenar columnas\" = Table.ReorderColumns(#\"Renombrar columnas\", {\r\n        \"codArt\",\r\n        \"descArt\",\r\n        \"descBusArt\",\r\n        \"idArt\",\r\n        \"nivelArt1\",\r\n        \"nivelArt2\",\r\n        \"nivelArt3\",\r\n        \"nivelArt4\",\r\n        \"nivelArt5\"\r\n    }),\r\n    #\"Ordenar filas\" = Table.Sort(#\"Reordenar columnas\", {{\"codArt\", Order.Ascending}})\r\nin\r\n    #\"Ordenar filas\""
+    },
+    {
+      "name": "artCont",
+      "endpoints": [
+        "https://sistemaisis.ar:8103/api/ISIS_Articulo_VW"
+      ],
+      "formula": "let\r\n    Origen = FUENTE_API_SIN_CREDENCIALES,\n    #\"Convertida en tabla\" = Table.FromList(Origen, Splitter.SplitByNothing(), null, null, ExtraValues.Error),\r\n    #\"Se expandió Column1\" = Table.ExpandRecordColumn(#\"Convertida en tabla\", \"Column1\", {\"regisArti\", \"codInternoArti\", \"descripcionArti\", \"descriBusArti\", \"senInhabilitadoArti\", \"calificacion\", \"clasificaArti\", \"tipoArti\", \"facturaArti\", \"codigoArtiGrupo\", \"codigArtFami1\", \"descrArtFami1\", \"codigArtFami2\", \"descrArtFami2\", \"despachoArti\", \"partidaLoteArti\", \"nroSerieArti\", \"codigNivelInt1\", \"descrNivelInt1\", \"codigNivelInt2\", \"descrNivelInt2\", \"codigNivelInt3\", \"descrNivelInt3\", \"codigNivelInt4\", \"descrNivelInt4\", \"codigNivelInt5\", \"descrNivelInt5\", \"diasReaproviArti\", \"descrUnidadMedidaPri\", \"pesoPriArti\", \"descrUniMedidaPesoPri\", \"volumenPriArti\", \"descrUniMedidaVolumenPri\", \"stMinimoPriArti\", \"stIdealPriArti\", \"loteCpraPriArti\", \"ptoPedidoPriArti\", \"cantPalletPriArti1\", \"cantPalletPriArti2\", \"cantPalletPriArti3\", \"cantBultoPriArti\", \"descrUnidadMedidaSecu\", \"factorConveArti\", \"pesoSecuArti\", \"descrUniMedidaPesoSecu\", \"volumenSecuArti\", \"descrUniMedidaVolumenSecu\", \"stMinimoSecuArti\", \"stIdealSecuArti\", \"loteCpraSecuArti\", \"ptoPedidoSecuArti\", \"cantPalletSecuArti1\", \"cantPalletSecuArti2\", \"cantPalletSecuArti3\", \"cantBultoSecuArti\", \"tasaIva\", \"codigoActEcoVenta\", \"descripcionActEcoVenta\", \"codigoActEcoCompra\", \"descripcionActEcoCompra\", \"usaFactorConvePrecio\", \"codigGrupoComi\", \"descrGrupoComi\", \"tipoPreVtaArti\", \"tipoPreCpraArti\", \"codBarraArti\"}, {\"Column1.regisArti\", \"Column1.codInternoArti\", \"Column1.descripcionArti\", \"Column1.descriBusArti\", \"Column1.senInhabilitadoArti\", \"Column1.calificacion\", \"Column1.clasificaArti\", \"Column1.tipoArti\", \"Column1.facturaArti\", \"Column1.codigoArtiGrupo\", \"Column1.codigArtFami1\", \"Column1.descrArtFami1\", \"Column1.codigArtFami2\", \"Column1.descrArtFami2\", \"Column1.despachoArti\", \"Column1.partidaLoteArti\", \"Column1.nroSerieArti\", \"Column1.codigNivelInt1\", \"Column1.descrNivelInt1\", \"Column1.codigNivelInt2\", \"Column1.descrNivelInt2\", \"Column1.codigNivelInt3\", \"Column1.descrNivelInt3\", \"Column1.codigNivelInt4\", \"Column1.descrNivelInt4\", \"Column1.codigNivelInt5\", \"Column1.descrNivelInt5\", \"Column1.diasReaproviArti\", \"Column1.descrUnidadMedidaPri\", \"Column1.pesoPriArti\", \"Column1.descrUniMedidaPesoPri\", \"Column1.volumenPriArti\", \"Column1.descrUniMedidaVolumenPri\", \"Column1.stMinimoPriArti\", \"Column1.stIdealPriArti\", \"Column1.loteCpraPriArti\", \"Column1.ptoPedidoPriArti\", \"Column1.cantPalletPriArti1\", \"Column1.cantPalletPriArti2\", \"Column1.cantPalletPriArti3\", \"Column1.cantBultoPriArti\", \"Column1.descrUnidadMedidaSecu\", \"Column1.factorConveArti\", \"Column1.pesoSecuArti\", \"Column1.descrUniMedidaPesoSecu\", \"Column1.volumenSecuArti\", \"Column1.descrUniMedidaVolumenSecu\", \"Column1.stMinimoSecuArti\", \"Column1.stIdealSecuArti\", \"Column1.loteCpraSecuArti\", \"Column1.ptoPedidoSecuArti\", \"Column1.cantPalletSecuArti1\", \"Column1.cantPalletSecuArti2\", \"Column1.cantPalletSecuArti3\", \"Column1.cantBultoSecuArti\", \"Column1.tasaIva\", \"Column1.codigoActEcoVenta\", \"Column1.descripcionActEcoVenta\", \"Column1.codigoActEcoCompra\", \"Column1.descripcionActEcoCompra\", \"Column1.usaFactorConvePrecio\", \"Column1.codigGrupoComi\", \"Column1.descrGrupoComi\", \"Column1.tipoPreVtaArti\", \"Column1.tipoPreCpraArti\", \"Column1.codBarraArti\"}),\r\n\r\n    // Paso 1: Filtrar solo artículos activos\r\n    #\"Filtrar activos\" = Table.SelectRows(#\"Se expandió Column1\", each [Column1.senInhabilitadoArti] = \"No\"),\r\n\r\n    // Paso 2: Quitar columnas innecesarias\r\n    #\"Quitar columnas\" = Table.SelectColumns(#\"Filtrar activos\", {\r\n        \"Column1.regisArti\",\r\n        \"Column1.codInternoArti\",\r\n        \"Column1.descripcionArti\",\r\n        \"Column1.tipoArti\",\r\n        \"Column1.facturaArti\",\r\n        \"Column1.despachoArti\",\r\n        \"Column1.partidaLoteArti\",\r\n        \"Column1.tasaIva\",\r\n        \"Column1.descripcionActEcoVenta\",\r\n        \"Column1.descripcionActEcoCompra\"\r\n    }),\r\n\r\n    // Paso 3: Renombrar columnas\r\n    #\"Renombrar columnas\" = Table.RenameColumns(#\"Quitar columnas\", {\r\n        {\"Column1.regisArti\",               \"idArt\"},\r\n        {\"Column1.codInternoArti\",          \"codArt\"},\r\n        {\"Column1.descripcionArti\",         \"descArt\"},\r\n        {\"Column1.tipoArti\",                \"tipoArt\"},\r\n        {\"Column1.facturaArti\",             \"factArt\"},\r\n        {\"Column1.despachoArti\",            \"despArt\"},\r\n        {\"Column1.partidaLoteArti\",         \"loteArt\"},\r\n        {\"Column1.tasaIva\",                 \"ivaArt\"},\r\n        {\"Column1.descripcionActEcoVenta\",  \"ventaArt\"},\r\n        {\"Column1.descripcionActEcoCompra\", \"compraArt\"}\r\n    }),\r\n\r\n    // Paso 4: Reordenar columnas según orden del Excel\r\n    #\"Reordenar columnas\" = Table.ReorderColumns(#\"Renombrar columnas\", {\r\n        \"codArt\",\r\n        \"descArt\",\r\n        \"idArt\",\r\n        \"tipoArt\",\r\n        \"factArt\",\r\n        \"despArt\",\r\n        \"loteArt\",\r\n        \"ivaArt\",\r\n        \"ventaArt\",\r\n        \"compraArt\"\r\n    }),\r\n    #\"Ordenar filas\" = Table.Sort(#\"Reordenar columnas\", {{\"codArt\", Order.Ascending}})\r\nin\r\n    #\"Ordenar filas\""
+    },
+    {
+      "name": "stckBase",
+      "endpoints": [
+        "https://sistemaisis.ar:8103/api/ISIS_ArticuloStock_VW"
+      ],
+      "formula": "let\r\n    Origen = FUENTE_API_SIN_CREDENCIALES,\n    #\"Convertida en tabla\" = Table.FromList(Origen, Splitter.SplitByNothing(), null, null, ExtraValues.Error),\r\n    #\"Se expandió Column1\" = Table.ExpandRecordColumn(#\"Convertida en tabla\", \"Column1\", {\"codArticulo\", \"descBusquedaArticulo\", \"descripcionArticulo\", \"codEmpresa\", \"empresa\", \"codDeposito\", \"deposito\", \"tipoDeposito\", \"cantCompraUm1\", \"cantCompraUm2\", \"cantVentaUm1\", \"cantVentaUm2\", \"stockUm1\", \"stockUm2\"}, {\"Column1.codArticulo\", \"Column1.descBusquedaArticulo\", \"Column1.descripcionArticulo\", \"Column1.codEmpresa\", \"Column1.empresa\", \"Column1.codDeposito\", \"Column1.deposito\", \"Column1.tipoDeposito\", \"Column1.cantCompraUm1\", \"Column1.cantCompraUm2\", \"Column1.cantVentaUm1\", \"Column1.cantVentaUm2\", \"Column1.stockUm1\", \"Column1.stockUm2\"}),\r\n    #\"Filtrar empresa\" = Table.SelectRows(#\"Se expandió Column1\", each [Column1.codEmpresa] = 1),\r\n    #\"Quitar columnas\" = Table.SelectColumns(#\"Filtrar empresa\", {\r\n        \"Column1.codArticulo\",\r\n        \"Column1.descripcionArticulo\",\r\n        \"Column1.stockUm1\",\r\n        \"Column1.stockUm2\"\r\n    }),\r\n    #\"Renombrar columnas\" = Table.RenameColumns(#\"Quitar columnas\", {\r\n        {\"Column1.codArticulo\",         \"codArt\"},\r\n        {\"Column1.descripcionArticulo\", \"descArt\"},\r\n        {\"Column1.stockUm1\",            \"stokU1\"},\r\n        {\"Column1.stockUm2\",            \"stckU2\"}\r\n    }),\r\n    #\"Reordenar columnas\" = Table.ReorderColumns(#\"Renombrar columnas\", {\r\n        \"codArt\",\r\n        \"descArt\",\r\n        \"stokU1\",\r\n        \"stckU2\"\r\n    }),\r\n    #\"Ordenar filas\" = Table.Sort(#\"Reordenar columnas\", {{\"codArt\", Order.Ascending}})\r\nin\r\n    #\"Ordenar filas\""
+    },
+    {
+      "name": "condPgo",
+      "endpoints": [
+        "https://sistemaisis.ar:8103/api/ISIS_CondicionPago_VW"
+      ],
+      "formula": "let\r\n    Origen = FUENTE_API_SIN_CREDENCIALES,\n    #\"Convertida en tabla\" = Table.FromList(Origen, Splitter.SplitByNothing(), null, null, ExtraValues.Error),\r\n    #\"Se expandió Column1\" = Table.ExpandRecordColumn(#\"Convertida en tabla\", \"Column1\", {\"codigCondiPago\", \"descrCondiPago\", \"senActivoCondiPago\"}, {\"codigCondiPago\", \"descrCondiPago\", \"senActivoCondiPago\"}),\r\n    #\"Columnas con nombre cambiado\" = Table.RenameColumns(#\"Se expandió Column1\",{{\"codigCondiPago\", \"condPgo\"}}),\r\n    #\"Filas ordenadas\" = Table.Sort(#\"Columnas con nombre cambiado\",{{\"condPgo\", Order.Ascending}}),\r\n    #\"Filas filtradas\" = Table.SelectRows(#\"Filas ordenadas\", each ([senActivoCondiPago] = \"Si\")),\r\n    #\"Columnas con nombre cambiado1\" = Table.RenameColumns(#\"Filas filtradas\",{{\"descrCondiPago\", \"desCondPgo\"}, {\"senActivoCondiPago\", \"activo\"}})\r\nin\r\n    #\"Columnas con nombre cambiado1\""
+    },
+    {
+      "name": "chqCart",
+      "endpoints": [
+        "https://sistemaisis.ar:8103/api/ISIS_ChequesEnCarteraCliente_VW"
+      ],
+      "formula": "let\r\n    Origen = FUENTE_API_SIN_CREDENCIALES,\n    #\"Convertida en tabla\" = Table.FromList(Origen, Splitter.SplitByNothing(), null, null, ExtraValues.Error),\r\n    #\"Se expandió Column1\" = Table.ExpandRecordColumn(#\"Convertida en tabla\", \"Column1\", {\"codig_Emp\", \"cotizacion\", \"moneda\", \"importeCheque\", \"fechaAcreditracion\", \"fechaDeposito\", \"fechaEmision\", \"razonSocialBco\", \"codigoBco\", \"nroValor_CliVto\", \"descr_ModPa\", \"descrCtroCosto\", \"codCtroCosto\", \"razonSocialCli\", \"codigoCli\", \"nroPreimpre_CliTra\", \"nroComprob_CliTra\", \"descripcionCpbte\", \"fecha_CliTra\", \"descr_Emp\", \"cuitFirma_CliVto\", \"comentario_CliVto\"}, {\"Column1.codig_Emp\", \"Column1.cotizacion\", \"Column1.moneda\", \"Column1.importeCheque\", \"Column1.fechaAcreditracion\", \"Column1.fechaDeposito\", \"Column1.fechaEmision\", \"Column1.razonSocialBco\", \"Column1.codigoBco\", \"Column1.nroValor_CliVto\", \"Column1.descr_ModPa\", \"Column1.descrCtroCosto\", \"Column1.codCtroCosto\", \"Column1.razonSocialCli\", \"Column1.codigoCli\", \"Column1.nroPreimpre_CliTra\", \"Column1.nroComprob_CliTra\", \"Column1.descripcionCpbte\", \"Column1.fecha_CliTra\", \"Column1.descr_Emp\", \"Column1.cuitFirma_CliVto\", \"Column1.comentario_CliVto\"}),\r\n\r\n    // Paso 1: Quitar columnas innecesarias\r\n    #\"Quitar columnas\" = Table.SelectColumns(#\"Se expandió Column1\", {\r\n        \"Column1.codigoCli\",\r\n        \"Column1.razonSocialCli\",\r\n        \"Column1.descripcionCpbte\",\r\n        \"Column1.nroComprob_CliTra\",\r\n        \"Column1.fecha_CliTra\",\r\n        \"Column1.descr_ModPa\",\r\n        \"Column1.fechaEmision\",\r\n        \"Column1.importeCheque\",\r\n        \"Column1.fechaAcreditracion\",\r\n        \"Column1.comentario_CliVto\"\r\n    }),\r\n\r\n    // Paso 2: Cambiar tipos datetime → date\r\n    #\"Tipo fecha1\" = Table.TransformColumnTypes(#\"Quitar columnas\", {\r\n        {\"Column1.fechaAcreditracion\", type datetime},\r\n        {\"Column1.fecha_CliTra\",       type datetime},\r\n        {\"Column1.fechaEmision\",       type datetime}\r\n    }),\r\n    #\"Tipo fecha2\" = Table.TransformColumnTypes(#\"Tipo fecha1\", {\r\n        {\"Column1.fechaAcreditracion\", type date},\r\n        {\"Column1.fecha_CliTra\",       type date},\r\n        {\"Column1.fechaEmision\",       type date}\r\n    }),\r\n\r\n    // Paso 3: Cambiar tipo importe a moneda\r\n    #\"Tipo importe\" = Table.TransformColumnTypes(#\"Tipo fecha2\", {\r\n        {\"Column1.importeCheque\", Currency.Type}\r\n    }),\r\n\r\n    // Paso 4: Transformar numRc → últimos 5 dígitos\r\n    #\"Transformar numRc\" = Table.TransformColumns(#\"Tipo importe\", {\r\n        {\"Column1.nroComprob_CliTra\", each Text.End(Text.From(_), 5)}\r\n    }),\r\n\r\n    // Paso 5: Transformar pedido → últimos 5 dígitos, numérico o \"SIN PEDIDO\"\r\n     #\"Transformar pedido\" = Table.TransformColumns(#\"Transformar numRc\", {\r\n        {\"Column1.comentario_CliVto\", each\r\n            let val = Text.End(Text.Trim(Text.From(_)), 5)\r\n            in if (try Number.FromText(val))[HasError] then \"SIN PEDIDO\" else val\r\n        }\r\n    }),\r\n\r\n    // Paso 6: Renombrar columnas\r\n    #\"Renombrar columnas\" = Table.RenameColumns(#\"Transformar pedido\", {\r\n        {\"Column1.codigoCli\",        \"codCli\"},\r\n        {\"Column1.razonSocialCli\",   \"cliente\"},\r\n        {\"Column1.descripcionCpbte\", \"tipoComp\"},\r\n        {\"Column1.nroComprob_CliTra\",\"numRc\"},\r\n        {\"Column1.fecha_CliTra\",     \"fchRc\"},\r\n        {\"Column1.descr_ModPa\",      \"tipo\"},\r\n        {\"Column1.fechaEmision\",     \"fchEmi\"},\r\n        {\"Column1.importeCheque\",    \"importe\"},\r\n        {\"Column1.fechaAcreditracion\",\"fchAcred\"},\r\n        {\"Column1.comentario_CliVto\",\"pedido\"}\r\n    }),\r\n\r\n    // Paso 7: Reordenar columnas\r\n    #\"Reordenar columnas\" = Table.ReorderColumns(#\"Renombrar columnas\", {\r\n        \"codCli\",   // 1\r\n        \"cliente\",  // 2\r\n        \"tipoComp\", // 3\r\n        \"numRc\",    // 4\r\n        \"fchRc\",    // 5\r\n        \"tipo\",     // 6\r\n        \"fchEmi\",   // 7\r\n        \"importe\",  // 8\r\n        \"fchAcred\", // 9\r\n        \"pedido\"    // 10\r\n    }),\r\n\r\n    // Paso 8: Ordenar por fchAcred a-z\r\n    #\"Ordenar filas\" = Table.Sort(#\"Reordenar columnas\", {{\"fchAcred\", Order.Ascending}})\r\n\r\nin\r\n    #\"Ordenar filas\""
+    },
+    {
+      "name": "cliBase",
+      "endpoints": [
+        "https://sistemaisis.ar:8103/api/ISIS_Cliente_VW"
+      ],
+      "formula": "let\r\n    Origen = FUENTE_API_SIN_CREDENCIALES,\n    #\"Convertida en tabla\" = Table.FromList(Origen, Splitter.SplitByNothing(), null, null, ExtraValues.Error),\r\n    #\"Se expandió Column1\" = Table.ExpandRecordColumn(#\"Convertida en tabla\", \"Column1\", {\"codigoCli\", \"codigoExpreso\", \"razonSocialExpreso\", \"descrIvaC\", \"letraCli\", \"cuitCli\", \"ingBrutosCli\", \"fechaAltaCli\", \"fechaUltimaFacCli\", \"fechaUltimoRecCli\", \"codProveedorClte\", \"codProveAsociado\", \"diaVisitaLun\", \"diaVisitaMar\", \"diaVisitaMie\", \"diaVisitaJue\", \"diaVisitaVie\", \"diaVisitaSab\", \"diaVisitaDom\", \"ordenVisitaDia1CliLun\", \"ordenVisitaDia1CliMar\", \"ordenVisitaDia1CliMie\", \"ordenVisitaDia1CliJue\", \"ordenVisitaDia1CliVie\", \"ordenVisitaDia1CliSab\", \"ordenVisitaDia1CliDom\", \"usaDtosPreItemCli\", \"dtoItemPre1Cli\", \"razonSocialFlete\", \"codigoFlete\", \"descr_Mda\", \"limiteCreditoCli\", \"razonSocialBusCli\", \"razonSocialCli\", \"localidadCli\", \"codigoPostalCli\", \"descri_Partido\", \"codProvincia\", \"desdrProvincia\", \"codigoPais\", \"desdrPais\", \"estadoCli\", \"codigoCliCali\", \"desdrCliCali\", \"codigNivelInt1\", \"dtoItemPre2Cli\", \"desdrNivelInt1\", \"desdrNivelInt2\", \"codigNivelInt3\", \"desdrNivelInt3\", \"codigNivelInt4\", \"desdrNivelInt4\", \"codigVendedor\", \"nombreVendedor\", \"codigCobrador\", \"nombreCobrador\", \"codigListaPrec\", \"desdrListaPrec\", \"codigCondiPago\", \"desdrCondiPago\", \"codigNivelInt2\", \"dtoItemPre3Cli\"}, {\"Column1.codigoCli\", \"Column1.codigoExpreso\", \"Column1.razonSocialExpreso\", \"Column1.descrIvaC\", \"Column1.letraCli\", \"Column1.cuitCli\", \"Column1.ingBrutosCli\", \"Column1.fechaAltaCli\", \"Column1.fechaUltimaFacCli\", \"Column1.fechaUltimoRecCli\", \"Column1.codProveedorClte\", \"Column1.codProveAsociado\", \"Column1.diaVisitaLun\", \"Column1.diaVisitaMar\", \"Column1.diaVisitaMie\", \"Column1.diaVisitaJue\", \"Column1.diaVisitaVie\", \"Column1.diaVisitaSab\", \"Column1.diaVisitaDom\", \"Column1.ordenVisitaDia1CliLun\", \"Column1.ordenVisitaDia1CliMar\", \"Column1.ordenVisitaDia1CliMie\", \"Column1.ordenVisitaDia1CliJue\", \"Column1.ordenVisitaDia1CliVie\", \"Column1.ordenVisitaDia1CliSab\", \"Column1.ordenVisitaDia1CliDom\", \"Column1.usaDtosPreItemCli\", \"Column1.dtoItemPre1Cli\", \"Column1.razonSocialFlete\", \"Column1.codigoFlete\", \"Column1.descr_Mda\", \"Column1.limiteCreditoCli\", \"Column1.razonSocialBusCli\", \"Column1.razonSocialCli\", \"Column1.localidadCli\", \"Column1.codigoPostalCli\", \"Column1.descri_Partido\", \"Column1.codProvincia\", \"Column1.descrProvincia\", \"Column1.codigoPais\", \"Column1.descrPais\", \"Column1.estadoCli\", \"Column1.codigoCliCali\", \"Column1.descrCliCali\", \"Column1.codigNivelInt1\", \"Column1.dtoItemPre2Cli\", \"Column1.descrNivelInt1\", \"Column1.descrNivelInt2\", \"Column1.codigNivelInt3\", \"Column1.descrNivelInt3\", \"Column1.codigNivelInt4\", \"Column1.descrNivelInt4\", \"Column1.codigVendedor\", \"Column1.nombreVendedor\", \"Column1.codigCobrador\", \"Column1.nombreCobrador\", \"Column1.codigListaPrec\", \"Column1.descrListaPrec\", \"Column1.codigCondiPago\", \"Column1.descrCondiPago\", \"Column1.codigNivelInt2\", \"Column1.dtoItemPre3Cli\"}),\r\n\r\n    // Paso 1: Filtrar clientes activos\r\n    #\"Filtrar activos\" = Table.SelectRows(#\"Se expandió Column1\", each [Column1.estadoCli] = \"Activo\"),\r\n\r\n    // Paso 2: Quitar columnas innecesarias\r\n    #\"Quitar columnas\" = Table.SelectColumns(#\"Filtrar activos\", {\r\n        \"Column1.codigoCli\",\r\n        \"Column1.cuitCli\",\r\n        \"Column1.fechaAltaCli\",\r\n        \"Column1.fechaUltimaFacCli\",\r\n        \"Column1.codProveedorClte\",\r\n        \"Column1.descr_Mda\",\r\n        \"Column1.razonSocialBusCli\",\r\n        \"Column1.razonSocialCli\",\r\n        \"Column1.nombreVendedor\",\r\n        \"Column1.codigListaPrec\",\r\n        \"Column1.codigCondiPago\",\r\n        \"Column1.descrCondiPago\"\r\n    }),\r\n\r\n    // Paso 3: Filtrar CUIT nulo o \"00-00000000-0\"\r\n    #\"Filtrar cuit\" = Table.SelectRows(#\"Quitar columnas\", each\r\n        [Column1.cuitCli] <> null and [Column1.cuitCli] <> \"00-00000000-0\"\r\n    ),\r\n\r\n    // Paso 4: Cambiar tipos fechas datetime → date\r\n    #\"Tipo fecha1\" = Table.TransformColumnTypes(#\"Filtrar cuit\", {\r\n        {\"Column1.fechaAltaCli\",      type datetime},\r\n        {\"Column1.fechaUltimaFacCli\", type datetime}\r\n    }),\r\n    #\"Tipo fecha2\" = Table.TransformColumnTypes(#\"Tipo fecha1\", {\r\n        {\"Column1.fechaAltaCli\",      type date},\r\n        {\"Column1.fechaUltimaFacCli\", type date}\r\n    }),\r\n\r\n    // Paso 5: Filtrar fechaUltimaFacCli >= 01/01/2020\r\n    #\"Filtrar fecha fac\" = Table.SelectRows(#\"Tipo fecha2\", each\r\n        [Column1.fechaUltimaFacCli] >= #date(2020, 1, 1)\r\n    ),\r\n\r\n    // Paso 6: Renombrar columnas\r\n    #\"Renombrar columnas\" = Table.RenameColumns(#\"Filtrar fecha fac\", {\r\n        {\"Column1.codigoCli\",      \"codCli\"},\r\n        {\"Column1.razonSocialCli\", \"rzonSoc\"},\r\n        {\"Column1.razonSocialBusCli\", \"rzonSocBus\"},\r\n        {\"Column1.cuitCli\",        \"cuitcli\"},\r\n        {\"Column1.descr_Mda\",      \"moneda\"},\r\n        {\"Column1.nombreVendedor\", \"vendCli\"},\r\n        {\"Column1.codigListaPrec\", \"listaPr\"},\r\n        {\"Column1.codigCondiPago\", \"condPg\"},\r\n        {\"Column1.descrCondiPago\", \"condPgD\"},\r\n        {\"Column1.codProveedorClte\",\"codProv\"},\r\n        {\"Column1.fechaAltaCli\",   \"fechaAltaCli\"},\r\n        {\"Column1.fechaUltimaFacCli\", \"fechaUltimaFacCli\"}\r\n    }),\r\n\r\n    // Paso 7: Agregar columna ctaCte\r\n    #\"Agregar ctaCte\" = Table.AddColumn(#\"Renombrar columnas\", \"ctaCte\", each\r\n        if [condPg] >= 2000 and [condPg] <= 3000 then true else false,\r\n        type logical\r\n    ),\r\n\r\n    // Paso 8: Agregar columna dias\r\n    #\"Agregar dias\" = Table.AddColumn(#\"Agregar ctaCte\", \"dias\", each\r\n        if [ctaCte] = false then\r\n            if [condPg] < 2000 then 5 else 6\r\n        else\r\n            if [condPg] = 2007 then 7\r\n            else if [condPg] = 2010 then 10\r\n            else if [condPg] = 2014 then 14\r\n            else if [condPg] = 2021 then 21\r\n            else if [condPg] = 2030 then 30\r\n            else if [condPg] = 2037 then 37\r\n            else if [condPg] = 2060 then 60\r\n            else null,\r\n        Int64.Type\r\n    ),\r\n\r\n    // Paso 9: Agregar columna formaPago\r\n    #\"Agregar formaPago\" = Table.AddColumn(#\"Agregar dias\", \"formaPago\", each\r\n        if [condPg] >= 1000 and [condPg] < 2000 then \"Transferencia\"\r\n        else if [condPg] >= 2000 and [condPg] < 3000 then \"Transferencia\"\r\n        else if [condPg] >= 3000 and [condPg] < 4000 then \"ECheq\"\r\n        else if [condPg] >= 4000 and [condPg] < 5000 then \"Transf Parcial\"\r\n        else if [condPg] >= 5000 and [condPg] < 6000 then \"ECheq\"\r\n        else if [condPg] >= 9000 then \"CambiarCOD\"\r\n        else null,\r\n        type text\r\n    ),\r\n\r\n    // Paso 10: Agregar columna ctrlMda\r\n    #\"Agregar ctrlMda\" = Table.AddColumn(#\"Agregar formaPago\", \"ctrlMda\", each\r\n        if [moneda] <> \"Dolar\" then \"CAMBIAR\" else null,\r\n        type text\r\n    ),\r\n\r\n    // Paso 11: Reordenar columnas\r\n    #\"Reordenar columnas\" = Table.ReorderColumns(#\"Agregar ctrlMda\", {\r\n        \"codCli\",           // 1\r\n        \"rzonSoc\",          // 2\r\n        \"rzonSocBus\",       // 3\r\n        \"cuitcli\",          // 4\r\n        \"moneda\",           // 5\r\n        \"vendCli\",          // 6\r\n        \"listaPr\",          // 7\r\n        \"condPg\",           // 8\r\n        \"condPgD\",          // 9\r\n        \"codProv\",           // 10\r\n        \"fechaAltaCli\",     // 11\r\n        \"fechaUltimaFacCli\",// 12\r\n        \"ctaCte\",\r\n        \"dias\",\r\n        \"formaPago\",\r\n        \"ctrlMda\"\r\n    }),\r\n\r\n    // Paso 12: Ordenar a-z por rzonSocBus\r\n    #\"Ordenar filas\" = Table.Sort(#\"Reordenar columnas\", {{\"rzonSocBus\", Order.Ascending}})\r\n\r\nin\r\n    #\"Ordenar filas\""
+    },
+    {
+      "name": "pedCab",
+      "endpoints": [
+        "https://sistemaisis.ar:8103/api/ISIS_PedidoClteCab_VW"
+      ],
+      "formula": "let\r\n    Origen = FUENTE_API_SIN_CREDENCIALES,\n    #\"Convertida en tabla\" = Table.FromList(Origen, Splitter.SplitByNothing(), null, null, ExtraValues.Error),\r\n    #\"Se expandió Column1\" = Table.ExpandRecordColumn(#\"Convertida en tabla\", \"Column1\", {\"regis_PedCliCab\", \"nombreVendedor\", \"codigoFlete\", \"razonSocialFlete\", \"sucursalEntrega\", \"desMdaOper\", \"cotizaOper\", \"dto1_PedCliCab\", \"dto2_PedCliCab\", \"dto3_PedCliCab\", \"dto4_PedCliCab\", \"codigVendedor\", \"subtotal_PedCliCab\", \"impInterno_PedCliCab\", \"ivA_PedCliCab\", \"perceIva_PedCliCab\", \"perceIBr_PedCliCab\", \"total_PedCliCab\", \"senFechaIniFin_PedCliCab\", \"fechaInicioVig_PedCliCab\", \"fechaFinVig_PedCliCab\", \"pedidoPendiente\", \"pedidoEcommerce\", \"descuento_PedCliCab\", \"desCpbtePresupuesto\", \"descrListaPrec\", \"descrCtroCosto\", \"codig_Emp\", \"desCpbtePedido\", \"numero_PedCliCab\", \"fecha_PedCliCab\", \"tipoPedido\", \"mes01_PedCliCab\", \"mes02_PedCliCab\", \"mes03_PedCliCab\", \"mes04_PedCliCab\", \"mes05_PedCliCab\", \"mes06_PedCliCab\", \"mes07_PedCliCab\", \"mes08_PedCliCab\", \"mes09_PedCliCab\", \"mes10_PedCliCab\", \"mes11_PedCliCab\", \"mes12_PedCliCab\", \"codigoCli\", \"razonSocialCli\", \"codigListaPrec\", \"codigCondiPago\", \"descrCondiPago\", \"codCtroCosto\", \"numero_PreCliCab\", \"usuAutori1\", \"fecAut1_PedCliCab\", \"usuAutori2\", \"fecAut2_PedCliCab\"}, {\"Column1.regis_PedCliCab\", \"Column1.nombreVendedor\", \"Column1.codigoFlete\", \"Column1.razonSocialFlete\", \"Column1.sucursalEntrega\", \"Column1.desMdaOper\", \"Column1.cotizaOper\", \"Column1.dto1_PedCliCab\", \"Column1.dto2_PedCliCab\", \"Column1.dto3_PedCliCab\", \"Column1.dto4_PedCliCab\", \"Column1.codigVendedor\", \"Column1.subtotal_PedCliCab\", \"Column1.impInterno_PedCliCab\", \"Column1.ivA_PedCliCab\", \"Column1.perceIva_PedCliCab\", \"Column1.perceIBr_PedCliCab\", \"Column1.total_PedCliCab\", \"Column1.senFechaIniFin_PedCliCab\", \"Column1.fechaInicioVig_PedCliCab\", \"Column1.fechaFinVig_PedCliCab\", \"Column1.pedidoPendiente\", \"Column1.pedidoEcommerce\", \"Column1.descuento_PedCliCab\", \"Column1.desCpbtePresupuesto\", \"Column1.descrListaPrec\", \"Column1.descrCtroCosto\", \"Column1.codig_Emp\", \"Column1.desCpbtePedido\", \"Column1.numero_PedCliCab\", \"Column1.fecha_PedCliCab\", \"Column1.tipoPedido\", \"Column1.mes01_PedCliCab\", \"Column1.mes02_PedCliCab\", \"Column1.mes03_PedCliCab\", \"Column1.mes04_PedCliCab\", \"Column1.mes05_PedCliCab\", \"Column1.mes06_PedCliCab\", \"Column1.mes07_PedCliCab\", \"Column1.mes08_PedCliCab\", \"Column1.mes09_PedCliCab\", \"Column1.mes10_PedCliCab\", \"Column1.mes11_PedCliCab\", \"Column1.mes12_PedCliCab\", \"Column1.codigoCli\", \"Column1.razonSocialCli\", \"Column1.codigListaPrec\", \"Column1.codigCondiPago\", \"Column1.descrCondiPago\", \"Column1.codCtroCosto\", \"Column1.numero_PreCliCab\", \"Column1.usuAutori1\", \"Column1.fecAut1_PedCliCab\", \"Column1.usuAutori2\", \"Column1.fecAut2_PedCliCab\"}),\r\n\r\n    // Paso 1: Filtrar tipo de pedido\r\n    #\"Filtrar tipo\" = Table.SelectRows(#\"Se expandió Column1\", each [Column1.desCpbtePedido] = \"Pedido cliente autom\"),\r\n\r\n    // Paso 2: Filtrar empresas 1 y 4\r\n    #\"Filtrar empresa\" = Table.SelectRows(#\"Filtrar tipo\", each [Column1.codig_Emp] = 1 or [Column1.codig_Emp] = 4),\r\n\r\n    // Paso 3: Quitar columnas innecesarias (manteniendo codig_Emp y fecha para filtros)\r\n    #\"Quitar columnas\" = Table.SelectColumns(#\"Filtrar empresa\", {\r\n        \"Column1.numero_PedCliCab\",\r\n        \"Column1.regis_PedCliCab\",\r\n        \"Column1.fecha_PedCliCab\",\r\n        \"Column1.codig_Emp\",\r\n        \"Column1.nombreVendedor\",\r\n        \"Column1.codigoCli\",\r\n        \"Column1.razonSocialCli\",\r\n        \"Column1.desMdaOper\",\r\n        \"Column1.cotizaOper\",\r\n        \"Column1.subtotal_PedCliCab\",\r\n        \"Column1.total_PedCliCab\",\r\n        \"Column1.codigListaPrec\",\r\n        \"Column1.codigCondiPago\",\r\n        \"Column1.descrCondiPago\",\r\n        \"Column1.numero_PreCliCab\"\r\n    }),\r\n\r\n    // Paso 4: Cambiar tipo fecha datetime → date\r\n    #\"Tipo fecha1\" = Table.TransformColumnTypes(#\"Quitar columnas\", {\r\n        {\"Column1.fecha_PedCliCab\", type datetime}\r\n    }),\r\n    #\"Tipo fecha2\" = Table.TransformColumnTypes(#\"Tipo fecha1\", {\r\n        {\"Column1.fecha_PedCliCab\", type date}\r\n    }),\r\n\r\n    // Paso 5: Filtrar fechas — general > 01/01/2022, empresa 1 y 4 > 01/01/2024\r\n    #\"Filtrar fecha\" = Table.SelectRows(#\"Tipo fecha2\", each\r\n        [Column1.fecha_PedCliCab] > #date(2022, 1, 1) and\r\n        not ([Column1.codig_Emp] = 1 or [Column1.codig_Emp] = 4) or\r\n        [Column1.fecha_PedCliCab] > #date(2022, 1, 1)\r\n    ),\r\n\r\n    // Paso 6: Quitar columna codig_Emp\r\n    #\"Quitar codig_Emp\" = Table.RemoveColumns(#\"Filtrar fecha\", {\"Column1.codig_Emp\"}),\r\n\r\n    // Paso 7: Cambiar tipo moneda\r\n    #\"Tipo moneda\" = Table.TransformColumnTypes(#\"Quitar codig_Emp\", {\r\n        {\"Column1.cotizaOper\",        Currency.Type},\r\n        {\"Column1.subtotal_PedCliCab\", Currency.Type},\r\n        {\"Column1.total_PedCliCab\",   Currency.Type}\r\n    }),\r\n\r\n    // Paso 8: Renombrar columnas\r\n    #\"Renombrar columnas\" = Table.RenameColumns(#\"Tipo moneda\", {\r\n        {\"Column1.numero_PedCliCab\",   \"numPed\"},\r\n        {\"Column1.regis_PedCliCab\",    \"idPedCab\"},\r\n        {\"Column1.fecha_PedCliCab\",    \"fchaPed\"},\r\n        {\"Column1.nombreVendedor\",     \"vend\"},\r\n        {\"Column1.codigoCli\",          \"codCli\"},\r\n        {\"Column1.razonSocialCli\",     \"rzonSoc\"},\r\n        {\"Column1.desMdaOper\",         \"moneda\"},\r\n        {\"Column1.cotizaOper\",         \"cot\"},\r\n        {\"Column1.subtotal_PedCliCab\", \"subtot\"},\r\n        {\"Column1.total_PedCliCab\",    \"total\"},\r\n        {\"Column1.codigListaPrec\",     \"codPre\"},\r\n        {\"Column1.codigCondiPago\",     \"codPgo\"},\r\n        {\"Column1.descrCondiPago\",     \"desPgo\"},\r\n        {\"Column1.numero_PreCliCab\",   \"numCot\"}\r\n    }),\r\n\r\n    // Paso 9: Reordenar columnas\r\n    #\"Reordenar columnas\" = Table.ReorderColumns(#\"Renombrar columnas\", {\r\n        \"numPed\",   // 1\r\n        \"idPedCab\", // 2\r\n        \"fchaPed\",  // 3\r\n        \"vend\",     // 4\r\n        \"codCli\",   // 5\r\n        \"rzonSoc\",  // 6\r\n        \"moneda\",   // 7\r\n        \"cot\",      // 8\r\n        \"subtot\",   // 9\r\n        \"total\",    // 10\r\n        \"codPre\",   // 11\r\n        \"codPgo\",   // 12\r\n        \"desPgo\",   // 13\r\n        \"numCot\"    // 14\r\n    }),\r\n\r\n    // Paso 10: Ordenar 1° fchaPed z-a, 2° numPed z-a\r\n    #\"Ordenar filas\" = Table.Sort(#\"Reordenar columnas\",{{\"fchaPed\", Order.Descending}, {\"numPed\", Order.Descending}, {\"idPedCab\", Order.Ascending}})\r\n\r\nin\r\n    #\"Ordenar filas\""
+    },
+    {
+      "name": "pedDet",
+      "endpoints": [
+        "https://sistemaisis.ar:8103/api/ISIS_PedidoClteDet_VW"
+      ],
+      "formula": "let\r\n    Origen = FUENTE_API_SIN_CREDENCIALES,\n    #\"Convertida en tabla\" = Table.FromList(Origen, Splitter.SplitByNothing(), null, null, ExtraValues.Error),\r\n    #\"Se expandió Column1\" = Table.ExpandRecordColumn(#\"Convertida en tabla\", \"Column1\", {\"regisPedCliDet\", \"regisPedCliCab\", \"codInternoArti\", \"descripcionArticulo\", \"medidaPri\", \"cantiPedidaUmp\", \"bonifPedidaUmp\", \"cantiEntregadaUmp\", \"bonifEntregadaUmp\", \"medidaSecu\", \"cantiPedidaUms\", \"bonifPedidaUms\", \"cantiEntregadaUms\", \"bonifEntregadaUms\", \"codigListaPrec\", \"descrListaPrec\", \"monedaLista\", \"cotizMdaLista\", \"tipoPrecioPedCliDet\", \"precioMdaLista\", \"precioMdaCabe\", \"dto1Item\", \"dto2Item\", \"dto3Item\", \"dto1Cabe\", \"dto2Cabe\", \"dto3Cabe\", \"dto4Cabe\", \"precioMdaListaNeto\", \"precioMdaCabeNeto\", \"senFechaIniFinPedCliDet\", \"fechaInicioVigPedCliDet\", \"fechaFinVigPedCliDet\", \"prCpra1PesosArti\", \"prCpra2PesosArti\", \"prCto1PesosArti\", \"prCto2PesosArti\", \"mdaPrecioCompra\", \"cotizPrecioCompra\", \"prCpra1MonedaArti\", \"prCpra2MonedaArti\", \"prCto1MonedaArti\", \"prCto2MonedaArti\"}, {\"Column1.regisPedCliDet\", \"Column1.regisPedCliCab\", \"Column1.codInternoArti\", \"Column1.descripcionArticulo\", \"Column1.medidaPri\", \"Column1.cantiPedidaUmp\", \"Column1.bonifPedidaUmp\", \"Column1.cantiEntregadaUmp\", \"Column1.bonifEntregadaUmp\", \"Column1.medidaSecu\", \"Column1.cantiPedidaUms\", \"Column1.bonifPedidaUms\", \"Column1.cantiEntregadaUms\", \"Column1.bonifEntregadaUms\", \"Column1.codigListaPrec\", \"Column1.descrListaPrec\", \"Column1.monedaLista\", \"Column1.cotizMdaLista\", \"Column1.tipoPrecioPedCliDet\", \"Column1.precioMdaLista\", \"Column1.precioMdaCabe\", \"Column1.dto1Item\", \"Column1.dto2Item\", \"Column1.dto3Item\", \"Column1.dto1Cabe\", \"Column1.dto2Cabe\", \"Column1.dto3Cabe\", \"Column1.dto4Cabe\", \"Column1.precioMdaListaNeto\", \"Column1.precioMdaCabeNeto\", \"Column1.senFechaIniFinPedCliDet\", \"Column1.fechaInicioVigPedCliDet\", \"Column1.fechaFinVigPedCliDet\", \"Column1.prCpra1PesosArti\", \"Column1.prCpra2PesosArti\", \"Column1.prCto1PesosArti\", \"Column1.prCto2PesosArti\", \"Column1.mdaPrecioCompra\", \"Column1.cotizPrecioCompra\", \"Column1.prCpra1MonedaArti\", \"Column1.prCpra2MonedaArti\", \"Column1.prCto1MonedaArti\", \"Column1.prCto2MonedaArti\"}),\r\n\r\n    // Paso 1: Filtrar regisPedCliCab >= 30492\r\n    #\"Filtrar cab\" = Table.SelectRows(#\"Se expandió Column1\", each [Column1.regisPedCliCab] >= 21983),\r\n\r\n    // Paso 2: Quitar columnas innecesarias\r\n    #\"Quitar columnas\" = Table.SelectColumns(#\"Filtrar cab\", {\r\n        \"Column1.regisPedCliCab\",\r\n        \"Column1.regisPedCliDet\",\r\n        \"Column1.codInternoArti\",\r\n        \"Column1.descripcionArticulo\",\r\n        \"Column1.medidaPri\",\r\n        \"Column1.cantiPedidaUmp\",\r\n        \"Column1.precioMdaListaNeto\"\r\n    }),\r\n\r\n    // Paso 3: Cambiar tipo moneda\r\n    #\"Tipo moneda\" = Table.TransformColumnTypes(#\"Quitar columnas\", {\r\n        {\"Column1.precioMdaListaNeto\", Currency.Type}\r\n    }),\r\n\r\n    // Paso 5: Renombrar columnas\r\n    #\"Renombrar columnas\" = Table.RenameColumns(#\"Tipo moneda\", {\r\n        {\"Column1.regisPedCliCab\",    \"idPedCab\"},\r\n        {\"Column1.regisPedCliDet\",    \"idPedDet\"},\r\n        {\"Column1.codInternoArti\",    \"codArt\"},\r\n        {\"Column1.descripcionArticulo\",\"descArt\"},\r\n        {\"Column1.medidaPri\",         \"unidad\"},\r\n        {\"Column1.cantiPedidaUmp\",    \"cant\"},\r\n        {\"Column1.precioMdaListaNeto\",\"pcioUnit\"}\r\n    }),\r\n\r\n    // Paso 6: Reordenar columnas\r\n    #\"Reordenar columnas\" = Table.ReorderColumns(#\"Renombrar columnas\", {\r\n        \"idPedCab\",  // 1\r\n        \"idPedDet\",  // 2\r\n        \"codArt\",    // 3\r\n        \"descArt\",   // 4\r\n        \"unidad\",    // 5\r\n        \"cant\",      // 6\r\n        \"pcioUnit\"  // 7\r\n    }),\r\n\r\n    // Paso 7: Ordenar 1° idPedCab z-a, 2° idPedDet z-a\r\n    #\"Ordenar filas\" = Table.Sort(#\"Reordenar columnas\", {\r\n        {\"idPedCab\", Order.Descending},\r\n        {\"idPedDet\", Order.Descending}\r\n    })\r\n\r\nin\r\n    #\"Ordenar filas\""
+    },
+    {
+      "name": "pedCom",
+      "endpoints": [],
+      "formula": "let\r\n    Origen = Table.NestedJoin(pedCab, {\"idPedCab\"}, pedDet, {\"idPedCab\"}, \"pedDet\", JoinKind.LeftOuter),\r\n    #\"Se expandió pedDet\" = Table.ExpandTableColumn(Origen, \"pedDet\", {\"idPedDet\", \"codArt\", \"descArt\", \"unidad\", \"cant\", \"pcioUnit\"}, {\"pedDet.idPedDet\", \"pedDet.codArt\", \"pedDet.descArt\", \"pedDet.unidad\", \"pedDet.cant\", \"pedDet.pcioUnit\"}),\r\n\r\n    // Paso 1: Renombrar columnas pedDet\r\n    #\"Renombrar columnas\" = Table.RenameColumns(#\"Se expandió pedDet\", {\r\n        {\"pedDet.idPedDet\", \"idPedDet\"},\r\n        {\"pedDet.codArt\",   \"codArt\"},\r\n        {\"pedDet.descArt\",  \"descArt\"},\r\n        {\"pedDet.unidad\",   \"unidad\"},\r\n        {\"pedDet.cant\",     \"cant\"},\r\n        {\"pedDet.pcioUnit\", \"pcioUnit\"}\r\n    }),\r\n\r\n    // Paso 2: Agregar columna pedLine = numPed & \"-\" & idPedDet\r\n    #\"Agregar pedLine\" = Table.AddColumn(#\"Renombrar columnas\", \"pedLine\",\r\n        each Text.From([numPed]) & \"-\" & Text.From([idPedDet]),\r\n        type text\r\n    ),\r\n\r\n    // Paso 3: Reordenar columnas\r\n    #\"Reordenar columnas\" = Table.ReorderColumns(#\"Agregar pedLine\", {\r\n        \"numPed\",   // 1\r\n        \"idPedCab\", // 2\r\n        \"pedLine\",  // 3\r\n        \"fchaPed\",  // 4\r\n        \"vend\",     // 5\r\n        \"codCli\",   // 6\r\n        \"rzonSoc\",  // 7\r\n        \"moneda\",   // 8\r\n        \"cot\",      // 9\r\n        \"subtot\",   // 10\r\n        \"total\",    // 11\r\n        \"codPre\",   // 12\r\n        \"codPgo\",   // 13\r\n        \"desPgo\",   // 14\r\n        \"numCot\",   // 15\r\n        \"idPedDet\", // 16\r\n        \"codArt\",   // 17\r\n        \"descArt\",  // 18\r\n        \"unidad\",   // 19\r\n        \"cant\",     // 20\r\n        \"pcioUnit\"  // 21\r\n    }),\r\n\r\n    // Paso 4: Ordenar 1° fchaPed z-a, 2° pedLine z-a\r\n    #\"Ordenar filas\" = Table.Sort(#\"Reordenar columnas\", {\r\n        {\"fchaPed\", Order.Descending},\r\n        {\"pedLine\", Order.Descending}\r\n    })\r\n\r\nin\r\n    #\"Ordenar filas\""
+    },
+    {
+      "name": "cotDet",
+      "endpoints": [
+        "https://sistemaisis.ar:8103/api/ISIS_PresupuestoVtaDet_VW"
+      ],
+      "formula": "let\r\n    Origen = FUENTE_API_SIN_CREDENCIALES,\n    #\"Convertida en tabla\" = Table.FromList(Origen, Splitter.SplitByNothing(), null, null, ExtraValues.Error),\r\n    #\"Se expandió Column1\" = Table.ExpandRecordColumn(#\"Convertida en tabla\", \"Column1\", {\"idPresupVtaCab\", \"codProducPresup\", \"descripProducPresup\", \"descripProducModPresup\", \"cantidad1Presup\", \"cantidad2Presup\", \"bonific1Presup\", \"bonific2Presup\", \"codLisPrecPresupDet\", \"listPrecPresupDet\", \"monedaPresupDet\", \"cotizacMdaPresupDet\", \"tipoPrecioPresupDet\", \"dto1PrecPresupDet\", \"dto2PrecPresupDet\", \"dto3PrecPresupDet\", \"precioListPrecPresupDet\", \"precioPresupDet\", \"importePresupDet\", \"diasEntregaPresupDet\", \"fechaEntregaPresupDet\"}, {\"Column1.idPresupVtaCab\", \"Column1.codProducPresup\", \"Column1.descripProducPresup\", \"Column1.descripProducModPresup\", \"Column1.cantidad1Presup\", \"Column1.cantidad2Presup\", \"Column1.bonific1Presup\", \"Column1.bonific2Presup\", \"Column1.codLisPrecPresupDet\", \"Column1.listPrecPresupDet\", \"Column1.monedaPresupDet\", \"Column1.cotizacMdaPresupDet\", \"Column1.tipoPrecioPresupDet\", \"Column1.dto1PrecPresupDet\", \"Column1.dto2PrecPresupDet\", \"Column1.dto3PrecPresupDet\", \"Column1.precioListPrecPresupDet\", \"Column1.precioPresupDet\", \"Column1.importePresupDet\", \"Column1.diasEntregaPresupDet\", \"Column1.fechaEntregaPresupDet\"}),\r\n\r\n    // Paso 1: Filtrar idPresupVtaCab >= 31682\r\n    #\"Filtrar cab\" = Table.SelectRows(#\"Se expandió Column1\", each [Column1.idPresupVtaCab] >= 31682),\r\n    // Filtrar codArt no nulos\r\n    #\"Filtrar codArt\" = Table.SelectRows(#\"Filtrar cab\", each [Column1.codProducPresup] <> null),\r\n\r\n    // Paso 2: Quitar columnas innecesarias\r\n    #\"Quitar columnas\" = Table.SelectColumns(#\"Filtrar codArt\", {\r\n        \"Column1.idPresupVtaCab\",\r\n        \"Column1.codProducPresup\",\r\n        \"Column1.descripProducPresup\",\r\n        \"Column1.cantidad1Presup\",\r\n        \"Column1.precioPresupDet\",\r\n        \"Column1.importePresupDet\"\r\n    }),\r\n\r\n    // Paso 3: Renombrar columnas\r\n    #\"Renombrar columnas\" = Table.RenameColumns(#\"Quitar columnas\", {\r\n        {\"Column1.idPresupVtaCab\",     \"idCotCab\"},\r\n        {\"Column1.codProducPresup\",    \"codArt\"},\r\n        {\"Column1.descripProducPresup\",\"descArt\"},\r\n        {\"Column1.cantidad1Presup\",    \"cant\"},\r\n        {\"Column1.precioPresupDet\",    \"precio\"},\r\n        {\"Column1.importePresupDet\",   \"subtotal\"}\r\n    }),\r\n    \r\n\r\n    // Paso 4: Reordenar columnas\r\n    #\"Reordenar columnas\" = Table.ReorderColumns(#\"Renombrar columnas\", {\r\n        \"idCotCab\", // 1\r\n        \"codArt\",   // 2\r\n        \"descArt\",  // 3\r\n        \"cant\",     // 4\r\n        \"precio\",   // 5\r\n        \"subtotal\"  // 6\r\n    }),\r\n\r\n    // Paso 5: Ordenar z-a por idCotCab\r\n    #\"Ordenar filas\" = Table.Sort(#\"Reordenar columnas\", {{\"idCotCab\", Order.Descending}})\r\n\r\nin\r\n    #\"Ordenar filas\""
+    },
+    {
+      "name": "cotCom",
+      "endpoints": [],
+      "formula": "let\r\n    Origen = Table.NestedJoin(cotCab, {\"idCotCab\"}, cotDet, {\"idCotCab\"}, \"cotDet\", JoinKind.LeftOuter),\r\n    #\"Se expandió cotDet\" = Table.ExpandTableColumn(Origen, \"cotDet\", {\"codArt\", \"descArt\", \"cant\", \"precio\", \"subtotal\"}, {\"cotDet.codArt\", \"cotDet.descArt\", \"cotDet.cant\", \"cotDet.precio\", \"cotDet.subtotal\"}),\r\n    #\"Tipo cambiado\" = Table.TransformColumnTypes(#\"Se expandió cotDet\",{{\"cotMda\", Currency.Type}, {\"subtotal\", Currency.Type}, {\"total\", Currency.Type}, {\"cotDet.precio\", Currency.Type}, {\"cotDet.subtotal\", Currency.Type}}),\r\n    #\"Filas ordenadas\" = Table.Sort(#\"Tipo cambiado\",{{\"idCotCab\", Order.Descending}})\r\nin\r\n    #\"Filas ordenadas\""
+    },
+    {
+      "name": "cotCab",
+      "endpoints": [
+        "https://sistemaisis.ar:8103/api/ISIS_PresupuestoVtaCab_VW"
+      ],
+      "formula": "let\r\n    Origen = FUENTE_API_SIN_CREDENCIALES,\n    #\"Convertida en tabla\" = Table.FromList(Origen, Splitter.SplitByNothing(), null, null, ExtraValues.Error),\r\n    #\"Se expandió Column1\" = Table.ExpandRecordColumn(#\"Convertida en tabla\", \"Column1\", {\"idPresupVtaCab\", \"division\", \"comprobantePresup\", \"numeroComprobPresup\", \"fecha\", \"codigoCliente\", \"razonSocial\", \"lugarEntregaCliente\", \"codVendedor\", \"vendedor\", \"flete\", \"codCondPago\", \"condicPago\", \"codCtoCos\", \"centroCosto\", \"codListPrec\", \"listaPrecio\", \"ordCpraPresup\", \"mdaOperac\", \"mda1Operac\", \"cotizMda1\", \"mda2Operac\", \"cotizMda2\", \"mda3Operac\", \"cotizMda3\", \"mda4Operac\", \"cotizMda4\", \"dto1Presup\", \"dto2Presup\", \"dto3Presup\", \"dto4Presup\", \"recargoPresup\", \"subTotalPresup\", \"desctoListPrecPresup\", \"recargoListPrecPresup\", \"impInrPresup\", \"ivaPresup\", \"percepIvaPresup\", \"percepIibbPresup\", \"totalPresup\", \"leyen1Presup\", \"leyen2Presup\", \"usuarioAudiPresup\", \"fehaAudiPresup\", \"senVigenciaPresup\", \"diasVigencPresup\", \"fechaVigencPresup\"}, {\"Column1.idPresupVtaCab\", \"Column1.division\", \"Column1.comprobantePresup\", \"Column1.numeroComprobPresup\", \"Column1.fecha\", \"Column1.codigoCliente\", \"Column1.razonSocial\", \"Column1.lugarEntregaCliente\", \"Column1.codVendedor\", \"Column1.vendedor\", \"Column1.flete\", \"Column1.codCondPago\", \"Column1.condicPago\", \"Column1.codCtoCos\", \"Column1.centroCosto\", \"Column1.codListPrec\", \"Column1.listaPrecio\", \"Column1.ordCpraPresup\", \"Column1.mdaOperac\", \"Column1.mda1Operac\", \"Column1.cotizMda1\", \"Column1.mda2Operac\", \"Column1.cotizMda2\", \"Column1.mda3Operac\", \"Column1.cotizMda3\", \"Column1.mda4Operac\", \"Column1.cotizMda4\", \"Column1.dto1Presup\", \"Column1.dto2Presup\", \"Column1.dto3Presup\", \"Column1.dto4Presup\", \"Column1.recargoPresup\", \"Column1.subTotalPresup\", \"Column1.desctoListPrecPresup\", \"Column1.recargoListPrecPresup\", \"Column1.impInrPresup\", \"Column1.ivaPresup\", \"Column1.percepIvaPresup\", \"Column1.percepIibbPresup\", \"Column1.totalPresup\", \"Column1.leyen1Presup\", \"Column1.leyen2Presup\", \"Column1.usuarioAudiPresup\", \"Column1.fehaAudiPresup\", \"Column1.senVigenciaPresup\", \"Column1.diasVigencPresup\", \"Column1.fechaVigencPresup\"}),\r\n\r\n    // Paso 1: Filtrar division = \"CyE\"\r\n    #\"Filtrar division\" = Table.SelectRows(#\"Se expandió Column1\", each [Column1.division] = \"CyE\"),\r\n\r\n    // Paso 2: Quitar columnas innecesarias\r\n    #\"Quitar columnas\" = Table.SelectColumns(#\"Filtrar division\", {\r\n        \"Column1.idPresupVtaCab\",\r\n        \"Column1.numeroComprobPresup\",\r\n        \"Column1.fecha\",\r\n        \"Column1.codigoCliente\",\r\n        \"Column1.razonSocial\",\r\n        \"Column1.vendedor\",\r\n        \"Column1.codListPrec\",\r\n        \"Column1.mda1Operac\",\r\n        \"Column1.cotizMda1\",\r\n        \"Column1.subTotalPresup\",\r\n        \"Column1.totalPresup\"\r\n    }),\r\n\r\n    // Paso 3: Cambiar tipo fecha datetime → date\r\n    #\"Tipo fecha1\" = Table.TransformColumnTypes(#\"Quitar columnas\", {\r\n        {\"Column1.fecha\", type datetime}\r\n    }),\r\n    #\"Tipo fecha2\" = Table.TransformColumnTypes(#\"Tipo fecha1\", {\r\n        {\"Column1.fecha\", type date}\r\n    }),\r\n\r\n    // Paso 3b: Filtrar fechas >= 01/01/2023\r\n    #\"Filtrar fecha\" = Table.SelectRows(#\"Tipo fecha2\", each\r\n        [Column1.fecha] >= #date(2023, 1, 1)\r\n    ),\r\n\r\n    // Paso 4: Renombrar columnas\r\n    #\"Renombrar columnas\" = Table.RenameColumns(#\"Filtrar fecha\", {\r\n        {\"Column1.idPresupVtaCab\",   \"idCotCab\"},\r\n        {\"Column1.numeroComprobPresup\", \"numCot\"},\r\n        {\"Column1.fecha\",            \"fchCot\"},\r\n        {\"Column1.codigoCliente\",    \"codClie\"},\r\n        {\"Column1.razonSocial\",      \"rzSoc\"},\r\n        {\"Column1.vendedor\",         \"vendedor\"},\r\n        {\"Column1.codListPrec\",      \"codPcio\"},\r\n        {\"Column1.mda1Operac\",       \"moneda\"},\r\n        {\"Column1.cotizMda1\",        \"cotMda\"},\r\n        {\"Column1.subTotalPresup\",   \"subtotal\"},\r\n        {\"Column1.totalPresup\",      \"total\"}\r\n    }),\r\n\r\n    // Paso 5: Reordenar columnas\r\n    #\"Reordenar columnas\" = Table.ReorderColumns(#\"Renombrar columnas\", {\r\n        \"idCotCab\",  // 1\r\n        \"numCot\",    // 2\r\n        \"fchCot\",    // 3\r\n        \"codClie\",   // 4\r\n        \"rzSoc\",     // 5\r\n        \"vendedor\",  // 6\r\n        \"codPcio\",   // 7\r\n        \"moneda\",    // 8\r\n        \"cotMda\",    // 9\r\n        \"subtotal\",  // 10\r\n        \"total\"      // 11\r\n    }),\r\n\r\n    // Paso 6: Ordenar 1° fchCot z-a, 2° numCot z-a\r\n    #\"Ordenar filas\" = Table.Sort(#\"Reordenar columnas\", {\r\n        {\"fchCot\", Order.Descending},\r\n        {\"numCot\", Order.Descending}\r\n    })\r\n\r\nin\r\n    #\"Ordenar filas\""
+    },
+    {
+      "name": "Divisa",
+      "endpoints": [
+        "https://api.argentinadatos.com/v1/cotizaciones/dolares/oficial"
+      ],
+      "formula": "let\r\n    Source = Json.Document(Web.Contents(\"https://api.argentinadatos.com/v1/cotizaciones/dolares/oficial\")),\r\n    #\"Converted to Table\" = Table.FromList(Source, Splitter.SplitByNothing(), null, null, ExtraValues.Error),\r\n    #\"Expanded Column1\" = Table.ExpandRecordColumn(#\"Converted to Table\", \"Column1\", {\"venta\", \"fecha\"}, {\"div.venta\", \"div.fecha\"}),\r\n    #\"Changed Type\" = Table.TransformColumnTypes(#\"Expanded Column1\",{{\"div.fecha\", type date}, {\"div.venta\", Currency.Type}}),\r\n    #\"Filtered Rows\" = Table.SelectRows(#\"Changed Type\", each [div.fecha] > #date(2020, 12, 31)),\r\n    #\"Sorted Rows\" = Table.Sort(#\"Filtered Rows\",{{\"div.fecha\", Order.Descending}}),\r\n    #\"Columnas reordenadas\" = Table.ReorderColumns(#\"Sorted Rows\",{\"div.fecha\", \"div.venta\"})\r\nin\r\n    #\"Columnas reordenadas\""
+    },
+    {
+      "name": "ProvBase",
+      "endpoints": [
+        "https://sistemaisis.ar:8103/api/ISIS_Proveedor_VW"
+      ],
+      "formula": "let\r\n    ValidarCUIT = (Valor as any) as logical =>\r\n        let\r\n            TextoOriginal =\r\n                if Valor = null then\r\n                    \"\"\r\n                else\r\n                    Text.Trim(Text.From(Valor)),\r\n\r\n            CUITLimpio =\r\n                Text.Remove(\r\n                    TextoOriginal,\r\n                    {\"-\", \" \", \".\"}\r\n                ),\r\n\r\n            FormatoValido =\r\n                Text.Length(CUITLimpio) = 11\r\n                and Text.Select(CUITLimpio, {\"0\"..\"9\"}) = CUITLimpio,\r\n\r\n            PrefijoValido =\r\n                if FormatoValido then\r\n                    List.Contains(\r\n                        {\"20\", \"23\", \"24\", \"27\", \"30\", \"33\", \"34\"},\r\n                        Text.Start(CUITLimpio, 2)\r\n                    )\r\n                else\r\n                    false,\r\n\r\n            DigitoCalculado =\r\n                if FormatoValido and PrefijoValido then\r\n                    let\r\n                        PrimerosDiez = Text.Start(CUITLimpio, 10),\r\n\r\n                        Digitos =\r\n                            List.Transform(\r\n                                Text.ToList(PrimerosDiez),\r\n                                each Number.FromText(_)\r\n                            ),\r\n\r\n                        Multiplicadores =\r\n                            {5, 4, 3, 2, 7, 6, 5, 4, 3, 2},\r\n\r\n                        Suma =\r\n                            List.Sum(\r\n                                List.Transform(\r\n                                    List.Positions(Digitos),\r\n                                    each Digitos{_} * Multiplicadores{_}\r\n                                )\r\n                            ),\r\n\r\n                        Resto = Number.Mod(Suma, 11),\r\n                        Resultado = 11 - Resto,\r\n\r\n                        Digito =\r\n                            if Resultado = 11 then\r\n                                0\r\n                            else if Resultado = 10 then\r\n                                9\r\n                            else\r\n                                Resultado\r\n                    in\r\n                        Digito\r\n                else\r\n                    -1,\r\n\r\n            DigitoInformado =\r\n                if FormatoValido then\r\n                    Number.FromText(Text.End(CUITLimpio, 1))\r\n                else\r\n                    -2\r\n        in\r\n            FormatoValido\r\n            and PrefijoValido\r\n            and DigitoCalculado = DigitoInformado,\r\n\r\n    Origen = Json.Document(\r\n        Web.Contents(\r\n            \"https://sistemaisis.ar:8103/api/ISIS_Proveedor_VW\",\r\n    Origen = FUENTE_API_SIN_CREDENCIALES,\n        )\r\n    ),\r\n\r\n    #\"Convertida en tabla\" = Table.FromList(\r\n        Origen,\r\n        Splitter.SplitByNothing(),\r\n        null,\r\n        null,\r\n        ExtraValues.Error\r\n    ),\r\n\r\n    #\"Datos de proveedores expandidos\" = Table.ExpandRecordColumn(\r\n        #\"Convertida en tabla\",\r\n        \"Column1\",\r\n        {\r\n            \"regisProve\",\r\n            \"codigoProve\",\r\n            \"cuitProve\",\r\n            \"razonSocialBusProve\",\r\n            \"razonSocialProve\",\r\n            \"fechaAltaProve\",\r\n            \"fechaUltimaFacProve\",\r\n            \"fechaUltOpagoProve\",\r\n            \"descrProveCP\",\r\n            \"descr_Mda\"\r\n        },\r\n        {\r\n            \"idProv\",\r\n            \"codProv\",\r\n            \"cuit\",\r\n            \"rzonSocBus\",\r\n            \"rzonSoc\",\r\n            \"fchaAltaProv\",\r\n            \"fchaUltFac\",\r\n            \"fechaUltPago\",\r\n            \"condPago\",\r\n            \"moneda\"\r\n        }\r\n    ),\r\n\r\n    #\"Fechas convertidas a datetime\" = Table.TransformColumnTypes(\r\n        #\"Datos de proveedores expandidos\",\r\n        {\r\n            {\"fchaAltaProv\", type datetime},\r\n            {\"fchaUltFac\", type datetime},\r\n            {\"fechaUltPago\", type datetime}\r\n        }\r\n    ),\r\n\r\n    #\"Fechas convertidas a date\" = Table.TransformColumnTypes(\r\n        #\"Fechas convertidas a datetime\",\r\n        {\r\n            {\"fchaAltaProv\", type date},\r\n            {\"fchaUltFac\", type date},\r\n            {\"fechaUltPago\", type date}\r\n        }\r\n    ),\r\n\r\n    #\"Filas con CUIT válido\" = Table.SelectRows(\r\n        #\"Fechas convertidas a date\",\r\n        each ValidarCUIT([cuit])\r\n    ),\r\n\r\n    #\"Proveedores con actividad vigente\" = Table.SelectRows(\r\n        #\"Filas con CUIT válido\",\r\n        each\r\n            let\r\n                FechaCorte = #date(2022, 1, 1),\r\n\r\n                AltaAnterior =\r\n                    [fchaAltaProv] <> null\r\n                    and [fchaAltaProv] < FechaCorte,\r\n\r\n                SinFacturaPosterior =\r\n                    [fchaUltFac] = null\r\n                    or [fchaUltFac] <= FechaCorte,\r\n\r\n                SinPagoPosterior =\r\n                    [fechaUltPago] = null\r\n                    or [fechaUltPago] <= FechaCorte,\r\n\r\n                DebeOcultarse =\r\n                    AltaAnterior\r\n                    and SinFacturaPosterior\r\n                    and SinPagoPosterior\r\n            in\r\n                not DebeOcultarse\r\n    ),\r\n\r\n    #\"Ordenado por razón social\" = Table.Sort(\r\n        #\"Proveedores con actividad vigente\",\r\n        {{\"rzonSoc\", Order.Ascending}}\r\n    )\r\nin\r\n    #\"Ordenado por razón social\""
+    },
+    {
+      "name": "fcCab",
+      "endpoints": [
+        "https://sistemaisis.ar:8103/api/ISIS_VentasCabecera_VW"
+      ],
+      "formula": "let\r\n    Origen = FUENTE_API_SIN_CREDENCIALES,\n    #\"Convertida en tabla\" = Table.FromList(Origen, Splitter.SplitByNothing(), null, null, ExtraValues.Error),\r\n    #\"Se expandió Column1\" = Table.ExpandRecordColumn(#\"Convertida en tabla\", \"Column1\", {\"regis_CliTra\", \"signoCpbte\", \"netoPes_CliTra\", \"netoMda1_CliTra\", \"netoMda2_CliTra\", \"netoMda3_CliTra\", \"netoMda4_CliTra\", \"dto1_CliTra\", \"dto2_CliTra\", \"dto3_CliTra\", \"dto4_CliTra\", \"porceRec_CliTra\", \"descuento_CliTra\", \"descuentoPes_CliTra\", \"recargo_CliTra\", \"recargoPes_CliTra\", \"ivA_CliTra\", \"ivaPes_CliTra\", \"perceIva_CliTra\", \"perceIvaPes_CliTra\", \"cotizaOper\", \"monedaOper\", \"nroMonedaOper\", \"nombreCliSucu\", \"codig_Emp\", \"descr_Emp\", \"fecha_CliTra\", \"descripcionCpbte\", \"nroComprob_CliTra\", \"nroPreimpre_CliTra\", \"codigoCli\", \"razonSocialCli\", \"codigCondiPago\", \"perceIBr_CliTra\", \"descrCondiPago\", \"descrCtroCosto\", \"codigListaPrec\", \"descrListaPrec\", \"codigVendedor\", \"nombreVendedor\", \"codConceOpe\", \"descrConceOpe\", \"codigoFlete\", \"razonSocialFlete\", \"codCtroCosto\", \"perceIBrPes_CliTra\"}, {\"Column1.regis_CliTra\", \"Column1.signoCpbte\", \"Column1.netoPes_CliTra\", \"Column1.netoMda1_CliTra\", \"Column1.netoMda2_CliTra\", \"Column1.netoMda3_CliTra\", \"Column1.netoMda4_CliTra\", \"Column1.dto1_CliTra\", \"Column1.dto2_CliTra\", \"Column1.dto3_CliTra\", \"Column1.dto4_CliTra\", \"Column1.porceRec_CliTra\", \"Column1.descuento_CliTra\", \"Column1.descuentoPes_CliTra\", \"Column1.recargo_CliTra\", \"Column1.recargoPes_CliTra\", \"Column1.ivA_CliTra\", \"Column1.ivaPes_CliTra\", \"Column1.perceIva_CliTra\", \"Column1.perceIvaPes_CliTra\", \"Column1.cotizaOper\", \"Column1.monedaOper\", \"Column1.nroMonedaOper\", \"Column1.nombreCliSucu\", \"Column1.codig_Emp\", \"Column1.descr_Emp\", \"Column1.fecha_CliTra\", \"Column1.descripcionCpbte\", \"Column1.nroComprob_CliTra\", \"Column1.nroPreimpre_CliTra\", \"Column1.codigoCli\", \"Column1.razonSocialCli\", \"Column1.codigCondiPago\", \"Column1.perceIBr_CliTra\", \"Column1.descrCondiPago\", \"Column1.descrCtroCosto\", \"Column1.codigListaPrec\", \"Column1.descrListaPrec\", \"Column1.codigVendedor\", \"Column1.nombreVendedor\", \"Column1.codConceOpe\", \"Column1.descrConceOpe\", \"Column1.codigoFlete\", \"Column1.razonSocialFlete\", \"Column1.codCtroCosto\", \"Column1.perceIBrPes_CliTra\"}),\r\n    #\"Filas filtradas\" = Table.SelectRows(#\"Se expandió Column1\", each ([Column1.codig_Emp] = 1)),\r\n    #\"Columnas quitadas\" = Table.RemoveColumns(#\"Filas filtradas\",{\"Column1.codig_Emp\", \"Column1.descr_Emp\", \"Column1.netoMda2_CliTra\", \"Column1.netoMda3_CliTra\", \"Column1.netoMda4_CliTra\", \"Column1.dto1_CliTra\", \"Column1.dto2_CliTra\", \"Column1.dto3_CliTra\", \"Column1.dto4_CliTra\", \"Column1.porceRec_CliTra\", \"Column1.descuento_CliTra\", \"Column1.descuentoPes_CliTra\", \"Column1.recargo_CliTra\", \"Column1.recargoPes_CliTra\", \"Column1.ivA_CliTra\", \"Column1.ivaPes_CliTra\", \"Column1.perceIva_CliTra\", \"Column1.perceIvaPes_CliTra\", \"Column1.cotizaOper\", \"Column1.nroMonedaOper\", \"Column1.nombreCliSucu\"}),\r\n    #\"Tipo cambiado\" = Table.TransformColumnTypes(#\"Columnas quitadas\",{{\"Column1.fecha_CliTra\", type datetime}}),\r\n    #\"Tipo cambiado1\" = Table.TransformColumnTypes(#\"Tipo cambiado\",{{\"Column1.fecha_CliTra\", type date}}),\r\n    #\"Columnas quitadas1\" = Table.RemoveColumns(#\"Tipo cambiado1\",{\"Column1.nroPreimpre_CliTra\", \"Column1.perceIBr_CliTra\", \"Column1.descrCtroCosto\", \"Column1.codigListaPrec\", \"Column1.descrListaPrec\", \"Column1.codigVendedor\", \"Column1.codConceOpe\", \"Column1.descrConceOpe\", \"Column1.codigoFlete\", \"Column1.razonSocialFlete\", \"Column1.codCtroCosto\", \"Column1.perceIBrPes_CliTra\"}),\r\n    #\"Columnas reordenadas\" = Table.ReorderColumns(#\"Columnas quitadas1\",{\"Column1.fecha_CliTra\", \"Column1.regis_CliTra\", \"Column1.nroComprob_CliTra\", \"Column1.signoCpbte\", \"Column1.descripcionCpbte\", \"Column1.monedaOper\", \"Column1.netoPes_CliTra\", \"Column1.netoMda1_CliTra\", \"Column1.codigoCli\", \"Column1.razonSocialCli\", \"Column1.nombreVendedor\", \"Column1.codigCondiPago\", \"Column1.descrCondiPago\"}),\r\n    #\"Columnas con nombre cambiado\" = Table.RenameColumns(#\"Columnas reordenadas\",{{\"Column1.fecha_CliTra\", \"fc.fecha\"}, {\"Column1.regis_CliTra\", \"idFcCab\"}, {\"Column1.nroComprob_CliTra\", \"numFc\"}, {\"Column1.signoCpbte\", \"signo\"}, {\"Column1.descripcionCpbte\", \"tipoFc\"}, {\"Column1.monedaOper\", \"moneda\"}, {\"Column1.netoPes_CliTra\", \"finalPesos\"}, {\"Column1.netoMda1_CliTra\", \"finalUSD\"}, {\"Column1.codigoCli\", \"codCli\"}, {\"Column1.razonSocialCli\", \"razonSocial\"}, {\"Column1.nombreVendedor\", \"vendedor\"}, {\"Column1.codigCondiPago\", \"codConPgo\"}, {\"Column1.descrCondiPago\", \"CondPago\"}}),\r\n    #\"Filas filtradas1\" = Table.SelectRows(#\"Columnas con nombre cambiado\", each [fc.fecha] > #date(2022, 1, 1)),\r\n    #\"Filas ordenadas\" = Table.Sort(#\"Filas filtradas1\",{{\"fc.fecha\", Order.Descending}}),\r\n    #\"Tipo cambiado2\" = Table.TransformColumnTypes(#\"Filas ordenadas\",{{\"finalPesos\", Currency.Type}})\r\nin\r\n    #\"Tipo cambiado2\""
+    },
+    {
+      "name": "fcDet",
+      "endpoints": [
+        "https://sistemaisis.ar:8103/api/ISIS_VentasDetalle_VW"
+      ],
+      "formula": "let\r\n    Origen = FUENTE_API_SIN_CREDENCIALES,\n    #\"Converted to Table\" = Table.FromList(Source, Splitter.SplitByNothing(), null, null, ExtraValues.Error),\r\n    #\"Expanded Column1\" = Table.ExpandRecordColumn(#\"Converted to Table\", \"Column1\", {\"regis_CliTra\", \"mdaPrecioVta\", \"precio\", \"importe\", \"mdaPrecioCpra\", \"prCpra1MonedaCpra\", \"medidaPrincipal\", \"regis_MovArtiD\", \"codigoCli\", \"razonSocialCli\", \"fechaCpbteVenta\", \"descrCpbteVenta\", \"nroSistemaCpbteVenta\", \"fechaCpbteRemito\", \"nroSistemaCpbteRemito\", \"fechaCpbtePedido\", \"numeroCpbtePedido\", \"nombreVdorCpbtePedido\", \"codInternoArti\", \"descripcionArti\", \"cantidad1_MovArtiD\", \"prCosto2MonedaCpra\"}, {\"FcD.regis_CliTra\", \"FcD.mdaPrecioVta\", \"FcD.precio\", \"FcD.importe\", \"FcD.mdaPrecioCpra\", \"FcD.prCpra1MonedaCpra\", \"FcD.medidaPrincipal\", \"FcD.regis_MovArtiD\", \"FcD.codigoCli\", \"FcD.razonSocialCli\", \"FcD.fechaCpbteVenta\", \"FcD.descrCpbteVenta\", \"FcD.nroSistemaCpbteVenta\", \"FcD.fechaCpbteRemito\", \"FcD.nroSistemaCpbteRemito\", \"FcD.fechaCpbtePedido\", \"FcD.numeroCpbtePedido\", \"FcD.nombreVdorCpbtePedido\", \"FcD.codInternoArti\", \"FcD.descripcionArti\", \"FcD.cantidad1_MovArtiD\", \"FcD.prCosto2MonedaCpra\"}),\r\n    #\"Changed Type\" = Table.TransformColumnTypes(#\"Expanded Column1\",{{\"FcD.fechaCpbteVenta\", type datetime}}),\r\n    #\"Changed Type1\" = Table.TransformColumnTypes(#\"Changed Type\",{{\"FcD.fechaCpbteVenta\", type date}}),\r\n    #\"Filtered Rows\" = Table.SelectRows(#\"Changed Type1\", each [FcD.fechaCpbteVenta] > #date(2022, 01, 01)),\r\n    #\"Sorted Rows\" = Table.Sort(#\"Filtered Rows\",{{\"FcD.fechaCpbteVenta\", Order.Descending}}),\r\n    #\"Filas filtradas\" = Table.SelectRows(#\"Sorted Rows\", each [FcD.fechaCpbteVenta] > #date(2022, 1, 1)),\r\n    #\"Changed Type2\" = Table.TransformColumnTypes(#\"Filas filtradas\",{{\"FcD.fechaCpbteRemito\", type datetime}}),\r\n    #\"Changed Type3\" = Table.TransformColumnTypes(#\"Changed Type2\",{{\"FcD.fechaCpbteRemito\", type date}, {\"FcD.fechaCpbtePedido\", type datetime}}),\r\n    #\"Changed Type4\" = Table.TransformColumnTypes(#\"Changed Type3\",{{\"FcD.fechaCpbtePedido\", type date}}),\r\n    #\"Filas ordenadas\" = Table.Sort(#\"Changed Type4\",{{\"FcD.regis_CliTra\", Order.Descending}}),\r\n    #\"Columnas reordenadas\" = Table.ReorderColumns(#\"Filas ordenadas\",{\"FcD.fechaCpbteVenta\", \"FcD.regis_CliTra\", \"FcD.mdaPrecioVta\", \"FcD.precio\", \"FcD.importe\", \"FcD.mdaPrecioCpra\", \"FcD.prCpra1MonedaCpra\", \"FcD.medidaPrincipal\", \"FcD.regis_MovArtiD\", \"FcD.codigoCli\", \"FcD.razonSocialCli\", \"FcD.descrCpbteVenta\", \"FcD.nroSistemaCpbteVenta\", \"FcD.fechaCpbteRemito\", \"FcD.nroSistemaCpbteRemito\", \"FcD.fechaCpbtePedido\", \"FcD.numeroCpbtePedido\", \"FcD.nombreVdorCpbtePedido\", \"FcD.codInternoArti\", \"FcD.descripcionArti\", \"FcD.cantidad1_MovArtiD\", \"FcD.prCosto2MonedaCpra\"}),\r\n    #\"Columnas con nombre cambiado\" = Table.RenameColumns(#\"Columnas reordenadas\",{{\"FcD.fechaCpbteVenta\", \"fchaFc\"}, {\"FcD.regis_CliTra\", \"idFcCab\"}, {\"FcD.mdaPrecioVta\", \"mdaFcCab\"}, {\"FcD.precio\", \"precioUn\"}}),\r\n    #\"Columnas quitadas\" = Table.RemoveColumns(#\"Columnas con nombre cambiado\",{\"FcD.mdaPrecioCpra\", \"FcD.prCpra1MonedaCpra\"}),\r\n    #\"Columnas con nombre cambiado1\" = Table.RenameColumns(#\"Columnas quitadas\",{{\"FcD.medidaPrincipal\", \"medida\"}, {\"FcD.regis_MovArtiD\", \"idMovArti\"}, {\"FcD.codigoCli\", \"codCli\"}, {\"FcD.razonSocialCli\", \"rzonSoc\"}, {\"FcD.descrCpbteVenta\", \"descrCpbte\"}, {\"FcD.nroSistemaCpbteVenta\", \"nroFc\"}, {\"FcD.fechaCpbteRemito\", \"fchaRemito\"}, {\"FcD.nroSistemaCpbteRemito\", \"numCpbteRem\"}, {\"FcD.fechaCpbtePedido\", \"fchaCpbtePed\"}}),\r\n    #\"Columnas quitadas1\" = Table.RemoveColumns(#\"Columnas con nombre cambiado1\",{\"fchaCpbtePed\"}),\r\n    #\"Columnas con nombre cambiado2\" = Table.RenameColumns(#\"Columnas quitadas1\",{{\"FcD.numeroCpbtePedido\", \"numPed\"}, {\"FcD.nombreVdorCpbtePedido\", \"Vendedor\"}, {\"FcD.codInternoArti\", \"codArt\"}, {\"FcD.descripcionArti\", \"descArt\"}, {\"FcD.cantidad1_MovArtiD\", \"cant\"}}),\r\n    #\"Columnas quitadas2\" = Table.RemoveColumns(#\"Columnas con nombre cambiado2\",{\"FcD.prCosto2MonedaCpra\"}),\r\n    #\"Columnas reordenadas1\" = Table.ReorderColumns(#\"Columnas quitadas2\",{\"fchaFc\", \"idFcCab\", \"idMovArti\", \"mdaFcCab\", \"precioUn\", \"FcD.importe\", \"codCli\", \"rzonSoc\", \"descrCpbte\", \"nroFc\", \"fchaRemito\", \"numCpbteRem\", \"numPed\", \"Vendedor\", \"codArt\", \"descArt\", \"cant\", \"medida\"}),\r\n    #\"Tipo cambiado\" = Table.TransformColumnTypes(#\"Columnas reordenadas1\",{{\"cant\", type number}, {\"precioUn\", Currency.Type}, {\"FcD.importe\", Currency.Type}}),\r\n    #\"Columnas reordenadas2\" = Table.ReorderColumns(#\"Tipo cambiado\",{\"fchaFc\", \"descrCpbte\", \"nroFc\", \"idFcCab\", \"idMovArti\", \"codCli\", \"rzonSoc\", \"mdaFcCab\", \"FcD.importe\", \"fchaRemito\", \"numCpbteRem\", \"numPed\", \"Vendedor\", \"codArt\", \"descArt\", \"cant\", \"medida\", \"precioUn\"}),\r\n    #\"Filas ordenadas1\" = Table.Sort(#\"Columnas reordenadas2\",{{\"fchaFc\", Order.Descending}, {\"nroFc\", Order.Descending}, {\"idMovArti\", Order.Ascending}})\r\nin\r\n    #\"Filas ordenadas1\""
+    },
+    {
+      "name": "fcAnt",
+      "endpoints": [
+        "https://sistemaisis.ar:8103/api/ISIS_VentasDetalLeFCAnti_VW"
+      ],
+      "formula": "let\r\n    Origen = FUENTE_API_SIN_CREDENCIALES,\n    #\"Convertida en tabla\" = Table.FromList(Origen, Splitter.SplitByNothing(), null, null, ExtraValues.Error),\r\n    #\"Se expandió Column1\" = Table.ExpandRecordColumn(#\"Convertida en tabla\", \"Column1\", {\"regis_CliTra\", \"codigListaPrec\", \"descrListaPrec\", \"monedaLista\", \"cotizMdaLista\", \"tipoPrecio_FCAntiDet\", \"precioMdaLista\", \"precioMdaCabe\", \"dto1Item\", \"dto2Item\", \"dto3Item\", \"dto1_CliTra\", \"bonifPendienteSec\", \"dto2_CliTra\", \"dto4_CliTra\", \"precioMdaLista_Neto\", \"precioMdaCabe_Neto\", \"prCpra1Pesos_Arti\", \"prCpra2Pesos_Arti\", \"prCto1Pesos_Arti\", \"prCto2Pesos_Arti\", \"mdaPrecioCompra\", \"cotizPrecioCompra\", \"prCpra1Moneda_Arti\", \"prCpra2Moneda_Arti\", \"dto3_CliTra\", \"bonifEntregadaSec\", \"bonifFacturadaSec\", \"cantiPendienteSec\", \"regis_FCAntiDet\", \"codigoCli\", \"razonSocialCli\", \"fechaCpbteVenta\", \"descrCpbteVenta\", \"nroSistemaCpbteVenta\", \"nroPreimpreCpbteVenta\", \"fechaCpbtePedido\", \"descrCpbtePedido\", \"numeroCpbtePedido\", \"codigoVdorCpbtePedido\", \"nombreVdorCpbtePedido\", \"signoCpbte\", \"codInternoArti\", \"descripcionArti\", \"medidaPrincipal\", \"cantiFacturadaPri\", \"cantiEntregadaPri\", \"cantiPendientePri\", \"bonifFacturadaPri\", \"bonifEntregadaPri\", \"bonifPendientePri\", \"medidaSecundaria\", \"cantiFacturadaSec\", \"cantiEntregadaSec\", \"prCto1Moneda_Arti\", \"prCto2Moneda_Arti\"}, {\"Column1.regis_CliTra\", \"Column1.codigListaPrec\", \"Column1.descrListaPrec\", \"Column1.monedaLista\", \"Column1.cotizMdaLista\", \"Column1.tipoPrecio_FCAntiDet\", \"Column1.precioMdaLista\", \"Column1.precioMdaCabe\", \"Column1.dto1Item\", \"Column1.dto2Item\", \"Column1.dto3Item\", \"Column1.dto1_CliTra\", \"Column1.bonifPendienteSec\", \"Column1.dto2_CliTra\", \"Column1.dto4_CliTra\", \"Column1.precioMdaLista_Neto\", \"Column1.precioMdaCabe_Neto\", \"Column1.prCpra1Pesos_Arti\", \"Column1.prCpra2Pesos_Arti\", \"Column1.prCto1Pesos_Arti\", \"Column1.prCto2Pesos_Arti\", \"Column1.mdaPrecioCompra\", \"Column1.cotizPrecioCompra\", \"Column1.prCpra1Moneda_Arti\", \"Column1.prCpra2Moneda_Arti\", \"Column1.dto3_CliTra\", \"Column1.bonifEntregadaSec\", \"Column1.bonifFacturadaSec\", \"Column1.cantiPendienteSec\", \"Column1.regis_FCAntiDet\", \"Column1.codigoCli\", \"Column1.razonSocialCli\", \"Column1.fechaCpbteVenta\", \"Column1.descrCpbteVenta\", \"Column1.nroSistemaCpbteVenta\", \"Column1.nroPreimpreCpbteVenta\", \"Column1.fechaCpbtePedido\", \"Column1.descrCpbtePedido\", \"Column1.numeroCpbtePedido\", \"Column1.codigoVdorCpbtePedido\", \"Column1.nombreVdorCpbtePedido\", \"Column1.signoCpbte\", \"Column1.codInternoArti\", \"Column1.descripcionArti\", \"Column1.medidaPrincipal\", \"Column1.cantiFacturadaPri\", \"Column1.cantiEntregadaPri\", \"Column1.cantiPendientePri\", \"Column1.bonifFacturadaPri\", \"Column1.bonifEntregadaPri\", \"Column1.bonifPendientePri\", \"Column1.medidaSecundaria\", \"Column1.cantiFacturadaSec\", \"Column1.cantiEntregadaSec\", \"Column1.prCto1Moneda_Arti\", \"Column1.prCto2Moneda_Arti\"}),\r\n    #\"Columnas quitadas\" = Table.RemoveColumns(#\"Se expandió Column1\",{\"Column1.codigListaPrec\"}),\r\n    #\"Columnas con nombre cambiado\" = Table.RenameColumns(#\"Columnas quitadas\",{{\"Column1.cotizMdaLista\", \"cotizMda\"}, {\"Column1.monedaLista\", \"moneda\"}, {\"Column1.descrListaPrec\", \"ListaPrec\"}}),\r\n    #\"Columnas quitadas1\" = Table.RemoveColumns(#\"Columnas con nombre cambiado\",{\"Column1.tipoPrecio_FCAntiDet\", \"Column1.precioMdaLista\"}),\r\n    #\"Columnas con nombre cambiado1\" = Table.RenameColumns(#\"Columnas quitadas1\",{{\"Column1.precioMdaCabe\", \"precioMda\"}}),\r\n    #\"Columnas quitadas2\" = Table.RemoveColumns(#\"Columnas con nombre cambiado1\",{\"Column1.dto1Item\", \"Column1.dto2Item\", \"Column1.dto3Item\", \"Column1.dto1_CliTra\", \"Column1.bonifPendienteSec\", \"Column1.dto2_CliTra\", \"Column1.dto4_CliTra\", \"precioMda\"}),\r\n    #\"Columnas con nombre cambiado2\" = Table.RenameColumns(#\"Columnas quitadas2\",{{\"Column1.precioMdaLista_Neto\", \"preMdaList\"}}),\r\n    #\"Tipo cambiado\" = Table.TransformColumnTypes(#\"Columnas con nombre cambiado2\",{{\"cotizMda\", Currency.Type}, {\"preMdaList\", Currency.Type}}),\r\n    #\"Columnas quitadas3\" = Table.RemoveColumns(#\"Tipo cambiado\",{\"Column1.prCpra1Pesos_Arti\", \"Column1.prCpra2Pesos_Arti\", \"Column1.prCto1Pesos_Arti\", \"Column1.prCto2Pesos_Arti\", \"Column1.mdaPrecioCompra\", \"Column1.cotizPrecioCompra\", \"Column1.prCpra1Moneda_Arti\", \"Column1.prCpra2Moneda_Arti\", \"Column1.dto3_CliTra\", \"Column1.bonifEntregadaSec\", \"Column1.bonifFacturadaSec\", \"Column1.cantiPendienteSec\"}),\r\n    #\"Tipo cambiado1\" = Table.TransformColumnTypes(#\"Columnas quitadas3\",{{\"Column1.precioMdaCabe_Neto\", Currency.Type}}),\r\n    #\"Columnas con nombre cambiado3\" = Table.RenameColumns(#\"Tipo cambiado1\",{{\"Column1.razonSocialCli\", \"rzonSoc\"}, {\"Column1.codigoCli\", \"codCli\"}, {\"Column1.fechaCpbteVenta\", \"fchaFc\"}}),\r\n    #\"Tipo cambiado2\" = Table.TransformColumnTypes(#\"Columnas con nombre cambiado3\",{{\"fchaFc\", type datetime}}),\r\n    #\"Tipo cambiado3\" = Table.TransformColumnTypes(#\"Tipo cambiado2\",{{\"fchaFc\", type date}}),\r\n    #\"Filas filtradas\" = Table.SelectRows(#\"Tipo cambiado3\", each true),\r\n    #\"Columnas con nombre cambiado4\" = Table.RenameColumns(#\"Filas filtradas\",{{\"Column1.descrCpbteVenta\", \"descrCpbte\"}, {\"Column1.nroSistemaCpbteVenta\", \"nroCpbte\"}}),\r\n    #\"Columnas quitadas4\" = Table.RemoveColumns(#\"Columnas con nombre cambiado4\",{\"Column1.nroPreimpreCpbteVenta\", \"Column1.fechaCpbtePedido\", \"Column1.descrCpbtePedido\"}),\r\n    #\"Columnas con nombre cambiado5\" = Table.RenameColumns(#\"Columnas quitadas4\",{{\"Column1.numeroCpbtePedido\", \"numPed\"}}),\r\n    #\"Columnas quitadas5\" = Table.RemoveColumns(#\"Columnas con nombre cambiado5\",{\"Column1.codigoVdorCpbtePedido\"}),\r\n    #\"Columnas con nombre cambiado6\" = Table.RenameColumns(#\"Columnas quitadas5\",{{\"Column1.nombreVdorCpbtePedido\", \"vendedor\"}, {\"Column1.signoCpbte\", \"signo\"}, {\"Column1.codInternoArti\", \"codArt\"}, {\"Column1.medidaPrincipal\", \"medida\"}, {\"Column1.cantiFacturadaPri\", \"cant\"}}),\r\n    #\"Tipo cambiado4\" = Table.TransformColumnTypes(#\"Columnas con nombre cambiado6\",{{\"cant\", type number}}),\r\n    #\"Columnas quitadas6\" = Table.RemoveColumns(#\"Tipo cambiado4\",{\"Column1.prCto2Moneda_Arti\", \"Column1.cantiEntregadaPri\"}),\r\n    #\"Columnas con nombre cambiado7\" = Table.RenameColumns(#\"Columnas quitadas6\",{{\"Column1.cantiPendientePri\", \"cantiPend\"}, {\"Column1.descripcionArti\", \"descArt\"}}),\r\n    #\"Columnas quitadas7\" = Table.RemoveColumns(#\"Columnas con nombre cambiado7\",{\"Column1.bonifFacturadaPri\", \"Column1.bonifEntregadaPri\", \"Column1.bonifPendientePri\", \"Column1.medidaSecundaria\", \"Column1.cantiEntregadaSec\", \"Column1.cantiFacturadaSec\", \"Column1.prCto1Moneda_Arti\"}),\r\n    #\"Columnas con nombre cambiado8\" = Table.RenameColumns(#\"Columnas quitadas7\",{{\"Column1.precioMdaCabe_Neto\", \"precioCabeNeto\"}}),\r\n    #\"Columnas reordenadas\" = Table.ReorderColumns(#\"Columnas con nombre cambiado8\",{\"Column1.regis_FCAntiDet\", \"Column1.regis_CliTra\", \"fchaFc\", \"descrCpbte\", \"signo\", \"nroCpbte\", \"numPed\", \"moneda\", \"cotizMda\", \"ListaPrec\", \"precioCabeNeto\", \"codCli\", \"rzonSoc\", \"vendedor\", \"codArt\", \"descArt\", \"preMdaList\", \"cant\", \"medida\", \"cantiPend\"}),\r\n    #\"Filas filtradas1\" = Table.SelectRows(#\"Columnas reordenadas\", each [fchaFc] > #date(2022, 2, 1)),\r\n    #\"Columnas con nombre cambiado9\" = Table.RenameColumns(#\"Filas filtradas1\",{{\"Column1.regis_CliTra\", \"idFcCab\"}, {\"Column1.regis_FCAntiDet\", \"idFcAntLin\"}})\r\nin\r\n    #\"Columnas con nombre cambiado9\""
+    },
+    {
+      "name": "fcCom",
+      "endpoints": [],
+      "formula": "let\r\n    Origen = Table.NestedJoin(fcCab, {\"idFcCab\", \"numFc\"}, fcDet, {\"idFcCab\", \"nroFc\"}, \"fcDet\", JoinKind.LeftOuter),\r\n    #\"Se expandió fcDet\" = Table.ExpandTableColumn(Origen, \"fcDet\", {\"fchaFc\", \"descrCpbte\", \"nroFc\", \"idFcCab\", \"idMovArti\", \"codCli\", \"rzonSoc\", \"mdaFcCab\", \"FcD.importe\", \"fchaRemito\", \"numCpbteRem\", \"numPed\", \"Vendedor\", \"codArt\", \"descArt\", \"cant\", \"medida\", \"precioUn\"}, {\"fcDet.fchaFc\", \"fcDet.descrCpbte\", \"fcDet.nroFc\", \"fcDet.idFcCab\", \"fcDet.idMovArti\", \"fcDet.codCli\", \"fcDet.rzonSoc\", \"fcDet.mdaFcCab\", \"fcDet.FcD.importe\", \"fcDet.fchaRemito\", \"fcDet.numCpbteRem\", \"fcDet.numPed\", \"fcDet.Vendedor\", \"fcDet.codArt\", \"fcDet.descArt\", \"fcDet.cant\", \"fcDet.medida\", \"fcDet.precioUn\"}),\r\n    #\"Columnas quitadas\" = Table.RemoveColumns(#\"Se expandió fcDet\",{\"fcDet.fchaFc\", \"fcDet.descrCpbte\", \"fcDet.nroFc\", \"fcDet.idFcCab\", \"fcDet.codCli\", \"fcDet.rzonSoc\", \"fcDet.mdaFcCab\", \"fcDet.fchaRemito\", \"fcDet.Vendedor\"}),\r\n    #\"Columnas reordenadas\" = Table.ReorderColumns(#\"Columnas quitadas\",{\"fc.fecha\", \"idFcCab\", \"numFc\", \"signo\", \"tipoFc\", \"moneda\", \"finalPesos\", \"finalUSD\", \"vendedor\", \"codCli\", \"razonSocial\", \"codConPgo\", \"CondPago\", \"fcDet.idMovArti\", \"fcDet.FcD.importe\", \"fcDet.numCpbteRem\", \"fcDet.numPed\", \"fcDet.codArt\", \"fcDet.descArt\", \"fcDet.cant\", \"fcDet.medida\", \"fcDet.precioUn\"}),\r\n    #\"Filas ordenadas\" = Table.Sort(#\"Columnas reordenadas\",{{\"fc.fecha\", Order.Descending}, {\"idFcCab\", Order.Descending}}),\r\n    #\"Tipo cambiado\" = Table.TransformColumnTypes(#\"Filas ordenadas\",{{\"finalUSD\", Currency.Type}})\r\nin\r\n    #\"Tipo cambiado\""
+    },
+    {
+      "name": "remCab",
+      "endpoints": [
+        "https://sistemaisis.ar:8103/api/ISIS_RemitoClienteCabecera_VW"
+      ],
+      "formula": "let\r\n    Origen = FUENTE_API_SIN_CREDENCIALES,\n    #\"Convertida en tabla\" = Table.FromList(Origen, Splitter.SplitByNothing(), null, null, ExtraValues.Error),\r\n    #\"Se expandió Column1\" = Table.ExpandRecordColumn(#\"Convertida en tabla\", \"Column1\", {\"regis_RtoCliCab\", \"regis_PedCliCab\", \"codig_Emp\", \"descr_Emp\", \"descripcion\", \"nroComprob_RtoCliCab\", \"nroPreimpre_RtoCliCab\", \"fecha_RtoCliCab\", \"codigoCli\", \"razonSocialBusCli\", \"codigCondiPago\", \"descrCondiPago\", \"codCtroCosto\", \"descrCtroCosto\", \"codigListaPrec\", \"descrListaPrec\", \"codigVendedor\", \"nombreVendedor\", \"codConceOpe\", \"descrConceOpe\", \"codigoFlete\", \"razonSocialFlete\", \"lugarEntrega\", \"mdaOper_RtoCliCab\", \"monedaOper\", \"cotizaOper\", \"moneda1\", \"cotizMda1_RtoCliCab\", \"moneda2\", \"cotizMda2_RtoCliCab\", \"moneda3\", \"cotizMda3_RtoCliCab\", \"moneda4\", \"cotizMda4_RtoCliCab\", \"dto1_RtoCliCab\", \"dto2_RtoCliCab\", \"dto3_RtoCliCab\", \"dto4_RtoCliCab\", \"valorDecla_RtoCliCab\", \"leye1_RtoCliCab\", \"leye2_RtoCliCab\", \"regis_FCAntiCab\"}, {\"Column1.regis_RtoCliCab\", \"Column1.regis_PedCliCab\", \"Column1.codig_Emp\", \"Column1.descr_Emp\", \"Column1.descripcion\", \"Column1.nroComprob_RtoCliCab\", \"Column1.nroPreimpre_RtoCliCab\", \"Column1.fecha_RtoCliCab\", \"Column1.codigoCli\", \"Column1.razonSocialBusCli\", \"Column1.codigCondiPago\", \"Column1.descrCondiPago\", \"Column1.codCtroCosto\", \"Column1.descrCtroCosto\", \"Column1.codigListaPrec\", \"Column1.descrListaPrec\", \"Column1.codigVendedor\", \"Column1.nombreVendedor\", \"Column1.codConceOpe\", \"Column1.descrConceOpe\", \"Column1.codigoFlete\", \"Column1.razonSocialFlete\", \"Column1.lugarEntrega\", \"Column1.mdaOper_RtoCliCab\", \"Column1.monedaOper\", \"Column1.cotizaOper\", \"Column1.moneda1\", \"Column1.cotizMda1_RtoCliCab\", \"Column1.moneda2\", \"Column1.cotizMda2_RtoCliCab\", \"Column1.moneda3\", \"Column1.cotizMda3_RtoCliCab\", \"Column1.moneda4\", \"Column1.cotizMda4_RtoCliCab\", \"Column1.dto1_RtoCliCab\", \"Column1.dto2_RtoCliCab\", \"Column1.dto3_RtoCliCab\", \"Column1.dto4_RtoCliCab\", \"Column1.valorDecla_RtoCliCab\", \"Column1.leye1_RtoCliCab\", \"Column1.leye2_RtoCliCab\", \"Column1.regis_FCAntiCab\"}),\r\n    #\"Filas ordenadas\" = Table.Sort(#\"Se expandió Column1\",{{\"Column1.regis_RtoCliCab\", Order.Descending}}),\r\n    #\"Columnas con nombre cambiado\" = Table.RenameColumns(#\"Filas ordenadas\",{{\"Column1.regis_RtoCliCab\", \"idRtoCliCab\"}, {\"Column1.regis_PedCliCab\", \"idPedCliCab\"}}),\r\n    #\"Filas filtradas\" = Table.SelectRows(#\"Columnas con nombre cambiado\", each [Column1.codig_Emp] = 1),\r\n    #\"Columnas quitadas\" = Table.RemoveColumns(#\"Filas filtradas\",{\"Column1.codig_Emp\", \"Column1.descr_Emp\"}),\r\n    #\"Filas filtradas1\" = Table.SelectRows(#\"Columnas quitadas\", each [Column1.descripcion] = \"Remito Vta.\"),\r\n    #\"Columnas quitadas1\" = Table.RemoveColumns(#\"Filas filtradas1\",{\"Column1.descripcion\"}),\r\n    #\"Columnas con nombre cambiado1\" = Table.RenameColumns(#\"Columnas quitadas1\",{{\"Column1.nroComprob_RtoCliCab\", \"numRto\"}}),\r\n    #\"Columnas quitadas2\" = Table.RemoveColumns(#\"Columnas con nombre cambiado1\",{\"Column1.nroPreimpre_RtoCliCab\"}),\r\n    #\"Tipo cambiado\" = Table.TransformColumnTypes(#\"Columnas quitadas2\",{{\"Column1.fecha_RtoCliCab\", type datetime}}),\r\n    #\"Tipo cambiado1\" = Table.TransformColumnTypes(#\"Tipo cambiado\",{{\"Column1.fecha_RtoCliCab\", type date}}),\r\n    #\"Columnas con nombre cambiado2\" = Table.RenameColumns(#\"Tipo cambiado1\",{{\"Column1.fecha_RtoCliCab\", \"fchRto\"}, {\"Column1.codigoCli\", \"codCli\"}, {\"Column1.razonSocialBusCli\", \"razSocBus\"}, {\"Column1.codigCondiPago\", \"codCondPgo\"}, {\"Column1.descrCondiPago\", \"condPg\"}}),\r\n    #\"Columnas quitadas3\" = Table.RemoveColumns(#\"Columnas con nombre cambiado2\",{\"Column1.codCtroCosto\", \"Column1.descrCtroCosto\"}),\r\n    #\"Columnas con nombre cambiado3\" = Table.RenameColumns(#\"Columnas quitadas3\",{{\"Column1.codigListaPrec\", \"codListPrec\"}}),\r\n    #\"Columnas quitadas4\" = Table.RemoveColumns(#\"Columnas con nombre cambiado3\",{\"Column1.descrListaPrec\", \"Column1.codigVendedor\"}),\r\n    #\"Columnas con nombre cambiado4\" = Table.RenameColumns(#\"Columnas quitadas4\",{{\"Column1.nombreVendedor\", \"nomVend\"}}),\r\n    #\"Columnas quitadas5\" = Table.RemoveColumns(#\"Columnas con nombre cambiado4\",{\"Column1.codConceOpe\", \"Column1.descrConceOpe\", \"Column1.mdaOper_RtoCliCab\"}),\r\n    #\"Columnas con nombre cambiado5\" = Table.RenameColumns(#\"Columnas quitadas5\",{{\"Column1.monedaOper\", \"moneda\"}}),\r\n    #\"Columnas quitadas6\" = Table.RemoveColumns(#\"Columnas con nombre cambiado5\",{\"Column1.moneda1\", \"Column1.cotizMda1_RtoCliCab\", \"Column1.moneda2\", \"Column1.cotizMda2_RtoCliCab\", \"Column1.moneda3\", \"Column1.cotizMda3_RtoCliCab\", \"Column1.moneda4\", \"Column1.cotizMda4_RtoCliCab\", \"Column1.dto1_RtoCliCab\", \"Column1.dto2_RtoCliCab\", \"Column1.dto3_RtoCliCab\", \"Column1.dto4_RtoCliCab\", \"Column1.valorDecla_RtoCliCab\", \"Column1.leye1_RtoCliCab\", \"Column1.leye2_RtoCliCab\"}),\r\n    #\"Tipo cambiado2\" = Table.TransformColumnTypes(#\"Columnas quitadas6\",{{\"Column1.cotizaOper\", Currency.Type}}),\r\n    #\"Columnas con nombre cambiado6\" = Table.RenameColumns(#\"Tipo cambiado2\",{{\"Column1.regis_FCAntiCab\", \"idFCAntCab\"}, {\"Column1.cotizaOper\", \"cotDol\"}}),\r\n    #\"Filas filtradas2\" = Table.SelectRows(#\"Columnas con nombre cambiado6\", each [fchRto] > #date(2021, 12, 31)),\r\n    #\"Filas ordenadas1\" = Table.Sort(#\"Filas filtradas2\",{{\"numRto\", Order.Descending}})\r\nin\r\n    #\"Filas ordenadas1\""
+    },
+    {
+      "name": "remDet",
+      "endpoints": [
+        "https://sistemaisis.ar:8103/api/ISIS_RemitoClienteDetalle_VW"
+      ],
+      "formula": "let\r\n    Origen = FUENTE_API_SIN_CREDENCIALES,\n    #\"Convertida en tabla\" = Table.FromList(Origen, Splitter.SplitByNothing(), null, null, ExtraValues.Error),\r\n    #\"Se expandió Column1\" = Table.ExpandRecordColumn(#\"Convertida en tabla\", \"Column1\", {\"regis_RtoCliDet\", \"regis_RtoCliCab\", \"codDeposito\", \"descrDeposito\", \"codInternoArti\", \"descripcion_RtoCliDet\", \"canRto1_RtoCliDet\", \"canRto2_RtoCliDet\", \"bonRto1_RtoCliDet\", \"bonRto2_RtoCliDet\", \"codigListaPrec\", \"descrListaPrec\", \"descr_Mda\", \"cotiz_Mda\", \"tipoPrecio_RtoCliDet\", \"dto1_RtoCliDet\", \"dto2_RtoCliDet\", \"dto3_RtoCliDet\", \"precioCab_RtoCliDet\", \"importe_RtoCliDet\", \"canFac1_RtoCliDet\", \"canFac2_RtoCliDet\", \"bonFac1_RtoCliDet\", \"bonFac2_RtoCliDet\", \"regis_FCAntiDet\"}, {\"Column1.regis_RtoCliDet\", \"Column1.regis_RtoCliCab\", \"Column1.codDeposito\", \"Column1.descrDeposito\", \"Column1.codInternoArti\", \"Column1.descripcion_RtoCliDet\", \"Column1.canRto1_RtoCliDet\", \"Column1.canRto2_RtoCliDet\", \"Column1.bonRto1_RtoCliDet\", \"Column1.bonRto2_RtoCliDet\", \"Column1.codigListaPrec\", \"Column1.descrListaPrec\", \"Column1.descr_Mda\", \"Column1.cotiz_Mda\", \"Column1.tipoPrecio_RtoCliDet\", \"Column1.dto1_RtoCliDet\", \"Column1.dto2_RtoCliDet\", \"Column1.dto3_RtoCliDet\", \"Column1.precioCab_RtoCliDet\", \"Column1.importe_RtoCliDet\", \"Column1.canFac1_RtoCliDet\", \"Column1.canFac2_RtoCliDet\", \"Column1.bonFac1_RtoCliDet\", \"Column1.bonFac2_RtoCliDet\", \"Column1.regis_FCAntiDet\"}),\r\n    #\"Filas ordenadas\" = Table.Sort(#\"Se expandió Column1\",{{\"Column1.regis_RtoCliDet\", Order.Descending}}),\r\n    #\"Columnas con nombre cambiado\" = Table.RenameColumns(#\"Filas ordenadas\",{{\"Column1.regis_RtoCliDet\", \"idRtoCliDet\"}, {\"Column1.regis_RtoCliCab\", \"idRtoCliCab\"}}),\r\n    #\"Columnas quitadas\" = Table.RemoveColumns(#\"Columnas con nombre cambiado\",{\"Column1.codDeposito\", \"Column1.descrDeposito\"}),\r\n    #\"Columnas con nombre cambiado1\" = Table.RenameColumns(#\"Columnas quitadas\",{{\"Column1.codInternoArti\", \"codArt\"}, {\"Column1.descripcion_RtoCliDet\", \"descArt\"}, {\"Column1.canRto1_RtoCliDet\", \"cantRem\"}}),\r\n    #\"Columnas quitadas1\" = Table.RemoveColumns(#\"Columnas con nombre cambiado1\",{\"Column1.canRto2_RtoCliDet\", \"Column1.bonRto1_RtoCliDet\", \"Column1.bonRto2_RtoCliDet\"}),\r\n    #\"Columnas con nombre cambiado2\" = Table.RenameColumns(#\"Columnas quitadas1\",{{\"Column1.codigListaPrec\", \"codListPre\"}}),\r\n    #\"Columnas quitadas2\" = Table.RemoveColumns(#\"Columnas con nombre cambiado2\",{\"Column1.descrListaPrec\"}),\r\n    #\"Columnas con nombre cambiado3\" = Table.RenameColumns(#\"Columnas quitadas2\",{{\"Column1.descr_Mda\", \"moneda\"}}),\r\n    #\"Tipo cambiado\" = Table.TransformColumnTypes(#\"Columnas con nombre cambiado3\",{{\"Column1.cotiz_Mda\", Currency.Type}}),\r\n    #\"Columnas con nombre cambiado4\" = Table.RenameColumns(#\"Tipo cambiado\",{{\"Column1.cotiz_Mda\", \"cotMoneda\"}}),\r\n    #\"Columnas quitadas3\" = Table.RemoveColumns(#\"Columnas con nombre cambiado4\",{\"Column1.tipoPrecio_RtoCliDet\", \"Column1.dto1_RtoCliDet\", \"Column1.dto2_RtoCliDet\", \"Column1.dto3_RtoCliDet\"}),\r\n    #\"Columnas con nombre cambiado5\" = Table.RenameColumns(#\"Columnas quitadas3\",{{\"Column1.precioCab_RtoCliDet\", \"precioUnitario\"}, {\"Column1.importe_RtoCliDet\", \"Subtotal\"}, {\"Column1.canFac1_RtoCliDet\", \"cantFac\"}}),\r\n    #\"Columnas quitadas4\" = Table.RemoveColumns(#\"Columnas con nombre cambiado5\",{\"Column1.canFac2_RtoCliDet\", \"Column1.bonFac1_RtoCliDet\", \"Column1.bonFac2_RtoCliDet\"}),\r\n    #\"Columnas con nombre cambiado6\" = Table.RenameColumns(#\"Columnas quitadas4\",{{\"Column1.regis_FCAntiDet\", \"idFCAntiDet\"}}),\r\n    #\"Filas ordenadas1\" = Table.Sort(#\"Columnas con nombre cambiado6\",{{\"idRtoCliDet\", Order.Descending}})\r\nin\r\n    #\"Filas ordenadas1\""
+    },
+    {
+      "name": "remCom",
+      "endpoints": [],
+      "formula": "let\r\n    Origen = Table.NestedJoin(remCab, {\"idRtoCliCab\"}, remDet, {\"idRtoCliCab\"}, \"remDet\", JoinKind.LeftOuter),\r\n    #\"Se expandió remDet\" = Table.ExpandTableColumn(Origen, \"remDet\", {\"idRtoCliDet\", \"codArt\", \"descArt\", \"cantRem\", \"codListPre\", \"moneda\", \"cotMoneda\", \"precioUnitario\", \"Subtotal\", \"cantFac\", \"idFCAntiDet\"}, {\"remDet.idRtoCliDet\", \"remDet.codArt\", \"remDet.descArt\", \"remDet.cantRem\", \"remDet.codListPre\", \"remDet.moneda\", \"remDet.cotMoneda\", \"remDet.precioUnitario\", \"remDet.Subtotal\", \"remDet.cantFac\", \"remDet.idFCAntiDet\"}),\r\n    #\"Filas ordenadas\" = Table.Sort(#\"Se expandió remDet\",{{\"idRtoCliCab\", Order.Descending}}),\r\n    #\"Columnas reordenadas\" = Table.ReorderColumns(#\"Filas ordenadas\",{\"idRtoCliCab\", \"idPedCliCab\", \"remDet.idFCAntiDet\", \"numRto\", \"fchRto\", \"codCli\", \"razSocBus\", \"codCondPgo\", \"condPg\", \"codListPrec\", \"nomVend\", \"Column1.codigoFlete\", \"Column1.razonSocialFlete\", \"Column1.lugarEntrega\", \"moneda\", \"cotDol\", \"idFCAntCab\", \"remDet.idRtoCliDet\", \"remDet.codArt\", \"remDet.descArt\", \"remDet.cantRem\", \"remDet.codListPre\", \"remDet.moneda\", \"remDet.cotMoneda\", \"remDet.precioUnitario\", \"remDet.Subtotal\", \"remDet.cantFac\"})\r\nin\r\n    #\"Columnas reordenadas\""
+    },
+    {
+      "name": "rcBase",
+      "endpoints": [
+        "https://sistemaisis.ar:8103/api/ISIS_OperacionesClienteImputacion_VW"
+      ],
+      "formula": "let\r\n    Origen = FUENTE_API_SIN_CREDENCIALES,\n    #\"Convertida en tabla\" = Table.FromList(Origen, Splitter.SplitByNothing(), null, null, ExtraValues.Error),\r\n    #\"Se expandió Column1\" = Table.ExpandRecordColumn(#\"Convertida en tabla\", \"Column1\", {\"regis_ImpuCli\", \"codig_Emp\", \"descr_Emp\", \"codigoCli\", \"razonSocialBusCli\", \"razonSocialCli\", \"regTraFC_ImpuCli\", \"fechaComprobDeb\", \"desComprobDeb\", \"nroComprobDeb\", \"totalComproDeb\", \"regTraRC_ImpuCli\", \"fechaComprobCred\", \"desComprobCred\", \"nroComprobCred\", \"totalComproCred\"}, {\"Column1.regis_ImpuCli\", \"Column1.codig_Emp\", \"Column1.descr_Emp\", \"Column1.codigoCli\", \"Column1.razonSocialBusCli\", \"Column1.razonSocialCli\", \"Column1.regTraFC_ImpuCli\", \"Column1.fechaComprobDeb\", \"Column1.desComprobDeb\", \"Column1.nroComprobDeb\", \"Column1.totalComproDeb\", \"Column1.regTraRC_ImpuCli\", \"Column1.fechaComprobCred\", \"Column1.desComprobCred\", \"Column1.nroComprobCred\", \"Column1.totalComproCred\"}),\r\n    #\"Tipo cambiado\" = Table.TransformColumnTypes(#\"Se expandió Column1\",{{\"Column1.fechaComprobCred\", type datetime}, {\"Column1.fechaComprobDeb\", type datetime}}),\r\n    #\"Tipo cambiado1\" = Table.TransformColumnTypes(#\"Tipo cambiado\",{{\"Column1.fechaComprobCred\", type date}, {\"Column1.fechaComprobDeb\", type date}, {\"Column1.totalComproDeb\", Currency.Type}, {\"Column1.totalComproCred\", Currency.Type}}),\r\n    #\"Filas filtradas\" = Table.SelectRows(#\"Tipo cambiado1\", each ([Column1.desComprobCred] = \"Recibo\") and ([Column1.codig_Emp] = 1)),\r\n    #\"Columnas quitadas\" = Table.RemoveColumns(#\"Filas filtradas\",{\"Column1.codig_Emp\", \"Column1.descr_Emp\", \"Column1.razonSocialCli\"}),\r\n    #\"Columnas reordenadas\" = Table.ReorderColumns(#\"Columnas quitadas\",{\"Column1.regis_ImpuCli\", \"Column1.regTraFC_ImpuCli\", \"Column1.regTraRC_ImpuCli\", \"Column1.codigoCli\", \"Column1.razonSocialBusCli\", \"Column1.fechaComprobDeb\", \"Column1.desComprobDeb\", \"Column1.nroComprobDeb\", \"Column1.totalComproDeb\", \"Column1.fechaComprobCred\", \"Column1.desComprobCred\", \"Column1.nroComprobCred\", \"Column1.totalComproCred\"}),\r\n    #\"Filas ordenadas\" = Table.Sort(#\"Columnas reordenadas\",{{\"Column1.regis_ImpuCli\", Order.Descending}}),\r\n    #\"Columnas con nombre cambiado\" = Table.RenameColumns(#\"Filas ordenadas\",{{\"Column1.regis_ImpuCli\", \"idImpuCli\"}, {\"Column1.regTraFC_ImpuCli\", \"idRegTraFC_ImpuCli\"}, {\"Column1.regTraRC_ImpuCli\", \"idRegTraRC_ImpuCli\"}, {\"Column1.codigoCli\", \"codCli\"}, {\"Column1.razonSocialBusCli\", \"razSocBus\"}, {\"Column1.fechaComprobDeb\", \"fechaComprobDeb\"}, {\"Column1.desComprobDeb\", \"desComprobDeb\"}, {\"Column1.nroComprobDeb\", \"nroComprobDeb\"}, {\"Column1.totalComproDeb\", \"totalComproDeb\"}, {\"Column1.fechaComprobCred\", \"fechaComprobCred\"}, {\"Column1.desComprobCred\", \"desComprobCred\"}, {\"Column1.nroComprobCred\", \"ComprobCred\"}, {\"Column1.totalComproCred\", \"totalComproCred\"}}),\r\n    #\"Filas filtradas1\" = Table.SelectRows(#\"Columnas con nombre cambiado\", each [fechaComprobDeb] > #date(2021, 12, 31))\r\nin\r\n \r\n    #\"Filas filtradas1\""
+    }
+  ],
+  "tables": [
+    {
+      "sheet": "artBase",
+      "name": "artBase",
+      "rows": 1093,
+      "columns": [
+        "codArt",
+        "descArt",
+        "descBusArt",
+        "idArt",
+        "nivelArt1",
+        "nivelArt2",
+        "nivelArt3",
+        "nivelArt4",
+        "nivelArt5"
+      ]
+    },
+    {
+      "sheet": "artCont",
+      "name": "artCont",
+      "rows": 1093,
+      "columns": [
+        "codArt",
+        "descArt",
+        "idArt",
+        "tipoArt",
+        "factArt",
+        "despArt",
+        "loteArt",
+        "ivaArt",
+        "ventaArt",
+        "compraArt"
+      ]
+    },
+    {
+      "sheet": "stckBase",
+      "name": "stckBase",
+      "rows": 4856,
+      "columns": [
+        "codArt",
+        "descArt",
+        "stokU1",
+        "stckU2"
+      ]
+    },
+    {
+      "sheet": "Divisa",
+      "name": "Divisa",
+      "rows": 2086,
+      "columns": [
+        "div.fecha",
+        "div.venta"
+      ]
+    },
+    {
+      "sheet": "ProvBase",
+      "name": "ProvBase",
+      "rows": 777,
+      "columns": [
+        "idProv",
+        "codProv",
+        "cuit",
+        "rzonSocBus",
+        "rzonSoc",
+        "fchaAltaProv",
+        "fchaUltFac",
+        "fechaUltPago",
+        "condPago",
+        "moneda"
+      ]
+    },
+    {
+      "sheet": "artStck",
+      "name": "artStck",
+      "rows": 1093,
+      "columns": [
+        "codArt",
+        "descArt",
+        "descBusArt",
+        "idArt",
+        "nivelArt1",
+        "nivelArt2",
+        "nivelArt3",
+        "nivelArt4",
+        "nivelArt5",
+        "stckBase.stokU1",
+        "stckBase.stckU2"
+      ]
+    },
+    {
+      "sheet": "chqCart",
+      "name": "chqCart",
+      "rows": 17,
+      "columns": [
+        "Columna1",
+        "Columna2",
+        "Columna3",
+        "Columna4",
+        "Columna5",
+        "Columna6",
+        "Columna7",
+        "Columna8",
+        "Columna9",
+        "Columna10"
+      ]
+    },
+    {
+      "sheet": "condPgo",
+      "name": "condPgo",
+      "rows": 35,
+      "columns": [
+        "condPgo",
+        "desCondPgo",
+        "activo"
+      ]
+    },
+    {
+      "sheet": "cliBase",
+      "name": "cliBase",
+      "rows": 1900,
+      "columns": [
+        "codCli",
+        "rzonSoc",
+        "rzonSocBus",
+        "cuitcli",
+        "moneda",
+        "vendCli",
+        "listaPr",
+        "condPg",
+        "condPgD",
+        "codProv",
+        "fechaAltaCli",
+        "fechaUltimaFacCli",
+        "ctaCte",
+        "dias",
+        "formaPago",
+        "ctrlMda"
+      ]
+    },
+    {
+      "sheet": "pedDet",
+      "name": "pedDet",
+      "rows": 12531,
+      "columns": [
+        "idPedCab",
+        "idPedDet",
+        "codArt",
+        "descArt",
+        "unidad",
+        "cant",
+        "pcioUnit"
+      ]
+    },
+    {
+      "sheet": "cotCom",
+      "name": "cotCom",
+      "rows": 29081,
+      "columns": [
+        "idCotCab",
+        "numCot",
+        "fchCot",
+        "codClie",
+        "rzSoc",
+        "vendedor",
+        "codPcio",
+        "moneda",
+        "cotMda",
+        "subtotal",
+        "total",
+        "cotDet.codArt",
+        "cotDet.descArt",
+        "cotDet.cant",
+        "cotDet.precio",
+        "cotDet.subtotal"
+      ]
+    },
+    {
+      "sheet": "cotDet",
+      "name": "cotDet",
+      "rows": 29089,
+      "columns": [
+        "idCotCab",
+        "codArt",
+        "descArt",
+        "cant",
+        "precio",
+        "subtotal"
+      ]
+    },
+    {
+      "sheet": "cotCab",
+      "name": "cotCab",
+      "rows": 11001,
+      "columns": [
+        "idCotCab",
+        "numCot",
+        "fchCot",
+        "codClie",
+        "rzSoc",
+        "vendedor",
+        "codPcio",
+        "moneda",
+        "cotMda",
+        "subtotal",
+        "total",
+        "Ajustar",
+        "cotDol",
+        "SubtAjus"
+      ]
+    },
+    {
+      "sheet": "pedCom",
+      "name": "pedCom",
+      "rows": 12377,
+      "columns": [
+        "numPed",
+        "idPedCab",
+        "pedLine",
+        "fchaPed",
+        "vend",
+        "codCli",
+        "rzonSoc",
+        "moneda",
+        "cot",
+        "subtot",
+        "total",
+        "codPre",
+        "codPgo",
+        "desPgo",
+        "numCot",
+        "idPedDet",
+        "codArt",
+        "descArt",
+        "unidad",
+        "cant",
+        "pcioUnit"
+      ]
+    },
+    {
+      "sheet": "pedCab",
+      "name": "pedCab",
+      "rows": 6852,
+      "columns": [
+        "numPed",
+        "idPedCab",
+        "fchaPed",
+        "vend",
+        "codCli",
+        "rzonSoc",
+        "moneda",
+        "cot",
+        "subtot",
+        "total",
+        "codPre",
+        "codPgo",
+        "desPgo",
+        "numCot"
+      ]
+    },
+    {
+      "sheet": "rcBase",
+      "name": "rcBase",
+      "rows": 8621,
+      "columns": [
+        "idImpuCli",
+        "idRegTraFC_ImpuCli",
+        "idRegTraRC_ImpuCli",
+        "codCli",
+        "razSocBus",
+        "fechaComprobDeb",
+        "desComprobDeb",
+        "nroComprobDeb",
+        "totalComproDeb",
+        "fechaComprobCred",
+        "desComprobCred",
+        "ComprobCred",
+        "totalComproCred"
+      ]
+    },
+    {
+      "sheet": "fcCom",
+      "name": "fcCom",
+      "rows": 14168,
+      "columns": [
+        "fc.fecha",
+        "idFcCab",
+        "numFc",
+        "signo",
+        "tipoFc",
+        "moneda",
+        "finalPesos",
+        "finalUSD",
+        "vendedor",
+        "codCli",
+        "razonSocial",
+        "codConPgo",
+        "CondPago",
+        "fcDet.idMovArti",
+        "fcDet.FcD.importe",
+        "fcDet.numCpbteRem",
+        "fcDet.numPed",
+        "fcDet.codArt",
+        "fcDet.descArt",
+        "fcDet.cant",
+        "fcDet.medida",
+        "fcDet.precioUn"
+      ]
+    },
+    {
+      "sheet": "fcAnt",
+      "name": "fcAnt",
+      "rows": 55,
+      "columns": [
+        "idFcAntLin",
+        "idFcCab",
+        "fchaFc",
+        "descrCpbte",
+        "signo",
+        "nroCpbte",
+        "numPed",
+        "moneda",
+        "cotizMda",
+        "ListaPrec",
+        "precioCabeNeto",
+        "codCli",
+        "rzonSoc",
+        "vendedor",
+        "codArt",
+        "descArt",
+        "preMdaList",
+        "cant",
+        "medida",
+        "cantiPend"
+      ]
+    },
+    {
+      "sheet": "remCom",
+      "name": "remCom",
+      "rows": 8995,
+      "columns": [
+        "idRtoCliCab",
+        "idPedCliCab",
+        "remDet.idFCAntiDet",
+        "numRto",
+        "fchRto",
+        "codCli",
+        "razSocBus",
+        "codCondPgo",
+        "condPg",
+        "codListPrec",
+        "nomVend",
+        "Column1.codigoFlete",
+        "Column1.razonSocialFlete",
+        "Column1.lugarEntrega",
+        "moneda",
+        "cotDol",
+        "idFCAntCab",
+        "remDet.idRtoCliDet",
+        "remDet.codArt",
+        "remDet.descArt",
+        "remDet.cantRem",
+        "remDet.codListPre",
+        "remDet.moneda",
+        "remDet.cotMoneda",
+        "remDet.precioUnitario",
+        "remDet.Subtotal",
+        "remDet.cantFac"
+      ]
+    }
+  ],
+  "sheetCount": 21,
+  "note": "Solo consultas y metadatos. Sin credenciales ni filas comerciales. Sin refrescar conexiones."
+}

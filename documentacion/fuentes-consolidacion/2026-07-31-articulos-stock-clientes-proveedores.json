@@ -1,0 +1,2634 @@
+{
+  "version": 1,
+  "exportedAt": "2026-07-31T10:50:22.903Z",
+  "catalog": [
+    {
+      "id": "isis-articulo-vw",
+      "name": "/api/ISIS_Articulo_VW",
+      "method": "GET",
+      "area": "Artículos",
+      "purpose": "Maestro local de artículos de ISIS",
+      "metrics": {
+        "records": "7498",
+        "time": "28550",
+        "size": "12804.22",
+        "date": "2026-07-30T09:26"
+      },
+      "notes": "Completa: 28,55 s y 12,5 MB. Activos: 1.090. Inactivos: 6.408; no incorporarlos como artículos nuevos. Por código: 161 ms. Por regisArti exacto: 152 ms.",
+      "parameters": [
+        {
+          "name": "CodInternoArti",
+          "type": "string"
+        },
+        {
+          "name": "CodBarraArti",
+          "type": "string"
+        },
+        {
+          "name": "DescriBusArti",
+          "type": "string"
+        },
+        {
+          "name": "Regis_Arti",
+          "type": "integer (int32)"
+        }
+      ],
+      "fields": [
+        {
+          "name": "regisArti",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "codInternoArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descripcionArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descriBusArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "senInhabilitadoArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "calificacion",
+          "type": "string · nullable"
+        },
+        {
+          "name": "clasificaArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "tipoArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "facturaArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigoArtiGrupo",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigArtFami1",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrArtFami1",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigArtFami2",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrArtFami2",
+          "type": "string · nullable"
+        },
+        {
+          "name": "despachoArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "partidaLoteArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "nroSerieArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigNivelInt1",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrNivelInt1",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigNivelInt2",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrNivelInt2",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigNivelInt3",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrNivelInt3",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigNivelInt4",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrNivelInt4",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigNivelInt5",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrNivelInt5",
+          "type": "string · nullable"
+        },
+        {
+          "name": "diasReaproviArti",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "descrUnidadMedidaPri",
+          "type": "string · nullable"
+        },
+        {
+          "name": "pesoPriArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "descrUniMedidaPesoPri",
+          "type": "string · nullable"
+        },
+        {
+          "name": "volumenPriArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "descrUniMedidaVolumenPri",
+          "type": "string · nullable"
+        },
+        {
+          "name": "stMinimoPriArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "stIdealPriArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "loteCpraPriArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "ptoPedidoPriArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantPalletPriArti1",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantPalletPriArti2",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantPalletPriArti3",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantBultoPriArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "descrUnidadMedidaSecu",
+          "type": "string · nullable"
+        },
+        {
+          "name": "factorConveArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "pesoSecuArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "descrUniMedidaPesoSecu",
+          "type": "string · nullable"
+        },
+        {
+          "name": "volumenSecuArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "descrUniMedidaVolumenSecu",
+          "type": "string · nullable"
+        },
+        {
+          "name": "stMinimoSecuArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "stIdealSecuArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "loteCpraSecuArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "ptoPedidoSecuArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantPalletSecuArti1",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantPalletSecuArti2",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantPalletSecuArti3",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantBultoSecuArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "tasaIva",
+          "type": "number (double)"
+        },
+        {
+          "name": "codigoActEcoVenta",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descripcionActEcoVenta",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigoActEcoCompra",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descripcionActEcoCompra",
+          "type": "string · nullable"
+        },
+        {
+          "name": "usaFactorConvePrecio",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigGrupoComi",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "descrGrupoComi",
+          "type": "string · nullable"
+        },
+        {
+          "name": "tipoPreVtaArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "tipoPreCpraArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codBarraArti",
+          "type": "string · nullable"
+        }
+      ]
+    },
+    {
+      "id": "isis-articulo-stock-vw",
+      "name": "/api/ISIS_ArticuloStock_VW",
+      "method": "GET",
+      "area": "Artículos",
+      "purpose": "Stock actual por artículo",
+      "metrics": {
+        "records": "5975",
+        "time": "1390",
+        "size": "2097.33",
+        "date": "2026-07-30T09:15"
+      },
+      "notes": "Completa: 1,39 a 2,39 s. Por artículo: 69 ms. Empresa 1: 4.853 filas. Usar depósito 1; ignorar depósito 80 (Reserva). cantCompra y cantVenta son acumulados y no se usarán.",
+      "parameters": [
+        {
+          "name": "Cod_Articulo",
+          "type": "string"
+        },
+        {
+          "name": "Cod_Empresa",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "Cod_Deposito",
+          "type": "integer (int32)"
+        }
+      ],
+      "fields": [
+        {
+          "name": "codArticulo",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descBusquedaArticulo",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descripcionArticulo",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codEmpresa",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "empresa",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codDeposito",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "deposito",
+          "type": "string · nullable"
+        },
+        {
+          "name": "tipoDeposito",
+          "type": "string · nullable"
+        },
+        {
+          "name": "cantCompraUm1",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantCompraUm2",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantVentaUm1",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantVentaUm2",
+          "type": "number (double)"
+        },
+        {
+          "name": "stockUm1",
+          "type": "number (double)"
+        },
+        {
+          "name": "stockUm2",
+          "type": "number (double)"
+        }
+      ]
+    },
+    {
+      "id": "isis-cliente-vw",
+      "name": "/api/ISIS_Cliente_VW",
+      "method": "GET",
+      "area": "Clientes",
+      "purpose": "Maestro local de clientes de ISIS",
+      "metrics": {
+        "records": "11353",
+        "time": "9787",
+        "size": "17189.44",
+        "date": "2026-07-30T13:33"
+      },
+      "notes": "Completa: 9,79 s y 16,79 MB. Activos: 11.289. Inactivos: 64. Activos sin CUIT útil: 2.579. Con factura desde 2020: 1.875. Por código: 103 ms.",
+      "parameters": [
+        {
+          "name": "CodigoCli",
+          "type": "string"
+        },
+        {
+          "name": "CuitCli",
+          "type": "string"
+        },
+        {
+          "name": "RazonSocialBusCli",
+          "type": "string"
+        }
+      ],
+      "fields": [
+        {
+          "name": "codigoCli",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigoExpreso",
+          "type": "string · nullable"
+        },
+        {
+          "name": "razonSocialExpreso",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descrIvaC",
+          "type": "string · nullable"
+        },
+        {
+          "name": "letraCli",
+          "type": "string · nullable"
+        },
+        {
+          "name": "cuitCli",
+          "type": "string · nullable"
+        },
+        {
+          "name": "ingBrutosCli",
+          "type": "string · nullable"
+        },
+        {
+          "name": "fechaAltaCli",
+          "type": "date-time"
+        },
+        {
+          "name": "fechaUltimaFacCli",
+          "type": "date-time · nullable"
+        },
+        {
+          "name": "fechaUltimoRecCli",
+          "type": "date-time · nullable"
+        },
+        {
+          "name": "codProveedorClte",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codProveAsociado",
+          "type": "string · nullable"
+        },
+        {
+          "name": "diaVisitaLun",
+          "type": "string · nullable"
+        },
+        {
+          "name": "diaVisitaMar",
+          "type": "string · nullable"
+        },
+        {
+          "name": "diaVisitaMie",
+          "type": "string · nullable"
+        },
+        {
+          "name": "diaVisitaJue",
+          "type": "string · nullable"
+        },
+        {
+          "name": "diaVisitaVie",
+          "type": "string · nullable"
+        },
+        {
+          "name": "diaVisitaSab",
+          "type": "string · nullable"
+        },
+        {
+          "name": "diaVisitaDom",
+          "type": "string · nullable"
+        },
+        {
+          "name": "ordenVisitaDia1CliLun",
+          "type": "string · nullable"
+        },
+        {
+          "name": "ordenVisitaDia1CliMar",
+          "type": "string · nullable"
+        },
+        {
+          "name": "ordenVisitaDia1CliMie",
+          "type": "string · nullable"
+        },
+        {
+          "name": "ordenVisitaDia1CliJue",
+          "type": "string · nullable"
+        },
+        {
+          "name": "ordenVisitaDia1CliVie",
+          "type": "string · nullable"
+        },
+        {
+          "name": "ordenVisitaDia1CliSab",
+          "type": "string · nullable"
+        },
+        {
+          "name": "ordenVisitaDia1CliDom",
+          "type": "string · nullable"
+        },
+        {
+          "name": "usaDtosPreItemCli",
+          "type": "string · nullable"
+        },
+        {
+          "name": "dtoItemPre1Cli",
+          "type": "number (double)"
+        },
+        {
+          "name": "razonSocialFlete",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigoFlete",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descr_Mda",
+          "type": "string · nullable"
+        },
+        {
+          "name": "limiteCreditoCli",
+          "type": "number (double)"
+        },
+        {
+          "name": "razonSocialBusCli",
+          "type": "string · nullable"
+        },
+        {
+          "name": "razonSocialCli",
+          "type": "string · nullable"
+        },
+        {
+          "name": "localidadCli",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigoPostalCli",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descri_Partido",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codProvincia",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "descrProvincia",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigoPais",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descrPais",
+          "type": "string · nullable"
+        },
+        {
+          "name": "estadoCli",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigoCliCali",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "descrCliCali",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigNivelInt1",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "dtoItemPre2Cli",
+          "type": "number (double)"
+        },
+        {
+          "name": "descrNivelInt1",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descrNivelInt2",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigNivelInt3",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrNivelInt3",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigNivelInt4",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrNivelInt4",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigVendedor",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "nombreVendedor",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigCobrador",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "nombreCobrador",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigListaPrec",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "descrListaPrec",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigCondiPago",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "descrCondiPago",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigNivelInt2",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "dtoItemPre3Cli",
+          "type": "number (double)"
+        },
+        {
+          "name": "emailCli",
+          "type": "string · nullable"
+        }
+      ]
+    },
+    {
+      "id": "isis-proveedor-vw",
+      "name": "/api/ISIS_Proveedor_VW",
+      "method": "GET",
+      "area": "Proveedores",
+      "purpose": "Maestro local de proveedores de ISIS",
+      "metrics": {
+        "records": "3510",
+        "time": "22250",
+        "size": "9261.55",
+        "date": "2026-07-30T14:30"
+      },
+      "notes": "Primera prueba completa: 3.510 filas, 9,04 MB y 22,25 s. Se confirmaron 71 proveedores con cliente asociado. Pendiente repetir estado, CUIT y consulta puntual porque luego la conexión desde Codex dejó de responder.",
+      "parameters": [
+        {
+          "name": "CodigoProve",
+          "type": "string"
+        },
+        {
+          "name": "RazonSocialBusProve",
+          "type": "string"
+        },
+        {
+          "name": "CuitProve",
+          "type": "string"
+        }
+      ],
+      "fields": [
+        {
+          "name": "regisProve",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "codigoProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "razonSocialBusProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "razonSocialProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "calleProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "numeroProve",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "pisoProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "deptoProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "barrioProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "localidadProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigoPostalProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "regisPro",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "regisPais",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "telefono1Prove",
+          "type": "string · nullable"
+        },
+        {
+          "name": "telefono2Prove",
+          "type": "string · nullable"
+        },
+        {
+          "name": "telefono3Prove",
+          "type": "string · nullable"
+        },
+        {
+          "name": "faxProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "emailProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "paginaWebProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "estadoProve",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "calificaProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "regisNivelProve1",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "regisNivelProve2",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "regisNivelProve3",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "regisNivelProve4",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "diaVisita1Prove",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "diaVisita2Prove",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "diaVisita3Prove",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "diaVisita4Prove",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "diaVisita5Prove",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "diaVisita6Prove",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "diaVisita7Prove",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "regisProveCp",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "limiteCreditoProve",
+          "type": "number (double)"
+        },
+        {
+          "name": "regisMda",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "regisIvaC",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "cuitProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "ingBrutosProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "cbuprove",
+          "type": "string · nullable"
+        },
+        {
+          "name": "regisCta",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "granContribProve",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "inscripGananciaProve",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "regisGanCon",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "regisCashFlowCon",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "horarioAtenProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "fechaAltaProve",
+          "type": "date-time"
+        },
+        {
+          "name": "fechaCumpleProve",
+          "type": "date-time · nullable"
+        },
+        {
+          "name": "fechaUltimaFacProve",
+          "type": "date-time · nullable"
+        },
+        {
+          "name": "fechaUltOpagoProve",
+          "type": "date-time · nullable"
+        },
+        {
+          "name": "comentarioProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "docuNombre1Prove",
+          "type": "string · nullable"
+        },
+        {
+          "name": "docuDescr1Prove",
+          "type": "string · nullable"
+        },
+        {
+          "name": "docuNombre2Prove",
+          "type": "string · nullable"
+        },
+        {
+          "name": "docuDescr2Prove",
+          "type": "string · nullable"
+        },
+        {
+          "name": "docuNombre3Prove",
+          "type": "string · nullable"
+        },
+        {
+          "name": "docuDescr3Prove",
+          "type": "string · nullable"
+        },
+        {
+          "name": "docuNombre4Prove",
+          "type": "string · nullable"
+        },
+        {
+          "name": "docuDescr4Prove",
+          "type": "string · nullable"
+        },
+        {
+          "name": "repoPedCotizProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "repoOrdCpraProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "porceRetIvaProve",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantDtosProve",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "usaPorceRecarProve",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "usaImpoRecarProve",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "calcuRetSussProve",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "regisSussCon",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "regisCli",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "usuarioAudi",
+          "type": "string · nullable"
+        },
+        {
+          "name": "fechaAudi",
+          "type": "date-time"
+        },
+        {
+          "name": "horaAudi",
+          "type": "string · nullable"
+        },
+        {
+          "name": "regisProveConce",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "calcuRetIvaProve",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "regisIvaConRet",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "nroSedronarProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "calcuPerceGanProve",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "regisTesoConce",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "senExenRetIvaprove",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "dfecExenRetIvaprove",
+          "type": "date-time · nullable"
+        },
+        {
+          "name": "hfecExenRetIvaprove",
+          "type": "date-time · nullable"
+        },
+        {
+          "name": "senExenRetSussprove",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "dfecExenRetSussprove",
+          "type": "date-time · nullable"
+        },
+        {
+          "name": "hfecExenRetSussprove",
+          "type": "date-time · nullable"
+        },
+        {
+          "name": "senExenRetGanProve",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "dfecExenRetGanProve",
+          "type": "date-time · nullable"
+        },
+        {
+          "name": "hfecExenRetGanProve",
+          "type": "date-time · nullable"
+        },
+        {
+          "name": "letraProve",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codProvincia",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "descrProvincia",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigProveCP",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "descrProveCP",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descr_Mda",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descrIvaC",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigCta",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descrCta",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigCashFlowCon",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "descrCashFlowCon",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigoPais",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descrPais",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigNivelProve1",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrNivelProve1",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigNivelProve2",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrNivelProve2",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigNivelProve3",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrNivelProve3",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigNivelProve4",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrNivelProve4",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigGanCon",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrGanCon",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigoSussCon",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descriSussCon",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigoCli",
+          "type": "string · nullable"
+        },
+        {
+          "name": "razonSocialBusCli",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigProveConce",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrProveConce",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigoIvaConRet",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descriIvaConRet",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigTesoConce",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrTesoConce",
+          "type": "string · nullable"
+        }
+      ]
+    }
+  ],
+  "decisions": {
+    "isis-articulo-vw": {
+      "status": "yes",
+      "area": "Artículos",
+      "purpose": "Maestro local de artículos de ISIS",
+      "parameters": {
+        "CodInternoArti": {
+          "decision": "yes",
+          "purpose": "Creo que para actualizar, la demanda deberia ser puntual",
+          "notes": ""
+        },
+        "CodBarraArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "DescriBusArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": "Nuesta BD va a ser interna, no vamos a consultar desde ISIS"
+        },
+        "Regis_Arti": {
+          "decision": "review",
+          "purpose": "Podria ser util para detectar si existe un articulo nuevo.",
+          "notes": ""
+        }
+      },
+      "fields": {
+        "regisArti": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "codInternoArti": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "descripcionArti": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "descriBusArti": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "senInhabilitadoArti": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "calificacion": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "clasificaArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "tipoArti": {
+          "decision": "yes",
+          "purpose": "Podria servir para crear nuevos, para taller",
+          "notes": ""
+        },
+        "facturaArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigoArtiGrupo": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigArtFami1": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrArtFami1": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigArtFami2": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrArtFami2": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "despachoArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "partidaLoteArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "nroSerieArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigNivelInt1": {
+          "decision": "yes",
+          "purpose": "Filtros, estadisticas",
+          "notes": ""
+        },
+        "descrNivelInt1": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigNivelInt2": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrNivelInt2": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigNivelInt3": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrNivelInt3": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigNivelInt4": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrNivelInt4": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigNivelInt5": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrNivelInt5": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "diasReaproviArti": {
+          "decision": "no",
+          "purpose": "Seria util, pero no esta cargado",
+          "notes": ""
+        },
+        "descrUnidadMedidaPri": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "pesoPriArti": {
+          "decision": "review",
+          "purpose": "No esta cargado, pero seria interesante para cuando lleguemos a logistica",
+          "notes": ""
+        },
+        "descrUniMedidaPesoPri": {
+          "decision": "review",
+          "purpose": "",
+          "notes": ""
+        },
+        "volumenPriArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrUniMedidaVolumenPri": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "stMinimoPriArti": {
+          "decision": "review",
+          "purpose": "",
+          "notes": "Generaria el dato en nuestro sistema"
+        },
+        "stIdealPriArti": {
+          "decision": "review",
+          "purpose": "",
+          "notes": "dato de gestion"
+        },
+        "loteCpraPriArti": {
+          "decision": "review",
+          "purpose": "",
+          "notes": "dato de gestion"
+        },
+        "ptoPedidoPriArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantPalletPriArti1": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantPalletPriArti2": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantPalletPriArti3": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantBultoPriArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrUnidadMedidaSecu": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "factorConveArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "pesoSecuArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrUniMedidaPesoSecu": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "volumenSecuArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrUniMedidaVolumenSecu": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "stMinimoSecuArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "stIdealSecuArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "loteCpraSecuArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "ptoPedidoSecuArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantPalletSecuArti1": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantPalletSecuArti2": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantPalletSecuArti3": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantBultoSecuArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "tasaIva": {
+          "decision": "yes",
+          "purpose": "Para impuestos",
+          "notes": ""
+        },
+        "codigoActEcoVenta": {
+          "decision": "yes",
+          "purpose": "Impuestos",
+          "notes": ""
+        },
+        "descripcionActEcoVenta": {
+          "decision": "yes",
+          "purpose": "Impuestos",
+          "notes": ""
+        },
+        "codigoActEcoCompra": {
+          "decision": "yes",
+          "purpose": "Impuestos",
+          "notes": ""
+        },
+        "descripcionActEcoCompra": {
+          "decision": "yes",
+          "purpose": "Impuestos",
+          "notes": ""
+        },
+        "usaFactorConvePrecio": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigGrupoComi": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrGrupoComi": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "tipoPreVtaArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "tipoPreCpraArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codBarraArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        }
+      },
+      "metrics": {
+        "records": "7498",
+        "time": "28550",
+        "size": "12804.22",
+        "date": "2026-07-30T09:26"
+      },
+      "update": {
+        "mode": "",
+        "frequency": "",
+        "key": "",
+        "volume": ""
+      },
+      "notes": "Completa: 28,55 s y 12,5 MB. Activos: 1.090. Inactivos: 6.408; no incorporarlos como artículos nuevos. Por código: 161 ms. Por regisArti exacto: 152 ms."
+    },
+    "isis-articulo-stock-vw": {
+      "status": "yes",
+      "area": "Artículos",
+      "purpose": "Stock actual por artículo",
+      "parameters": {
+        "Cod_Articulo": {
+          "decision": "yes",
+          "purpose": "Actualizar puntual si articulo nuevo",
+          "notes": ""
+        },
+        "Cod_Empresa": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "Cod_Deposito": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        }
+      },
+      "fields": {
+        "codArticulo": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "descBusquedaArticulo": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descripcionArticulo": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codEmpresa": {
+          "decision": "yes",
+          "purpose": "Para evitar datos viejos",
+          "notes": ""
+        },
+        "empresa": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codDeposito": {
+          "decision": "yes",
+          "purpose": "como filtro",
+          "notes": ""
+        },
+        "deposito": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "tipoDeposito": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantCompraUm1": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantCompraUm2": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantVentaUm1": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantVentaUm2": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "stockUm1": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "stockUm2": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        }
+      },
+      "metrics": {
+        "records": "5975",
+        "time": "1390",
+        "size": "2097.33",
+        "date": "2026-07-30T09:15"
+      },
+      "update": {
+        "mode": "",
+        "frequency": "",
+        "key": "",
+        "volume": ""
+      },
+      "notes": "Completa: 1,39 a 2,39 s. Por artículo: 69 ms. Empresa 1: 4.853 filas. Usar depósito 1; ignorar depósito 80 (Reserva). cantCompra y cantVenta son acumulados y no se usarán."
+    },
+    "isis-cliente-vw": {
+      "status": "review",
+      "area": "Clientes",
+      "purpose": "Maestro local de clientes de ISIS",
+      "parameters": {
+        "CodigoCli": {
+          "decision": "yes",
+          "purpose": "Actualizacion incremental o bajo demanda",
+          "notes": ""
+        },
+        "CuitCli": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "RazonSocialBusCli": {
+          "decision": "no",
+          "purpose": "",
+          "notes": "Demasiado posible cometer errores"
+        }
+      },
+      "fields": {
+        "codigoCli": {
+          "decision": "yes",
+          "purpose": "ID local, actualizacion particular",
+          "notes": ""
+        },
+        "codigoExpreso": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "razonSocialExpreso": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrIvaC": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "letraCli": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cuitCli": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "ingBrutosCli": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "fechaAltaCli": {
+          "decision": "yes",
+          "purpose": "Filtros",
+          "notes": ""
+        },
+        "fechaUltimaFacCli": {
+          "decision": "yes",
+          "purpose": "Filtros",
+          "notes": ""
+        },
+        "fechaUltimoRecCli": {
+          "decision": "yes",
+          "purpose": "Filtros",
+          "notes": ""
+        },
+        "codProveedorClte": {
+          "decision": "yes",
+          "purpose": "FK para vincular un cliente-proveedor",
+          "notes": ""
+        },
+        "codProveAsociado": {
+          "decision": "yes",
+          "purpose": "vinculo cliente proveedor",
+          "notes": ""
+        },
+        "diaVisitaLun": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "diaVisitaMar": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "diaVisitaMie": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "diaVisitaJue": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "diaVisitaVie": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "diaVisitaSab": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "diaVisitaDom": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "ordenVisitaDia1CliLun": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "ordenVisitaDia1CliMar": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "ordenVisitaDia1CliMie": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "ordenVisitaDia1CliJue": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "ordenVisitaDia1CliVie": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "ordenVisitaDia1CliSab": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "ordenVisitaDia1CliDom": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "usaDtosPreItemCli": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "dtoItemPre1Cli": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "razonSocialFlete": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigoFlete": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descr_Mda": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "limiteCreditoCli": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "razonSocialBusCli": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "razonSocialCli": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "localidadCli": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigoPostalCli": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descri_Partido": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codProvincia": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrProvincia": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigoPais": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrPais": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "estadoCli": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigoCliCali": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrCliCali": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigNivelInt1": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "dtoItemPre2Cli": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrNivelInt1": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrNivelInt2": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigNivelInt3": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrNivelInt3": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigNivelInt4": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrNivelInt4": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigVendedor": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "nombreVendedor": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigCobrador": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "nombreCobrador": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigListaPrec": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrListaPrec": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigCondiPago": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrCondiPago": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigNivelInt2": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "dtoItemPre3Cli": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "emailCli": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        }
+      },
+      "metrics": {
+        "records": "11353",
+        "time": "9787",
+        "size": "17189.44",
+        "date": "2026-07-30T13:33"
+      },
+      "update": {
+        "mode": "",
+        "frequency": "",
+        "key": "",
+        "volume": ""
+      },
+      "notes": "Completa: 9,79 s y 16,79 MB. Activos: 11.289. Inactivos: 64. Activos sin CUIT útil: 2.579. Con factura desde 2020: 1.875. Por código: 103 ms."
+    },
+    "isis-proveedor-vw": {
+      "status": "review",
+      "area": "Proveedores",
+      "purpose": "Maestro local de proveedores de ISIS",
+      "parameters": {
+        "CodigoProve": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "RazonSocialBusProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "CuitProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        }
+      },
+      "fields": {
+        "regisProve": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigoProve": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "razonSocialBusProve": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "razonSocialProve": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "calleProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "numeroProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "pisoProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "deptoProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "barrioProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "localidadProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigoPostalProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "regisPro": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "regisPais": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "telefono1Prove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "telefono2Prove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "telefono3Prove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "faxProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "emailProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "paginaWebProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "estadoProve": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "calificaProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "regisNivelProve1": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "regisNivelProve2": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "regisNivelProve3": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "regisNivelProve4": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "diaVisita1Prove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "diaVisita2Prove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "diaVisita3Prove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "diaVisita4Prove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "diaVisita5Prove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "diaVisita6Prove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "diaVisita7Prove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "regisProveCp": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "limiteCreditoProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "regisMda": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "regisIvaC": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cuitProve": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "ingBrutosProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cbuprove": {
+          "decision": "no",
+          "purpose": "Local",
+          "notes": ""
+        },
+        "regisCta": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "granContribProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "inscripGananciaProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "regisGanCon": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "regisCashFlowCon": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "horarioAtenProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "fechaAltaProve": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "fechaCumpleProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "fechaUltimaFacProve": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "fechaUltOpagoProve": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "comentarioProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "docuNombre1Prove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "docuDescr1Prove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "docuNombre2Prove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "docuDescr2Prove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "docuNombre3Prove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "docuDescr3Prove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "docuNombre4Prove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "docuDescr4Prove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "repoPedCotizProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "repoOrdCpraProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "porceRetIvaProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantDtosProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "usaPorceRecarProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "usaImpoRecarProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "calcuRetSussProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "regisSussCon": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "regisCli": {
+          "decision": "review",
+          "purpose": "",
+          "notes": ""
+        },
+        "usuarioAudi": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "fechaAudi": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "horaAudi": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "regisProveConce": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "calcuRetIvaProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "regisIvaConRet": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "nroSedronarProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "calcuPerceGanProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "regisTesoConce": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "senExenRetIvaprove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "dfecExenRetIvaprove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "hfecExenRetIvaprove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "senExenRetSussprove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "dfecExenRetSussprove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "hfecExenRetSussprove": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "senExenRetGanProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "dfecExenRetGanProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "hfecExenRetGanProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "letraProve": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codProvincia": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrProvincia": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigProveCP": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrProveCP": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descr_Mda": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrIvaC": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigCta": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrCta": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigCashFlowCon": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrCashFlowCon": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigoPais": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrPais": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigNivelProve1": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrNivelProve1": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigNivelProve2": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrNivelProve2": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigNivelProve3": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrNivelProve3": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigNivelProve4": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrNivelProve4": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigGanCon": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrGanCon": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigoSussCon": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descriSussCon": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigoCli": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "razonSocialBusCli": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigProveConce": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrProveConce": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigoIvaConRet": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descriIvaConRet": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigTesoConce": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrTesoConce": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        }
+      },
+      "metrics": {
+        "records": "3510",
+        "time": "22250",
+        "size": "9261.55",
+        "date": "2026-07-30T14:30"
+      },
+      "update": {
+        "mode": "",
+        "frequency": "",
+        "key": "",
+        "volume": ""
+      },
+      "notes": "Primera prueba completa: 3.510 filas, 9,04 MB y 22,25 s. Se confirmaron 71 proveedores con cliente asociado. Pendiente repetir estado, CUIT y consulta puntual porque luego la conexión desde Codex dejó de responder."
+    }
+  }
+}

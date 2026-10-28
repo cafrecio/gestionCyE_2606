@@ -2,9 +2,13 @@
 
 > Estado: diseño conceptual. No existe todavía una aplicación implementada.
 >
-> Última actualización: 2026-07-22.
+> Última actualización: 2026-09-17.
 >
 > Este archivo es la fuente de verdad para Codex, Claude Code u otra IA que trabaje en el proyecto. Antes de proponer arquitectura, código o flujos, leerlo completo.
+>
+> Para datos ISIS y la primera pantalla, leer también `09-consolidacion-datos.md` y su fuente estructurada `09-consolidacion-datos.json`. Esa consolidación preserva las decisiones exportadas y distingue lo aprobado de lo usado solamente en Excel.
+>
+> Índice humano y tareas numeradas del chat Datos: `01-datos-indice.html`. Respaldo legible por IA: `01-datos-indice.md`.
 
 ## 1. Reglas de trabajo
 
@@ -58,6 +62,12 @@ No reemplaza a ISIS. Su función es coordinar el trabajo que hoy ocurre mediante
 - Paneles y vistas por perfil.
 - Datos complementarios que ISIS no posea, almacenados por separado y vinculados al registro de ISIS.
 
+Principio de espejo:
+
+- Si un dato tiene ABM en ISIS, GestionCyE lo replica y no lo edita.
+- Si ISIS no administra ese dato, GestionCyE puede incorporarlo como información
+  propia sin modificar el registro espejo.
+
 ### Reglas no negociables
 
 - GestionCyE no cambia los códigos que los usuarios ya conocen.
@@ -109,7 +119,8 @@ Caso: Laura crea un pedido en ISIS y necesita que Stella realice una factura ant
 Flujo esperado:
 
 1. Laura abre “Nueva solicitud” en GestionCyE.
-2. GestionCyE consulta en ISIS los pedidos recientes y muestra los correspondientes a Laura.
+2. GestionCyE muestra desde su base local los pedidos recientes de Laura,
+   incorporados automáticamente por la sincronización recurrente.
 3. Laura selecciona el pedido; no memoriza ni escribe su número.
 4. GestionCyE identifica cliente y artículos del pedido.
 5. Si son nuevos para la base local, obtiene automáticamente sus registros completos desde ISIS.
@@ -123,17 +134,36 @@ Flujo esperado:
 ### Patrón híbrido
 
 - **Base local:** sirve las pantallas con velocidad y mantiene continuidad ante lentitud de ISIS.
-- **Sincronización interactiva:** consulta ISIS en el momento de una acción operativa concreta.
+- **Sincronización recurrente de documentos:** incorpora automáticamente pedidos,
+  remitos y facturas sin depender de acciones del usuario.
+- **Sincronización puntual de maestros:** actualiza bajo demanda clientes,
+  artículos o proveedores existentes que hayan cambiado.
+- **Dependencias nuevas:** cuando un documento referencia un maestro inexistente
+  localmente, lo incorpora automáticamente por código.
+- **Clientes inválidos:** un registro con CUIT inválido no se incorpora como
+  cliente local; el documento conserva la razón social recibida de ISIS.
+- **Datos propios de terceros:** contactos y sucursales se administran
+  localmente desde el flujo inicial de pedidos. Rubros, productos, CBU y alias
+  quedan para una etapa posterior.
+- **Carga incremental:** cuando se carga un pedido y faltan contacto o sucursal,
+  el usuario debe completarlos antes de continuar. Quedan disponibles para los
+  próximos pedidos del cliente.
+- **Sin fuente ISIS:** contactos y sucursales se administran exclusivamente en
+  GestionCyE. Cada pedido guarda una copia del contacto y destino confirmados.
+- **Proveedores válidos:** sólo se incorporan al maestro local con CUIT real y
+  válido; `estadoProve` no define por sí solo su vigencia operativa.
 - **Sincronización de activos:** actualiza periódicamente pedidos abiertos o recientes para detectar cambios.
 - **Barridos masivos:** se ejecutan fuera del camino interactivo y, preferentemente, fuera de horario.
 
-Sin webhooks, eventos o una fuente de cambios de ISIS no existe tiempo real automático estricto. El tiempo real operativo se consigue con consultas puntuales disparadas por acciones y actualizaciones frecuentes de registros activos.
+Sin webhooks, eventos o una fuente de cambios de ISIS no existe tiempo real
+automático estricto. El tiempo real operativo se consigue con tareas recurrentes
+frecuentes e incrementales ejecutadas en segundo plano.
 
 ### Regla de interfaz
 
 - Al abrir la aplicación se muestran primero los datos locales.
 - La interfaz no debe quedar bloqueada por una consulta masiva a ISIS.
-- Una acción que necesita información nueva dispara una consulta puntual y muestra un estado claro mientras se resuelve.
+- La interfaz no depende de que el usuario actualice documentos desde ISIS.
 
 ### Importación transaccional
 
@@ -159,7 +189,7 @@ Propiedades obligatorias:
 - Carga inicial completa.
 - Actualizaciones frecuentes de pedidos del día.
 - Actualizaciones de pedidos abiertos/pendientes y una ventana móvil todavía por definir.
-- Actualización puntual cuando el usuario trabaja con un pedido.
+- Incorporación automática mediante sincronización recurrente.
 - No alcanza con refrescar solo el día actual: pedidos anteriores pueden cambiar por entrega, autorización, vigencia u otros hechos.
 
 ### Clientes y artículos
@@ -377,4 +407,3 @@ No implementar todavía una arquitectura definitiva hasta confirmar ese flujo y 
 | 2026-07-14 | Dependencias | Importación automática, completa, transaccional e idempotente. |
 | 2026-07-14 | Pedidos API | Adoptar cabecera/detalle existentes; descartar consolidado por ahora. |
 | 2026-07-22 | Documentación | Mantener contexto IA y panel humano sincronizados. |
-

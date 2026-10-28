@@ -1,0 +1,1501 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Análisis API ISIS</title>
+  <style>
+    :root {
+      --nav: #303941;
+      --nav-dark: #252c33;
+      --primary: #079db9;
+      --primary-dark: #087f97;
+      --bg: #f3f5f7;
+      --surface: #fff;
+      --text: #172635;
+      --muted: #667789;
+      --line: #dfe5ea;
+      --yes: #168a4b;
+      --yes-bg: #e9f7ef;
+      --no: #b73535;
+      --no-bg: #fcecec;
+      --review: #906500;
+      --review-bg: #fff5d7;
+      --radius: 6px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-width: 1080px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+
+    .app {
+      display: grid;
+      grid-template-columns: 280px minmax(800px, 1fr);
+      min-height: 100vh;
+    }
+
+    aside {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+      background: var(--nav);
+      color: #eef4f8;
+      border-right: 1px solid var(--nav-dark);
+    }
+
+    .brand {
+      padding: 20px;
+      border-bottom: 1px solid #44505a;
+    }
+
+    .brand strong {
+      display: block;
+      font-size: 17px;
+      font-weight: 650;
+    }
+
+    .brand span {
+      display: block;
+      margin-top: 4px;
+      color: #b8c4cd;
+      font-size: 12px;
+    }
+
+    .sidebar-tools { padding: 14px; }
+
+    .search, .control {
+      width: 100%;
+      min-height: 38px;
+      padding: 8px 10px;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      outline: none;
+    }
+
+    .search {
+      color: #fff;
+      background: #252d34;
+      border-color: #4a5660;
+    }
+
+    .search::placeholder { color: #9eacb7; }
+    .search:focus, .control:focus { border-color: var(--primary); }
+
+    .endpoint-list { padding: 0 8px 18px; }
+
+    .endpoint-item {
+      width: 100%;
+      padding: 11px 12px;
+      color: #e9f0f4;
+      text-align: left;
+      background: transparent;
+      border: 0;
+      border-left: 3px solid transparent;
+      border-radius: 3px;
+    }
+
+    .endpoint-item:hover { background: #39444d; }
+    .endpoint-item.active {
+      background: #1f889f;
+      border-left-color: #80e4f4;
+    }
+
+    .endpoint-item small {
+      display: block;
+      margin-top: 4px;
+      color: #b9c6ce;
+    }
+
+    main { min-width: 0; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 62px;
+      padding: 10px 24px;
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 650;
+    }
+
+    .actions { display: flex; gap: 8px; }
+
+    .button {
+      min-height: 36px;
+      padding: 7px 12px;
+      color: var(--text);
+      background: #fff;
+      border: 1px solid #cbd4dc;
+      border-radius: var(--radius);
+    }
+
+    .button:hover { background: #f4f7f9; }
+    .button.primary {
+      color: #fff;
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .button.primary:hover { background: var(--primary-dark); }
+
+    .content {
+      width: 100%;
+      max-width: 1500px;
+      padding: 22px 24px 48px;
+    }
+
+    .empty {
+      padding: 70px 24px;
+      color: var(--muted);
+      text-align: center;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: minmax(280px, 1fr) repeat(4, 130px);
+      margin-bottom: 20px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .summary > div {
+      min-height: 76px;
+      padding: 14px 16px;
+      border-right: 1px solid var(--line);
+    }
+
+    .summary > div:last-child { border-right: 0; }
+    .summary .label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .summary .value {
+      font-size: 19px;
+      font-weight: 650;
+    }
+
+    .summary .endpoint-name {
+      overflow-wrap: anywhere;
+      font-size: 16px;
+    }
+
+    .section {
+      margin-top: 22px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 650;
+    }
+
+    .section-body { padding: 16px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(150px, 1fr));
+      gap: 14px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    textarea.control {
+      min-height: 72px;
+      resize: vertical;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      padding: 9px 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      text-align: left;
+      background: #f7f9fa;
+      border-bottom: 1px solid var(--line);
+    }
+
+    td {
+      padding: 9px 10px;
+      vertical-align: middle;
+      border-bottom: 1px solid #edf0f2;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+    code {
+      font-family: Consolas, monospace;
+      font-size: 13px;
+    }
+
+    .decision {
+      display: inline-grid;
+      grid-template-columns: repeat(3, 76px);
+      border: 1px solid #cdd6dd;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .decision button {
+      min-height: 30px;
+      padding: 4px 7px;
+      color: var(--muted);
+      background: #fff;
+      border: 0;
+      border-right: 1px solid #dbe1e6;
+      font-size: 12px;
+    }
+
+    .decision button:last-child { border-right: 0; }
+    .decision button[data-value="yes"].selected { color: var(--yes); background: var(--yes-bg); font-weight: 700; }
+    .decision button[data-value="no"].selected { color: var(--no); background: var(--no-bg); font-weight: 700; }
+    .decision button[data-value="review"].selected { color: var(--review); background: var(--review-bg); font-weight: 700; }
+
+    .inline-input {
+      width: 100%;
+      min-width: 170px;
+      padding: 7px 8px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      outline: none;
+    }
+
+    .inline-input:hover { border-color: var(--line); }
+    .inline-input:focus { border-color: var(--primary); }
+
+    .progress {
+      height: 6px;
+      margin-top: 8px;
+      overflow: hidden;
+      background: #e7ecef;
+      border-radius: 3px;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      background: var(--primary);
+      transition: width .15s ease;
+    }
+
+    .save-state {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .hidden { display: none !important; }
+    .file-input { display: none; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside>
+      <div class="brand">
+        <strong>Análisis API ISIS</strong>
+        <span>Sprint 1 · Mapa de datos</span>
+      </div>
+      <div class="sidebar-tools">
+        <input id="endpointSearch" class="search" type="search" placeholder="Buscar endpoint">
+      </div>
+      <nav id="endpointList" class="endpoint-list" aria-label="Endpoints"></nav>
+    </aside>
+
+    <main>
+      <header>
+        <div>
+          <h1 class="title">Relevamiento de datos</h1>
+          <span id="saveState" class="save-state">Guardado en este navegador</span>
+        </div>
+        <div class="actions">
+          <button id="importButton" class="button" type="button" title="Recuperar decisiones desde un archivo">Restaurar respaldo</button>
+          <button id="exportButton" class="button primary" type="button" title="Descargar una copia de las decisiones">Descargar respaldo</button>
+          <input id="importFile" class="file-input" type="file" accept="application/json,.json">
+        </div>
+      </header>
+
+      <div class="content">
+        <section id="emptyState" class="empty">
+          Todavía no hay endpoints cargados. El primero se incorporará cuando definamos sus datos y parámetros.
+        </section>
+
+        <div id="workspace" class="hidden">
+          <section class="summary">
+            <div>
+              <span class="label">Endpoint</span>
+              <span id="summaryName" class="value endpoint-name"></span>
+            </div>
+            <div>
+              <span class="label">Campos</span>
+              <span id="summaryFields" class="value">0</span>
+            </div>
+            <div>
+              <span class="label">Usar</span>
+              <span id="summaryYes" class="value">0</span>
+            </div>
+            <div>
+              <span class="label">No usar</span>
+              <span id="summaryNo" class="value">0</span>
+            </div>
+            <div>
+              <span class="label">Pendientes</span>
+              <span id="summaryPending" class="value">0</span>
+              <div class="progress"><span id="progressBar"></span></div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-head"><h2>Consulta</h2></div>
+            <div class="section-body grid">
+              <div class="field">
+                <label for="endpointStatus">¿Usaremos este endpoint?</label>
+                <select id="endpointStatus" class="control">
+                  <option value="review">Revisar</option>
+                  <option value="yes">Sí</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="endpointArea">Área</label>
+                <input id="endpointArea" class="control" type="text">
+              </div>
+              <div class="field">
+                <label for="endpointMethod">Método</label>
+                <input id="endpointMethod" class="control" type="text" readonly>
+              </div>
+              <div class="field">
+                <label for="endpointPurpose">Finalidad posible</label>
+                <input id="endpointPurpose" class="control" type="text">
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-head"><h2>Parámetros disponibles</h2></div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Parámetro</th>
+                  <th>Tipo</th>
+                  <th>¿Lo usamos?</th>
+                  <th>Para qué</th>
+                  <th>Observación</th>
+                </tr>
+              </thead>
+              <tbody id="parameterRows"></tbody>
+            </table>
+          </section>
+
+          <section class="section">
+            <div class="section-head">
+              <h2>Campos devueltos</h2>
+              <input id="fieldSearch" class="control" style="width:260px" type="search" placeholder="Buscar campo">
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Campo</th>
+                  <th>Tipo</th>
+                  <th>Decisión</th>
+                  <th>Para qué</th>
+                  <th>Observación</th>
+                </tr>
+              </thead>
+              <tbody id="fieldRows"></tbody>
+            </table>
+          </section>
+
+          <section class="section">
+            <div class="section-head"><h2>Prueba real de la consulta</h2></div>
+            <div class="section-body grid">
+              <div class="field">
+                <label for="metricRecords">Cantidad de registros</label>
+                <input id="metricRecords" class="control" type="number" min="0">
+              </div>
+              <div class="field">
+                <label for="metricTime">Tiempo total (ms)</label>
+                <input id="metricTime" class="control" type="number" min="0">
+              </div>
+              <div class="field">
+                <label for="metricSize">Tamaño de respuesta (KB)</label>
+                <input id="metricSize" class="control" type="number" min="0" step="0.01">
+              </div>
+              <div class="field">
+                <label for="metricDate">Fecha de prueba</label>
+                <input id="metricDate" class="control" type="datetime-local">
+              </div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-head"><h2>Actualización</h2></div>
+            <div class="section-body grid">
+              <div class="field">
+                <label for="updateMode">Modalidad</label>
+                <select id="updateMode" class="control">
+                  <option value="">Sin definir</option>
+                  <option value="full">Completa</option>
+                  <option value="paged">Paginada</option>
+                  <option value="filtered">Filtrada / incremental</option>
+                  <option value="on-demand">Puntual bajo demanda</option>
+                  <option value="hybrid">Híbrida</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="updateFrequency">Frecuencia propuesta</label>
+                <input id="updateFrequency" class="control" type="text" placeholder="Ej.: cada 1 minuto">
+              </div>
+              <div class="field">
+                <label for="updateKey">Campo para detectar cambios</label>
+                <input id="updateKey" class="control" type="text">
+              </div>
+              <div class="field">
+                <label for="updateVolume">Volumen esperado</label>
+                <input id="updateVolume" class="control" type="text">
+              </div>
+            </div>
+            <div class="section-body" style="padding-top:0">
+              <div class="field">
+                <label for="generalNotes">Riesgos, dudas y observaciones</label>
+                <textarea id="generalNotes" class="control"></textarea>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "gestion-cye:analisis-api-isis:v1";
+
+    // Sólo se cargan endpoints elegidos después de evaluar sus alternativas.
+    const catalog = [
+      {
+        id: "isis-articulo-vw",
+        name: "/api/ISIS_Articulo_VW",
+        method: "GET",
+        area: "Artículos",
+        purpose: "Maestro local de artículos de ISIS",
+        metrics: {
+          records: "7498",
+          time: "28550",
+          size: "12804.22",
+          date: "2026-07-30T09:26"
+        },
+        notes: "Completa: 28,55 s y 12,5 MB. Activos: 1.090. Inactivos: 6.408; no incorporarlos como artículos nuevos. Por código: 161 ms. Por regisArti exacto: 152 ms.",
+        parameters: [
+          { name: "CodInternoArti", type: "string" },
+          { name: "CodBarraArti", type: "string" },
+          { name: "DescriBusArti", type: "string" },
+          { name: "Regis_Arti", type: "integer (int32)" }
+        ],
+        fields: [
+          { name: "regisArti", type: "integer (int32)" },
+          { name: "codInternoArti", type: "string · nullable" },
+          { name: "descripcionArti", type: "string · nullable" },
+          { name: "descriBusArti", type: "string · nullable" },
+          { name: "senInhabilitadoArti", type: "string · nullable" },
+          { name: "calificacion", type: "string · nullable" },
+          { name: "clasificaArti", type: "string · nullable" },
+          { name: "tipoArti", type: "string · nullable" },
+          { name: "facturaArti", type: "string · nullable" },
+          { name: "codigoArtiGrupo", type: "string · nullable" },
+          { name: "codigArtFami1", type: "integer (int32) · nullable" },
+          { name: "descrArtFami1", type: "string · nullable" },
+          { name: "codigArtFami2", type: "integer (int32) · nullable" },
+          { name: "descrArtFami2", type: "string · nullable" },
+          { name: "despachoArti", type: "string · nullable" },
+          { name: "partidaLoteArti", type: "string · nullable" },
+          { name: "nroSerieArti", type: "string · nullable" },
+          { name: "codigNivelInt1", type: "integer (int32) · nullable" },
+          { name: "descrNivelInt1", type: "string · nullable" },
+          { name: "codigNivelInt2", type: "integer (int32) · nullable" },
+          { name: "descrNivelInt2", type: "string · nullable" },
+          { name: "codigNivelInt3", type: "integer (int32) · nullable" },
+          { name: "descrNivelInt3", type: "string · nullable" },
+          { name: "codigNivelInt4", type: "integer (int32) · nullable" },
+          { name: "descrNivelInt4", type: "string · nullable" },
+          { name: "codigNivelInt5", type: "integer (int32) · nullable" },
+          { name: "descrNivelInt5", type: "string · nullable" },
+          { name: "diasReaproviArti", type: "integer (int32)" },
+          { name: "descrUnidadMedidaPri", type: "string · nullable" },
+          { name: "pesoPriArti", type: "number (double)" },
+          { name: "descrUniMedidaPesoPri", type: "string · nullable" },
+          { name: "volumenPriArti", type: "number (double)" },
+          { name: "descrUniMedidaVolumenPri", type: "string · nullable" },
+          { name: "stMinimoPriArti", type: "number (double)" },
+          { name: "stIdealPriArti", type: "number (double)" },
+          { name: "loteCpraPriArti", type: "number (double)" },
+          { name: "ptoPedidoPriArti", type: "number (double)" },
+          { name: "cantPalletPriArti1", type: "number (double)" },
+          { name: "cantPalletPriArti2", type: "number (double)" },
+          { name: "cantPalletPriArti3", type: "number (double)" },
+          { name: "cantBultoPriArti", type: "number (double)" },
+          { name: "descrUnidadMedidaSecu", type: "string · nullable" },
+          { name: "factorConveArti", type: "number (double)" },
+          { name: "pesoSecuArti", type: "number (double)" },
+          { name: "descrUniMedidaPesoSecu", type: "string · nullable" },
+          { name: "volumenSecuArti", type: "number (double)" },
+          { name: "descrUniMedidaVolumenSecu", type: "string · nullable" },
+          { name: "stMinimoSecuArti", type: "number (double)" },
+          { name: "stIdealSecuArti", type: "number (double)" },
+          { name: "loteCpraSecuArti", type: "number (double)" },
+          { name: "ptoPedidoSecuArti", type: "number (double)" },
+          { name: "cantPalletSecuArti1", type: "number (double)" },
+          { name: "cantPalletSecuArti2", type: "number (double)" },
+          { name: "cantPalletSecuArti3", type: "number (double)" },
+          { name: "cantBultoSecuArti", type: "number (double)" },
+          { name: "tasaIva", type: "number (double)" },
+          { name: "codigoActEcoVenta", type: "string · nullable" },
+          { name: "descripcionActEcoVenta", type: "string · nullable" },
+          { name: "codigoActEcoCompra", type: "string · nullable" },
+          { name: "descripcionActEcoCompra", type: "string · nullable" },
+          { name: "usaFactorConvePrecio", type: "string · nullable" },
+          { name: "codigGrupoComi", type: "integer (int32)" },
+          { name: "descrGrupoComi", type: "string · nullable" },
+          { name: "tipoPreVtaArti", type: "string · nullable" },
+          { name: "tipoPreCpraArti", type: "string · nullable" },
+          { name: "codBarraArti", type: "string · nullable" }
+        ]
+      },
+      {
+        id: "isis-articulo-stock-vw",
+        name: "/api/ISIS_ArticuloStock_VW",
+        method: "GET",
+        area: "Artículos",
+        purpose: "Stock actual por artículo",
+        metrics: {
+          records: "5975",
+          time: "1390",
+          size: "2097.33",
+          date: "2026-07-30T09:15"
+        },
+        notes: "Completa: 1,39 a 2,39 s. Por artículo: 69 ms. Empresa 1: 4.853 filas. Usar depósito 1; ignorar depósito 80 (Reserva). cantCompra y cantVenta son acumulados y no se usarán.",
+        parameters: [
+          { name: "Cod_Articulo", type: "string" },
+          { name: "Cod_Empresa", type: "integer (int32)" },
+          { name: "Cod_Deposito", type: "integer (int32)" }
+        ],
+        fields: [
+          { name: "codArticulo", type: "string · nullable" },
+          { name: "descBusquedaArticulo", type: "string · nullable" },
+          { name: "descripcionArticulo", type: "string · nullable" },
+          { name: "codEmpresa", type: "integer (int32)" },
+          { name: "empresa", type: "string · nullable" },
+          { name: "codDeposito", type: "integer (int32)" },
+          { name: "deposito", type: "string · nullable" },
+          { name: "tipoDeposito", type: "string · nullable" },
+          { name: "cantCompraUm1", type: "number (double)" },
+          { name: "cantCompraUm2", type: "number (double)" },
+          { name: "cantVentaUm1", type: "number (double)" },
+          { name: "cantVentaUm2", type: "number (double)" },
+          { name: "stockUm1", type: "number (double)" },
+          { name: "stockUm2", type: "number (double)" }
+        ]
+      },
+      {
+        id: "isis-cliente-vw",
+        name: "/api/ISIS_Cliente_VW",
+        method: "GET",
+        area: "Clientes",
+        purpose: "Maestro local de clientes de ISIS",
+        metrics: {
+          records: "11353",
+          time: "9787",
+          size: "17189.44",
+          date: "2026-07-30T13:33"
+        },
+        notes: "Completa: 9,79 s y 16,79 MB. Activos: 11.289. Inactivos: 64. Activos sin CUIT útil: 2.579. Con factura desde 2020: 1.875. Por código: 103 ms.",
+        parameters: [
+          { name: "CodigoCli", type: "string" },
+          { name: "CuitCli", type: "string" },
+          { name: "RazonSocialBusCli", type: "string" }
+        ],
+        fields: [
+          { name: "codigoCli", type: "string · nullable" },
+          { name: "codigoExpreso", type: "string · nullable" },
+          { name: "razonSocialExpreso", type: "string · nullable" },
+          { name: "descrIvaC", type: "string · nullable" },
+          { name: "letraCli", type: "string · nullable" },
+          { name: "cuitCli", type: "string · nullable" },
+          { name: "ingBrutosCli", type: "string · nullable" },
+          { name: "fechaAltaCli", type: "date-time" },
+          { name: "fechaUltimaFacCli", type: "date-time · nullable" },
+          { name: "fechaUltimoRecCli", type: "date-time · nullable" },
+          { name: "codProveedorClte", type: "string · nullable" },
+          { name: "codProveAsociado", type: "string · nullable" },
+          { name: "diaVisitaLun", type: "string · nullable" },
+          { name: "diaVisitaMar", type: "string · nullable" },
+          { name: "diaVisitaMie", type: "string · nullable" },
+          { name: "diaVisitaJue", type: "string · nullable" },
+          { name: "diaVisitaVie", type: "string · nullable" },
+          { name: "diaVisitaSab", type: "string · nullable" },
+          { name: "diaVisitaDom", type: "string · nullable" },
+          { name: "ordenVisitaDia1CliLun", type: "string · nullable" },
+          { name: "ordenVisitaDia1CliMar", type: "string · nullable" },
+          { name: "ordenVisitaDia1CliMie", type: "string · nullable" },
+          { name: "ordenVisitaDia1CliJue", type: "string · nullable" },
+          { name: "ordenVisitaDia1CliVie", type: "string · nullable" },
+          { name: "ordenVisitaDia1CliSab", type: "string · nullable" },
+          { name: "ordenVisitaDia1CliDom", type: "string · nullable" },
+          { name: "usaDtosPreItemCli", type: "string · nullable" },
+          { name: "dtoItemPre1Cli", type: "number (double)" },
+          { name: "razonSocialFlete", type: "string · nullable" },
+          { name: "codigoFlete", type: "string · nullable" },
+          { name: "descr_Mda", type: "string · nullable" },
+          { name: "limiteCreditoCli", type: "number (double)" },
+          { name: "razonSocialBusCli", type: "string · nullable" },
+          { name: "razonSocialCli", type: "string · nullable" },
+          { name: "localidadCli", type: "string · nullable" },
+          { name: "codigoPostalCli", type: "string · nullable" },
+          { name: "descri_Partido", type: "string · nullable" },
+          { name: "codProvincia", type: "integer (int32)" },
+          { name: "descrProvincia", type: "string · nullable" },
+          { name: "codigoPais", type: "string · nullable" },
+          { name: "descrPais", type: "string · nullable" },
+          { name: "estadoCli", type: "string · nullable" },
+          { name: "codigoCliCali", type: "integer (int32)" },
+          { name: "descrCliCali", type: "string · nullable" },
+          { name: "codigNivelInt1", type: "integer (int32) · nullable" },
+          { name: "dtoItemPre2Cli", type: "number (double)" },
+          { name: "descrNivelInt1", type: "string · nullable" },
+          { name: "descrNivelInt2", type: "string · nullable" },
+          { name: "codigNivelInt3", type: "integer (int32) · nullable" },
+          { name: "descrNivelInt3", type: "string · nullable" },
+          { name: "codigNivelInt4", type: "integer (int32) · nullable" },
+          { name: "descrNivelInt4", type: "string · nullable" },
+          { name: "codigVendedor", type: "integer (int32)" },
+          { name: "nombreVendedor", type: "string · nullable" },
+          { name: "codigCobrador", type: "integer (int32)" },
+          { name: "nombreCobrador", type: "string · nullable" },
+          { name: "codigListaPrec", type: "integer (int32)" },
+          { name: "descrListaPrec", type: "string · nullable" },
+          { name: "codigCondiPago", type: "integer (int32)" },
+          { name: "descrCondiPago", type: "string · nullable" },
+          { name: "codigNivelInt2", type: "integer (int32) · nullable" },
+          { name: "dtoItemPre3Cli", type: "number (double)" },
+          { name: "emailCli", type: "string · nullable" }
+        ]
+      },
+      {
+        id: "isis-proveedor-vw",
+        name: "/api/ISIS_Proveedor_VW",
+        method: "GET",
+        area: "Proveedores",
+        purpose: "Maestro local de proveedores de ISIS",
+        metrics: {
+          records: "3510",
+          time: "22250",
+          size: "9261.55",
+          date: "2026-07-30T14:30"
+        },
+        notes: "Primera prueba completa: 3.510 filas, 9,04 MB y 22,25 s. Se confirmaron 71 proveedores con cliente asociado. Pendiente repetir estado, CUIT y consulta puntual porque luego la conexión desde Codex dejó de responder.",
+        parameters: [
+          { name: "CodigoProve", type: "string" },
+          { name: "RazonSocialBusProve", type: "string" },
+          { name: "CuitProve", type: "string" }
+        ],
+        fields: [
+          { name: "regisProve", type: "integer (int32)" },
+          { name: "codigoProve", type: "string · nullable" },
+          { name: "razonSocialBusProve", type: "string · nullable" },
+          { name: "razonSocialProve", type: "string · nullable" },
+          { name: "calleProve", type: "string · nullable" },
+          { name: "numeroProve", type: "integer (int32) · nullable" },
+          { name: "pisoProve", type: "string · nullable" },
+          { name: "deptoProve", type: "string · nullable" },
+          { name: "barrioProve", type: "string · nullable" },
+          { name: "localidadProve", type: "string · nullable" },
+          { name: "codigoPostalProve", type: "string · nullable" },
+          { name: "regisPro", type: "integer (int32)" },
+          { name: "regisPais", type: "integer (int32)" },
+          { name: "telefono1Prove", type: "string · nullable" },
+          { name: "telefono2Prove", type: "string · nullable" },
+          { name: "telefono3Prove", type: "string · nullable" },
+          { name: "faxProve", type: "string · nullable" },
+          { name: "emailProve", type: "string · nullable" },
+          { name: "paginaWebProve", type: "string · nullable" },
+          { name: "estadoProve", type: "integer (int32)" },
+          { name: "calificaProve", type: "string · nullable" },
+          { name: "regisNivelProve1", type: "integer (int32) · nullable" },
+          { name: "regisNivelProve2", type: "integer (int32) · nullable" },
+          { name: "regisNivelProve3", type: "integer (int32) · nullable" },
+          { name: "regisNivelProve4", type: "integer (int32) · nullable" },
+          { name: "diaVisita1Prove", type: "integer (int32)" },
+          { name: "diaVisita2Prove", type: "integer (int32)" },
+          { name: "diaVisita3Prove", type: "integer (int32)" },
+          { name: "diaVisita4Prove", type: "integer (int32)" },
+          { name: "diaVisita5Prove", type: "integer (int32)" },
+          { name: "diaVisita6Prove", type: "integer (int32)" },
+          { name: "diaVisita7Prove", type: "integer (int32)" },
+          { name: "regisProveCp", type: "integer (int32)" },
+          { name: "limiteCreditoProve", type: "number (double)" },
+          { name: "regisMda", type: "integer (int32)" },
+          { name: "regisIvaC", type: "integer (int32)" },
+          { name: "cuitProve", type: "string · nullable" },
+          { name: "ingBrutosProve", type: "string · nullable" },
+          { name: "cbuprove", type: "string · nullable" },
+          { name: "regisCta", type: "integer (int32)" },
+          { name: "granContribProve", type: "integer (int32)" },
+          { name: "inscripGananciaProve", type: "integer (int32)" },
+          { name: "regisGanCon", type: "integer (int32) · nullable" },
+          { name: "regisCashFlowCon", type: "integer (int32)" },
+          { name: "horarioAtenProve", type: "string · nullable" },
+          { name: "fechaAltaProve", type: "date-time" },
+          { name: "fechaCumpleProve", type: "date-time · nullable" },
+          { name: "fechaUltimaFacProve", type: "date-time · nullable" },
+          { name: "fechaUltOpagoProve", type: "date-time · nullable" },
+          { name: "comentarioProve", type: "string · nullable" },
+          { name: "docuNombre1Prove", type: "string · nullable" },
+          { name: "docuDescr1Prove", type: "string · nullable" },
+          { name: "docuNombre2Prove", type: "string · nullable" },
+          { name: "docuDescr2Prove", type: "string · nullable" },
+          { name: "docuNombre3Prove", type: "string · nullable" },
+          { name: "docuDescr3Prove", type: "string · nullable" },
+          { name: "docuNombre4Prove", type: "string · nullable" },
+          { name: "docuDescr4Prove", type: "string · nullable" },
+          { name: "repoPedCotizProve", type: "string · nullable" },
+          { name: "repoOrdCpraProve", type: "string · nullable" },
+          { name: "porceRetIvaProve", type: "number (double)" },
+          { name: "cantDtosProve", type: "integer (int32)" },
+          { name: "usaPorceRecarProve", type: "integer (int32)" },
+          { name: "usaImpoRecarProve", type: "integer (int32)" },
+          { name: "calcuRetSussProve", type: "integer (int32)" },
+          { name: "regisSussCon", type: "integer (int32) · nullable" },
+          { name: "regisCli", type: "integer (int32) · nullable" },
+          { name: "usuarioAudi", type: "string · nullable" },
+          { name: "fechaAudi", type: "date-time" },
+          { name: "horaAudi", type: "string · nullable" },
+          { name: "regisProveConce", type: "integer (int32) · nullable" },
+          { name: "calcuRetIvaProve", type: "integer (int32)" },
+          { name: "regisIvaConRet", type: "integer (int32) · nullable" },
+          { name: "nroSedronarProve", type: "string · nullable" },
+          { name: "calcuPerceGanProve", type: "integer (int32)" },
+          { name: "regisTesoConce", type: "integer (int32) · nullable" },
+          { name: "senExenRetIvaprove", type: "integer (int32)" },
+          { name: "dfecExenRetIvaprove", type: "date-time · nullable" },
+          { name: "hfecExenRetIvaprove", type: "date-time · nullable" },
+          { name: "senExenRetSussprove", type: "integer (int32)" },
+          { name: "dfecExenRetSussprove", type: "date-time · nullable" },
+          { name: "hfecExenRetSussprove", type: "date-time · nullable" },
+          { name: "senExenRetGanProve", type: "integer (int32)" },
+          { name: "dfecExenRetGanProve", type: "date-time · nullable" },
+          { name: "hfecExenRetGanProve", type: "date-time · nullable" },
+          { name: "letraProve", type: "string · nullable" },
+          { name: "codProvincia", type: "integer (int32)" },
+          { name: "descrProvincia", type: "string · nullable" },
+          { name: "codigProveCP", type: "integer (int32)" },
+          { name: "descrProveCP", type: "string · nullable" },
+          { name: "descr_Mda", type: "string · nullable" },
+          { name: "descrIvaC", type: "string · nullable" },
+          { name: "codigCta", type: "string · nullable" },
+          { name: "descrCta", type: "string · nullable" },
+          { name: "codigCashFlowCon", type: "integer (int32)" },
+          { name: "descrCashFlowCon", type: "string · nullable" },
+          { name: "codigoPais", type: "string · nullable" },
+          { name: "descrPais", type: "string · nullable" },
+          { name: "codigNivelProve1", type: "integer (int32) · nullable" },
+          { name: "descrNivelProve1", type: "string · nullable" },
+          { name: "codigNivelProve2", type: "integer (int32) · nullable" },
+          { name: "descrNivelProve2", type: "string · nullable" },
+          { name: "codigNivelProve3", type: "integer (int32) · nullable" },
+          { name: "descrNivelProve3", type: "string · nullable" },
+          { name: "codigNivelProve4", type: "integer (int32) · nullable" },
+          { name: "descrNivelProve4", type: "string · nullable" },
+          { name: "codigGanCon", type: "integer (int32) · nullable" },
+          { name: "descrGanCon", type: "string · nullable" },
+          { name: "codigoSussCon", type: "integer (int32) · nullable" },
+          { name: "descriSussCon", type: "string · nullable" },
+          { name: "codigoCli", type: "string · nullable" },
+          { name: "razonSocialBusCli", type: "string · nullable" },
+          { name: "codigProveConce", type: "integer (int32) · nullable" },
+          { name: "descrProveConce", type: "string · nullable" },
+          { name: "codigoIvaConRet", type: "integer (int32) · nullable" },
+          { name: "descriIvaConRet", type: "string · nullable" },
+          { name: "codigTesoConce", type: "integer (int32) · nullable" },
+          { name: "descrTesoConce", type: "string · nullable" }
+        ]
+      },
+      {
+        id: "isis-condicion-pago-vw",
+        name: "/api/ISIS_CondicionPago_VW",
+        method: "GET",
+        area: "Catálogos ISIS",
+        purpose: "Condiciones de pago",
+        notes: "Pendiente de prueba real. Catálogo administrado exclusivamente en ISIS.",
+        parameters: [
+          { name: "CodigCondiPago", type: "integer (int32)" }
+        ],
+        fields: [
+          { name: "codigCondiPago", type: "integer (int32)" },
+          { name: "descrCondiPago", type: "string · nullable" },
+          { name: "senActivoCondiPago", type: "string · nullable" }
+        ]
+      },
+      {
+        id: "isis-lista-precios-vw",
+        name: "/api/ISIS_ListaPrecios_VW",
+        method: "GET",
+        area: "Catálogos ISIS",
+        purpose: "Listas de precios",
+        notes: "Pendiente de prueba real. Catálogo administrado exclusivamente en ISIS.",
+        parameters: [
+          { name: "CodigListaPrec", type: "integer (int32)" }
+        ],
+        fields: [
+          { name: "codigListaPrec", type: "integer (int32)" },
+          { name: "descrListaPrec", type: "string · nullable" },
+          { name: "abrevListaPrec", type: "string · nullable" }
+        ]
+      },
+      {
+        id: "isis-moneda-vw",
+        name: "/api/ISIS_Moneda_VW",
+        method: "GET",
+        area: "Catálogos ISIS",
+        purpose: "Monedas",
+        notes: "Pendiente de prueba real. Catálogo administrado exclusivamente en ISIS.",
+        parameters: [
+          { name: "DescrMda", type: "string" }
+        ],
+        fields: [
+          { name: "descr_Mda", type: "string · nullable" },
+          { name: "signo_Mda", type: "string · nullable" }
+        ]
+      },
+      {
+        id: "isis-vendedor-vw",
+        name: "/api/ISIS_Vendedor_VW",
+        method: "GET",
+        area: "Catálogos ISIS",
+        purpose: "Vendedores",
+        notes: "Pendiente de prueba real. Catálogo administrado exclusivamente en ISIS.",
+        parameters: [
+          { name: "CodigVendedor", type: "integer (int32)" }
+        ],
+        fields: [
+          { name: "codigVendedor", type: "integer (int32)" },
+          { name: "nombreVendedor", type: "string · nullable" },
+          { name: "senActivoVendedor", type: "string · nullable" }
+        ]
+      },
+      {
+        id: "isis-api-comprobantes",
+        name: "/api/ISIS_API_Comprobantes",
+        method: "GET",
+        area: "Catálogos ISIS",
+        purpose: "Tipos de comprobante",
+        notes: "Pendiente de prueba real. Catálogo administrado exclusivamente en ISIS.",
+        parameters: [
+          { name: "Descripcion", type: "string" }
+        ],
+        fields: [
+          { name: "regisCom", type: "integer (int32)" },
+          { name: "descripcion", type: "string · nullable" },
+          { name: "regisTco", type: "integer (int32)" },
+          { name: "abreviatura", type: "string · nullable" },
+          { name: "letra", type: "string · nullable" },
+          { name: "signoComp", type: "string · nullable" },
+          { name: "calculaImpu", type: "integer (int32)" },
+          { name: "libroIva", type: "integer (int32)" },
+          { name: "signoImpue", type: "string · nullable" },
+          { name: "grabaAsiento", type: "integer (int32)" },
+          { name: "codigoCiti", type: "integer (int32)" },
+          { name: "codigoAfip", type: "integer (int32)" },
+          { name: "senalFiscal", type: "integer (int32)" },
+          { name: "senActivoComp", type: "integer (int32)" },
+          { name: "senCpbteElec", type: "integer (int32)" },
+          { name: "senCpbteManual", type: "integer (int32)" }
+        ]
+      },
+      {
+        id: "isis-cheques-cartera-cliente-vw",
+        name: "/api/ISIS_ChequesEnCarteraCliente_VW",
+        method: "GET",
+        area: "Tesorería futura",
+        purpose: "Cheques de clientes disponibles para depositar o vender",
+        notes: "Útil para una etapa posterior: tablero de cheques en cartera y previsión de fondos. Pendiente de prueba real. Swagger describe una lista, pero el esquema de respuesta figura como un solo objeto.",
+        parameters: [
+          { name: "CodigoBco", type: "string" },
+          { name: "FechaDepositoDesde", type: "date-time" },
+          { name: "FechaDepositoHasta", type: "date-time" },
+          { name: "FechaAcreditracionDesde", type: "date-time" },
+          { name: "FechaAcreditracionHasta", type: "date-time" },
+          { name: "FechaEmisionDesde", type: "date-time" },
+          { name: "FechaEmisionHasta", type: "date-time" }
+        ],
+        fields: [
+          { name: "codig_Emp", type: "integer (int32)" },
+          { name: "cotizacion", type: "number (double)" },
+          { name: "moneda", type: "string · nullable" },
+          { name: "importeCheque", type: "number (double)" },
+          { name: "fechaAcreditracion", type: "date-time · nullable" },
+          { name: "fechaDeposito", type: "date-time · nullable" },
+          { name: "fechaEmision", type: "date-time · nullable" },
+          { name: "razonSocialBco", type: "string · nullable" },
+          { name: "codigoBco", type: "string · nullable" },
+          { name: "nroValor_CliVto", type: "string · nullable" },
+          { name: "descr_ModPa", type: "string · nullable" },
+          { name: "descrCtroCosto", type: "string · nullable" },
+          { name: "codCtroCosto", type: "integer (int32)" },
+          { name: "razonSocialCli", type: "string · nullable" },
+          { name: "codigoCli", type: "string · nullable" },
+          { name: "nroPreimpre_CliTra", type: "number (double)" },
+          { name: "nroComprob_CliTra", type: "number (double)" },
+          { name: "descripcionCpbte", type: "string · nullable" },
+          { name: "fecha_CliTra", type: "date-time" },
+          { name: "descr_Emp", type: "string · nullable" },
+          { name: "cuitFirma_CliVto", type: "string · nullable" },
+          { name: "comentario_CliVto", type: "string · nullable" }
+        ]
+      },
+      {
+        id: "isis-cheques-propios-transferencias",
+        name: "/api/ISIS_ChequesPropiosYTransferencias",
+        method: "GET",
+        area: "Tesorería futura",
+        purpose: "Cheques propios y transferencias emitidas",
+        notes: "Útil para una etapa posterior: calendario de egresos, seguimiento de pagos, conciliación y alertas por cheques rechazados. TipoOperacion: 0 cheques, 1 transferencias, 2 ambos. Pendiente de prueba real; Swagger describe una lista, pero documenta un solo objeto.",
+        parameters: [
+          { name: "CodigoBco", type: "string" },
+          { name: "FechaAcreditracionDesde", type: "date-time" },
+          { name: "FechaAcreditracionHasta", type: "date-time" },
+          { name: "FechaDepositoDesde", type: "date-time" },
+          { name: "FechaDepositoHasta", type: "date-time" },
+          { name: "FechaEmisionDesde", type: "date-time" },
+          { name: "FechaEmisionHasta", type: "date-time" },
+          { name: "TipoOperacion", type: "integer (int32) · default 2" }
+        ],
+        fields: [
+          { name: "codig_Emp", type: "integer (int32)" },
+          { name: "comentario_BcoMov", type: "string · nullable" },
+          { name: "cotiza_BcoMov", type: "number (double)" },
+          { name: "moneda", type: "string · nullable" },
+          { name: "importe_BcoMov", type: "number (double)" },
+          { name: "fechaAcreditracion", type: "date-time" },
+          { name: "fechaDeposito", type: "date-time" },
+          { name: "fechaEmision", type: "date-time · nullable" },
+          { name: "razonSocialBco", type: "string · nullable" },
+          { name: "codigoBco", type: "string · nullable" },
+          { name: "senConciliado", type: "string · nullable" },
+          { name: "nroValor_BcoMov", type: "string · nullable" },
+          { name: "descrCtroCosto", type: "string · nullable" },
+          { name: "codCtroCosto", type: "integer (int32)" },
+          { name: "razonSocialProve", type: "string · nullable" },
+          { name: "codigoProve", type: "string · nullable" },
+          { name: "nroPreimpre_BcoMov", type: "number (double)" },
+          { name: "nroComprob_BcoMov", type: "number (double)" },
+          { name: "descripcionCpbte", type: "string · nullable" },
+          { name: "fecha_BcoMov", type: "date-time" },
+          { name: "descr_Emp", type: "string · nullable" },
+          { name: "descr_ModPa", type: "string · nullable" },
+          { name: "senRechazo", type: "integer (int32)" }
+        ]
+      },
+      {
+        id: "isis-remito-cliente-cabecera-vw",
+        name: "/api/ISIS_RemitoClienteCabecera_VW",
+        method: "GET",
+        area: "Remitos",
+        purpose: "Cabecera de remitos de venta y vínculo con pedido",
+        notes: "Fuente candidata para detectar la emisión de un remito y actualizar automáticamente el pedido. regis_PedCliCab permite el vínculo directo. En facturación anticipada, la relación candidata es remito detalle.regis_FCAntiDet → factura anticipada detalle.regis_FCAntiDet → pedido; no requiere una cabecera de factura anticipada. Para logística también pueden ser relevantes codigoFlete, razonSocialFlete y lugarEntrega. Estrategia candidata: consultar una ventana reciente por fecha, hacer upsert por regis_RtoCliCab y solicitar su detalle puntual. Falta validarlo con datos reales y medir tiempos.",
+        parameters: [
+          { name: "CodigoCli", type: "string" },
+          { name: "Descripcion", type: "string" },
+          { name: "NroComprob_RtoCliCab", type: "number (double)" },
+          { name: "Fecha_RtoCliCabDesde", type: "date-time" },
+          { name: "Fecha_RtoCliCabHasta", type: "date-time" }
+        ],
+        fields: [
+          { name: "regis_RtoCliCab", type: "integer (int32)" },
+          { name: "regis_PedCliCab", type: "integer (int32) · nullable" },
+          { name: "codig_Emp", type: "integer (int32)" },
+          { name: "descr_Emp", type: "string · nullable" },
+          { name: "descripcion", type: "string · nullable" },
+          { name: "nroComprob_RtoCliCab", type: "number (double)" },
+          { name: "nroPreimpre_RtoCliCab", type: "number (double)" },
+          { name: "fecha_RtoCliCab", type: "date-time · nullable" },
+          { name: "codigoCli", type: "string · nullable" },
+          { name: "razonSocialBusCli", type: "string · nullable" },
+          { name: "codigCondiPago", type: "integer (int32)" },
+          { name: "descrCondiPago", type: "string · nullable" },
+          { name: "codCtroCosto", type: "integer (int32)" },
+          { name: "descrCtroCosto", type: "string · nullable" },
+          { name: "codigListaPrec", type: "integer (int32) · nullable" },
+          { name: "descrListaPrec", type: "string · nullable" },
+          { name: "codigVendedor", type: "integer (int32)" },
+          { name: "nombreVendedor", type: "string · nullable" },
+          { name: "codConceOpe", type: "integer (int32)" },
+          { name: "descrConceOpe", type: "string · nullable" },
+          { name: "codigoFlete", type: "string · nullable" },
+          { name: "razonSocialFlete", type: "string · nullable" },
+          { name: "lugarEntrega", type: "string · nullable" },
+          { name: "mdaOper_RtoCliCab", type: "integer (int32)" },
+          { name: "monedaOper", type: "string · nullable" },
+          { name: "cotizaOper", type: "number (double)" },
+          { name: "moneda1", type: "string · nullable" },
+          { name: "cotizMda1_RtoCliCab", type: "number (double)" },
+          { name: "moneda2", type: "string · nullable" },
+          { name: "cotizMda2_RtoCliCab", type: "number (double)" },
+          { name: "moneda3", type: "string · nullable" },
+          { name: "cotizMda3_RtoCliCab", type: "number (double)" },
+          { name: "moneda4", type: "string · nullable" },
+          { name: "cotizMda4_RtoCliCab", type: "number (double)" },
+          { name: "dto1_RtoCliCab", type: "number (double)" },
+          { name: "dto2_RtoCliCab", type: "number (double)" },
+          { name: "dto3_RtoCliCab", type: "number (double)" },
+          { name: "dto4_RtoCliCab", type: "number (double)" },
+          { name: "valorDecla_RtoCliCab", type: "number (double)" },
+          { name: "leye1_RtoCliCab", type: "string · nullable" },
+          { name: "leye2_RtoCliCab", type: "string · nullable" },
+          { name: "regis_FCAntiCab", type: "integer (int32) · nullable" }
+        ]
+      },
+      {
+        id: "isis-remito-cliente-detalle-vw",
+        name: "/api/ISIS_RemitoClienteDetalle_VW",
+        method: "GET",
+        area: "Remitos",
+        purpose: "Líneas remitidas y vínculo con factura anticipada",
+        notes: "Complementa la cabecera del remito. Puede consultarse puntualmente por Regis_RtoCliCab, por lo que no exige descargar todo el histórico. regis_FCAntiDet permite vincular una línea remitida con ISIS_VentasDetalLeFCAnti_VW y desde allí recuperar el pedido. Debe probarse con remitos comunes, anticipados y parciales antes de adoptarlo.",
+        parameters: [
+          { name: "Regis_RtoCliCab", type: "integer (int32)" }
+        ],
+        fields: [
+          { name: "regis_RtoCliDet", type: "integer (int32)" },
+          { name: "regis_RtoCliCab", type: "integer (int32)" },
+          { name: "codDeposito", type: "integer (int32)" },
+          { name: "descrDeposito", type: "string · nullable" },
+          { name: "codInternoArti", type: "string · nullable" },
+          { name: "descripcion_RtoCliDet", type: "string · nullable" },
+          { name: "canRto1_RtoCliDet", type: "number (double)" },
+          { name: "canRto2_RtoCliDet", type: "number (double)" },
+          { name: "bonRto1_RtoCliDet", type: "number (double)" },
+          { name: "bonRto2_RtoCliDet", type: "number (double)" },
+          { name: "codigListaPrec", type: "integer (int32)" },
+          { name: "descrListaPrec", type: "string · nullable" },
+          { name: "descr_Mda", type: "string · nullable" },
+          { name: "cotiz_Mda", type: "number (double)" },
+          { name: "tipoPrecio_RtoCliDet", type: "string · nullable" },
+          { name: "dto1_RtoCliDet", type: "number (double)" },
+          { name: "dto2_RtoCliDet", type: "number (double)" },
+          { name: "dto3_RtoCliDet", type: "number (double)" },
+          { name: "precioCab_RtoCliDet", type: "number (double)" },
+          { name: "importe_RtoCliDet", type: "number (double)" },
+          { name: "canFac1_RtoCliDet", type: "number (double)" },
+          { name: "canFac2_RtoCliDet", type: "number (double)" },
+          { name: "bonFac1_RtoCliDet", type: "number (double)" },
+          { name: "bonFac2_RtoCliDet", type: "number (double)" },
+          { name: "regis_FCAntiDet", type: "integer (int32) · nullable" }
+        ]
+      },
+      {
+        id: "isis-operaciones-cliente-imputacion-vw",
+        name: "/api/ISIS_OperacionesClienteImputacion_VW",
+        method: "GET",
+        area: "Cobranzas",
+        purpose: "Relacionar recibos con facturas y, mediante ellas, con pedidos",
+        notes: "Cada fila representa una imputación. regTraFC_ImpuCli identifica el comprobante de débito o factura y regTraRC_ImpuCli el recibo. La cadena candidata es pedido → VentasDetalle.regis_CliTra → regTraFC_ImpuCli → regTraRC_ImpuCli. Es una relación muchos a muchos. El endpoint no devuelve el importe imputado, sólo los totales de ambos comprobantes; permite demostrar asociación, pero no pago total o parcial. Problema incremental: filtra por fecha del comprobante de débito, no por fecha del recibo. Estrategia a probar: detectar recibos nuevos en VentasCabecera_VW y consultar sus imputaciones por NroComprobCred.",
+        parameters: [
+          { name: "CodigoCli", type: "string" },
+          { name: "FechaComprobDebDesde", type: "date-time" },
+          { name: "FechaComprobDebHasta", type: "date-time" },
+          { name: "NroComprobCred", type: "number (double)" }
+        ],
+        fields: [
+          { name: "regis_ImpuCli", type: "integer (int32)" },
+          { name: "codig_Emp", type: "integer (int32) · nullable" },
+          { name: "descr_Emp", type: "string · nullable" },
+          { name: "codigoCli", type: "string · nullable" },
+          { name: "razonSocialBusCli", type: "string · nullable" },
+          { name: "razonSocialCli", type: "string · nullable" },
+          { name: "regTraFC_ImpuCli", type: "integer (int32) · nullable" },
+          { name: "fechaComprobDeb", type: "date-time · nullable" },
+          { name: "desComprobDeb", type: "string · nullable" },
+          { name: "nroComprobDeb", type: "number (double) · nullable" },
+          { name: "totalComproDeb", type: "number (double) · nullable" },
+          { name: "regTraRC_ImpuCli", type: "integer (int32) · nullable" },
+          { name: "fechaComprobCred", type: "date-time · nullable" },
+          { name: "desComprobCred", type: "string · nullable" },
+          { name: "nroComprobCred", type: "number (double) · nullable" },
+          { name: "totalComproCred", type: "number (double) · nullable" }
+        ]
+      },
+      {
+        id: "isis-comprobante-pdf",
+        name: "/api/ISIS_ComprobantePdf",
+        method: "GET",
+        area: "Documentos futuros",
+        purpose: "Obtener el PDF original de un comprobante ISIS",
+        metrics: {
+          records: "1",
+          time: "591",
+          size: "42.65",
+          date: "2026-08-20T09:06"
+        },
+        notes: "Útil para mostrar, descargar o adjuntar comprobantes desde GestionCyE. Prueba real: factura de 59.018 bytes en 444 ms y remito de 43.670 bytes en 591 ms. Ambos fueron PDF A4 válidos de una página. Devuelve Content-Type application/pdf y nombre de archivo; un comprobante inexistente devuelve 404 en 216 ms. Requiere la descripción exacta del comprobante y su número. Evaluar su incorporación cuando el flujo necesite acceder al documento emitido.",
+        parameters: [
+          { name: "CodigoDivision", type: "integer (int32)" },
+          { name: "DescripcionComprobante", type: "string" },
+          { name: "Numero", type: "string" }
+        ],
+        fields: []
+      },
+      {
+        id: "isis-mayor-cuenta-conta-vw",
+        name: "/api/ISIS_MayorCuentaConta_VW",
+        method: "GET",
+        status: "yes",
+        area: "Bancos",
+        purpose: "Fuente contable ISIS para conciliación bancaria",
+        metrics: {
+          records: "216",
+          time: "522",
+          size: "128.05",
+          date: "2026-08-20T09:20"
+        },
+        notes: "Confirmado para conciliación bancaria. Cuenta 1119 Banco Galicia: 216 filas en 522 ms para veinte días, equivalentes a 108 movimientos. Cuenta 111601 Banco Credicoop: 38 filas en 276 ms, equivalentes a 19 movimientos. Falla crítica de ISIS: cada movimiento fue devuelto exactamente dos veces en ambas cuentas; antes de sumar o conciliar se deben eliminar duplicados exactos y validar esta regla contra un mayor exportado de ISIS. Aporta fecha, importe con signo, debe, haber, concepto, asiento, tipo y número de comprobante. La descripción del Swagger es incorrecta y corresponde a otro endpoint.",
+        parameters: [
+          { name: "DCodigoCuentaCont", type: "string" },
+          { name: "HCodigoCuentaCont", type: "string" },
+          { name: "DFechaAsiento", type: "date-time" },
+          { name: "HFechaAsiento", type: "date-time" }
+        ],
+        fields: [
+          { name: "codigoEmpresa", type: "integer (int32) · nullable" },
+          { name: "empresa", type: "string · nullable" },
+          { name: "abrevEmpresa", type: "string · nullable" },
+          { name: "fechaAsiento", type: "date-time · nullable" },
+          { name: "numeroAsiento", type: "integer (int32) · nullable" },
+          { name: "controCosto", type: "string · nullable" },
+          { name: "abrevCtoCosto", type: "string · nullable" },
+          { name: "codigoCuentaCont", type: "string · nullable" },
+          { name: "decripCuentaCont", type: "string · nullable" },
+          { name: "debe", type: "number (double) · nullable" },
+          { name: "haber", type: "number (double) · nullable" },
+          { name: "importe", type: "number (double) · nullable" },
+          { name: "cotiz_AsM", type: "number (double) · nullable" },
+          { name: "regis_Emp", type: "integer (int32) · nullable" },
+          { name: "regis_CCo", type: "integer (int32) · nullable" },
+          { name: "regis_Com", type: "integer (int32) · nullable" },
+          { name: "conceptoAsiento", type: "string · nullable" },
+          { name: "nroComprobante", type: "string · nullable" },
+          { name: "comprobante", type: "string · nullable" },
+          { name: "abrevComprob", type: "string · nullable" },
+          { name: "regis_Cta", type: "integer (int32) · nullable" },
+          { name: "leyenda1", type: "string · nullable" },
+          { name: "leyenda2", type: "string · nullable" },
+          { name: "usuario", type: "string · nullable" },
+          { name: "fechaAuditoria", type: "date-time · nullable" },
+          { name: "horaAuditoria", type: "string · nullable" }
+        ]
+      }
+    ];
+
+    let state = loadState();
+    let activeId = state.activeId || catalog[0]?.id || null;
+
+    const $ = (id) => document.getElementById(id);
+    const endpointList = $("endpointList");
+    const workspace = $("workspace");
+    const emptyState = $("emptyState");
+
+    function blankDecision() {
+      return { decision: "review", purpose: "", notes: "" };
+    }
+
+    function endpointState(endpoint) {
+      if (!state.endpoints[endpoint.id]) {
+        state.endpoints[endpoint.id] = {
+          status: endpoint.status || "review",
+          area: endpoint.area || "",
+          purpose: endpoint.purpose || "",
+          parameters: Object.fromEntries(endpoint.parameters.map((item) => [item.name, blankDecision()])),
+          fields: Object.fromEntries(endpoint.fields.map((item) => [item.name, blankDecision()])),
+          metrics: {
+            records: endpoint.metrics?.records || "",
+            time: endpoint.metrics?.time || "",
+            size: endpoint.metrics?.size || "",
+            date: endpoint.metrics?.date || ""
+          },
+          update: { mode: "", frequency: "", key: "", volume: "" },
+          notes: endpoint.notes || ""
+        };
+      }
+
+      const saved = state.endpoints[endpoint.id];
+      if (endpoint.metrics) {
+        Object.entries(endpoint.metrics).forEach(([key, value]) => {
+          if (saved.metrics[key] === "" || saved.metrics[key] == null) saved.metrics[key] = value;
+        });
+      }
+      if (!saved.notes && endpoint.notes) saved.notes = endpoint.notes;
+      return saved;
+    }
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        return saved && saved.endpoints ? saved : { activeId: null, endpoints: {} };
+      } catch {
+        return { activeId: null, endpoints: {} };
+      }
+    }
+
+    let saveTimer;
+    function save() {
+      state.activeId = activeId;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      $("saveState").textContent = "Guardando...";
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => $("saveState").textContent = "Guardado en este navegador", 250);
+    }
+
+    function currentEndpoint() {
+      return catalog.find((item) => item.id === activeId);
+    }
+
+    function renderSidebar() {
+      const query = $("endpointSearch").value.trim().toLowerCase();
+      endpointList.innerHTML = "";
+
+      catalog
+        .filter((item) => `${item.name} ${item.area || ""}`.toLowerCase().includes(query))
+        .forEach((endpoint) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = `endpoint-item${endpoint.id === activeId ? " active" : ""}`;
+          button.innerHTML = `<strong>${escapeHtml(endpoint.name)}</strong><small>${escapeHtml(endpoint.area || "Sin área")}</small>`;
+          button.addEventListener("click", () => {
+            activeId = endpoint.id;
+            save();
+            render();
+          });
+          endpointList.appendChild(button);
+        });
+    }
+
+    function render() {
+      renderSidebar();
+      const endpoint = currentEndpoint();
+      const hasEndpoint = Boolean(endpoint);
+      emptyState.classList.toggle("hidden", hasEndpoint);
+      workspace.classList.toggle("hidden", !hasEndpoint);
+      if (!endpoint) return;
+
+      const data = endpointState(endpoint);
+      $("summaryName").textContent = endpoint.name;
+      $("endpointStatus").value = data.status;
+      $("endpointArea").value = data.area;
+      $("endpointMethod").value = endpoint.method;
+      $("endpointPurpose").value = data.purpose;
+      $("metricRecords").value = data.metrics.records;
+      $("metricTime").value = data.metrics.time;
+      $("metricSize").value = data.metrics.size;
+      $("metricDate").value = data.metrics.date;
+      $("updateMode").value = data.update.mode;
+      $("updateFrequency").value = data.update.frequency;
+      $("updateKey").value = data.update.key;
+      $("updateVolume").value = data.update.volume;
+      $("generalNotes").value = data.notes;
+
+      renderDecisionRows("parameterRows", endpoint.parameters, data.parameters);
+      renderFieldRows(endpoint, data);
+      updateSummary(endpoint, data);
+    }
+
+    function renderFieldRows(endpoint, data) {
+      const query = $("fieldSearch").value.trim().toLowerCase();
+      const fields = endpoint.fields.filter((item) => item.name.toLowerCase().includes(query));
+      renderDecisionRows("fieldRows", fields, data.fields);
+    }
+
+    function renderDecisionRows(targetId, items, decisions) {
+      const target = $(targetId);
+      target.innerHTML = "";
+
+      items.forEach((item) => {
+        decisions[item.name] ||= blankDecision();
+        const value = decisions[item.name];
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td><code>${escapeHtml(item.name)}</code></td>
+          <td>${escapeHtml(item.type || "")}</td>
+          <td>
+            <div class="decision" data-name="${escapeHtml(item.name)}">
+              <button type="button" data-value="yes">Sí</button>
+              <button type="button" data-value="no">No</button>
+              <button type="button" data-value="review">Revisar</button>
+            </div>
+          </td>
+          <td><input class="inline-input purpose" value="${escapeHtml(value.purpose)}" placeholder="Uso del dato"></td>
+          <td><input class="inline-input notes" value="${escapeHtml(value.notes)}" placeholder="Observación"></td>
+        `;
+
+        row.querySelectorAll(".decision button").forEach((button) => {
+          button.classList.toggle("selected", button.dataset.value === value.decision);
+          button.addEventListener("click", () => {
+            value.decision = button.dataset.value;
+            row.querySelectorAll(".decision button").forEach((option) => {
+              option.classList.toggle("selected", option === button);
+            });
+            save();
+            const endpoint = currentEndpoint();
+            if (endpoint) updateSummary(endpoint, endpointState(endpoint));
+          });
+        });
+
+        row.querySelector(".purpose").addEventListener("input", (event) => {
+          value.purpose = event.target.value;
+          save();
+        });
+        row.querySelector(".notes").addEventListener("input", (event) => {
+          value.notes = event.target.value;
+          save();
+        });
+        target.appendChild(row);
+      });
+    }
+
+    function updateSummary(endpoint, data) {
+      const decisions = endpoint.fields.map((item) => data.fields[item.name]?.decision || "review");
+      const yes = decisions.filter((item) => item === "yes").length;
+      const no = decisions.filter((item) => item === "no").length;
+      const pending = decisions.length - yes - no;
+      const completed = decisions.length ? Math.round(((yes + no) / decisions.length) * 100) : 0;
+
+      $("summaryFields").textContent = decisions.length;
+      $("summaryYes").textContent = yes;
+      $("summaryNo").textContent = no;
+      $("summaryPending").textContent = pending;
+      $("progressBar").style.width = `${completed}%`;
+    }
+
+    function bindText(id, apply) {
+      $(id).addEventListener("input", (event) => {
+        const endpoint = currentEndpoint();
+        if (!endpoint) return;
+        apply(endpointState(endpoint), event.target.value);
+        save();
+      });
+    }
+
+    function exportState() {
+      const payload = {
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        catalog,
+        decisions: state.endpoints
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `analisis-api-isis-${new Date().toISOString().slice(0, 10)}.json`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }
+
+    function importState(file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const imported = JSON.parse(reader.result);
+          if (!imported.decisions || typeof imported.decisions !== "object") throw new Error();
+          state.endpoints = imported.decisions;
+          save();
+          render();
+        } catch {
+          alert("El archivo no contiene decisiones válidas.");
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    bindText("endpointStatus", (data, value) => data.status = value);
+    bindText("endpointArea", (data, value) => data.area = value);
+    bindText("endpointPurpose", (data, value) => data.purpose = value);
+    bindText("metricRecords", (data, value) => data.metrics.records = value);
+    bindText("metricTime", (data, value) => data.metrics.time = value);
+    bindText("metricSize", (data, value) => data.metrics.size = value);
+    bindText("metricDate", (data, value) => data.metrics.date = value);
+    bindText("updateMode", (data, value) => data.update.mode = value);
+    bindText("updateFrequency", (data, value) => data.update.frequency = value);
+    bindText("updateKey", (data, value) => data.update.key = value);
+    bindText("updateVolume", (data, value) => data.update.volume = value);
+    bindText("generalNotes", (data, value) => data.notes = value);
+
+    $("endpointSearch").addEventListener("input", renderSidebar);
+    $("fieldSearch").addEventListener("input", () => {
+      const endpoint = currentEndpoint();
+      if (endpoint) renderFieldRows(endpoint, endpointState(endpoint));
+    });
+    $("exportButton").addEventListener("click", exportState);
+    $("importButton").addEventListener("click", () => $("importFile").click());
+    $("importFile").addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      if (file) importState(file);
+      event.target.value = "";
+    });
+
+    catalog.forEach(endpointState);
+    render();
+  </script>
+</body>
+</html>

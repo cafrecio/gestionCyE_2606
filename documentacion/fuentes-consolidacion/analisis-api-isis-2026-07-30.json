@@ -1,0 +1,671 @@
+{
+  "version": 1,
+  "exportedAt": "2026-07-30T11:47:30.446Z",
+  "catalog": [
+    {
+      "id": "isis-articulo-vw",
+      "name": "/api/ISIS_Articulo_VW",
+      "method": "GET",
+      "area": "Artículos",
+      "purpose": "Maestro local de artículos de ISIS",
+      "parameters": [
+        {
+          "name": "CodInternoArti",
+          "type": "string"
+        },
+        {
+          "name": "CodBarraArti",
+          "type": "string"
+        },
+        {
+          "name": "DescriBusArti",
+          "type": "string"
+        },
+        {
+          "name": "Regis_Arti",
+          "type": "integer (int32)"
+        }
+      ],
+      "fields": [
+        {
+          "name": "regisArti",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "codInternoArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descripcionArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descriBusArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "senInhabilitadoArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "calificacion",
+          "type": "string · nullable"
+        },
+        {
+          "name": "clasificaArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "tipoArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "facturaArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigoArtiGrupo",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigArtFami1",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrArtFami1",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigArtFami2",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrArtFami2",
+          "type": "string · nullable"
+        },
+        {
+          "name": "despachoArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "partidaLoteArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "nroSerieArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigNivelInt1",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrNivelInt1",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigNivelInt2",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrNivelInt2",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigNivelInt3",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrNivelInt3",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigNivelInt4",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrNivelInt4",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigNivelInt5",
+          "type": "integer (int32) · nullable"
+        },
+        {
+          "name": "descrNivelInt5",
+          "type": "string · nullable"
+        },
+        {
+          "name": "diasReaproviArti",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "descrUnidadMedidaPri",
+          "type": "string · nullable"
+        },
+        {
+          "name": "pesoPriArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "descrUniMedidaPesoPri",
+          "type": "string · nullable"
+        },
+        {
+          "name": "volumenPriArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "descrUniMedidaVolumenPri",
+          "type": "string · nullable"
+        },
+        {
+          "name": "stMinimoPriArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "stIdealPriArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "loteCpraPriArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "ptoPedidoPriArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantPalletPriArti1",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantPalletPriArti2",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantPalletPriArti3",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantBultoPriArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "descrUnidadMedidaSecu",
+          "type": "string · nullable"
+        },
+        {
+          "name": "factorConveArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "pesoSecuArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "descrUniMedidaPesoSecu",
+          "type": "string · nullable"
+        },
+        {
+          "name": "volumenSecuArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "descrUniMedidaVolumenSecu",
+          "type": "string · nullable"
+        },
+        {
+          "name": "stMinimoSecuArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "stIdealSecuArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "loteCpraSecuArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "ptoPedidoSecuArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantPalletSecuArti1",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantPalletSecuArti2",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantPalletSecuArti3",
+          "type": "number (double)"
+        },
+        {
+          "name": "cantBultoSecuArti",
+          "type": "number (double)"
+        },
+        {
+          "name": "tasaIva",
+          "type": "number (double)"
+        },
+        {
+          "name": "codigoActEcoVenta",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descripcionActEcoVenta",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigoActEcoCompra",
+          "type": "string · nullable"
+        },
+        {
+          "name": "descripcionActEcoCompra",
+          "type": "string · nullable"
+        },
+        {
+          "name": "usaFactorConvePrecio",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codigGrupoComi",
+          "type": "integer (int32)"
+        },
+        {
+          "name": "descrGrupoComi",
+          "type": "string · nullable"
+        },
+        {
+          "name": "tipoPreVtaArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "tipoPreCpraArti",
+          "type": "string · nullable"
+        },
+        {
+          "name": "codBarraArti",
+          "type": "string · nullable"
+        }
+      ]
+    }
+  ],
+  "decisions": {
+    "isis-articulo-vw": {
+      "status": "yes",
+      "area": "Artículos",
+      "purpose": "Maestro local de artículos de ISIS",
+      "parameters": {
+        "CodInternoArti": {
+          "decision": "yes",
+          "purpose": "Creo que para actualizar, la demanda deberia ser puntual",
+          "notes": ""
+        },
+        "CodBarraArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "DescriBusArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": "Nuesta BD va a ser interna, no vamos a consultar desde ISIS"
+        },
+        "Regis_Arti": {
+          "decision": "review",
+          "purpose": "Podria ser util para detectar si existe un articulo nuevo.",
+          "notes": ""
+        }
+      },
+      "fields": {
+        "regisArti": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "codInternoArti": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "descripcionArti": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "descriBusArti": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "senInhabilitadoArti": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "calificacion": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "clasificaArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "tipoArti": {
+          "decision": "yes",
+          "purpose": "Podria servir para crear nuevos, para taller",
+          "notes": ""
+        },
+        "facturaArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigoArtiGrupo": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigArtFami1": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrArtFami1": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigArtFami2": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrArtFami2": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "despachoArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "partidaLoteArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "nroSerieArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigNivelInt1": {
+          "decision": "yes",
+          "purpose": "Filtros, estadisticas",
+          "notes": ""
+        },
+        "descrNivelInt1": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigNivelInt2": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrNivelInt2": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigNivelInt3": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrNivelInt3": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigNivelInt4": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrNivelInt4": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigNivelInt5": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrNivelInt5": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "diasReaproviArti": {
+          "decision": "no",
+          "purpose": "Seria util, pero no esta cargado",
+          "notes": ""
+        },
+        "descrUnidadMedidaPri": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "pesoPriArti": {
+          "decision": "review",
+          "purpose": "No esta cargado, pero seria interesante para cuando lleguemos a logistica",
+          "notes": ""
+        },
+        "descrUniMedidaPesoPri": {
+          "decision": "review",
+          "purpose": "",
+          "notes": ""
+        },
+        "volumenPriArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrUniMedidaVolumenPri": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "stMinimoPriArti": {
+          "decision": "review",
+          "purpose": "",
+          "notes": "Generaria el dato en nuestro sistema"
+        },
+        "stIdealPriArti": {
+          "decision": "review",
+          "purpose": "",
+          "notes": "dato de gestion"
+        },
+        "loteCpraPriArti": {
+          "decision": "review",
+          "purpose": "",
+          "notes": "dato de gestion"
+        },
+        "ptoPedidoPriArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantPalletPriArti1": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantPalletPriArti2": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantPalletPriArti3": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantBultoPriArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrUnidadMedidaSecu": {
+          "decision": "yes",
+          "purpose": "",
+          "notes": ""
+        },
+        "factorConveArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "pesoSecuArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrUniMedidaPesoSecu": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "volumenSecuArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrUniMedidaVolumenSecu": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "stMinimoSecuArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "stIdealSecuArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "loteCpraSecuArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "ptoPedidoSecuArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantPalletSecuArti1": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantPalletSecuArti2": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantPalletSecuArti3": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "cantBultoSecuArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "tasaIva": {
+          "decision": "yes",
+          "purpose": "Para impuestos",
+          "notes": ""
+        },
+        "codigoActEcoVenta": {
+          "decision": "yes",
+          "purpose": "Impuestos",
+          "notes": ""
+        },
+        "descripcionActEcoVenta": {
+          "decision": "yes",
+          "purpose": "Impuestos",
+          "notes": ""
+        },
+        "codigoActEcoCompra": {
+          "decision": "yes",
+          "purpose": "Impuestos",
+          "notes": ""
+        },
+        "descripcionActEcoCompra": {
+          "decision": "yes",
+          "purpose": "Impuestos",
+          "notes": ""
+        },
+        "usaFactorConvePrecio": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codigGrupoComi": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "descrGrupoComi": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "tipoPreVtaArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "tipoPreCpraArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        },
+        "codBarraArti": {
+          "decision": "no",
+          "purpose": "",
+          "notes": ""
+        }
+      },
+      "metrics": {
+        "records": "",
+        "time": "",
+        "size": "",
+        "date": ""
+      },
+      "update": {
+        "mode": "",
+        "frequency": "",
+        "key": "",
+        "volume": ""
+      },
+      "notes": ""
+    }
+  }
+}

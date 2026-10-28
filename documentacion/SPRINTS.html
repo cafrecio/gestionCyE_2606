@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Definición y alcance de los sprints de GestionCyE v2.0">
+  <title>GestionCyE v2.0 · Sprints</title>
+  <style>
+    :root {
+      --ink: #18242c; --muted: #65727a; --paper: #f3f1eb; --panel: #fffefa;
+      --navy: #17313d; --teal: #16857b; --teal-soft: #dff2ee;
+      --amber: #bd761c; --amber-soft: #fff0d7; --line: #dedbd2;
+      --shadow: 0 14px 36px rgba(20,42,54,.08); --radius: 18px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font-family: Inter, system-ui, sans-serif; line-height: 1.55; }
+    button { font: inherit; }
+    .sidebar { position: fixed; inset: 0 auto 0 0; width: 260px; padding: 28px 20px; color: white; background: var(--navy); }
+    .brand { margin-bottom: 34px; }
+    .brand strong { display: block; font-size: 20px; }
+    .brand span { color: #a9c1c5; font-size: 13px; }
+    nav a { display: block; padding: 10px 12px; margin: 4px 0; border-radius: 10px; color: #c8d8da; text-decoration: none; }
+    nav a:hover, nav a.active { color: white; background: rgba(255,255,255,.09); }
+    .sync { position: absolute; right: 20px; bottom: 24px; left: 20px; padding: 13px; border: 1px solid rgba(255,255,255,.12); border-radius: 12px; color: #b8cccf; font-size: 12px; }
+    main { margin-left: 260px; }
+    .hero { padding: 62px clamp(28px,7vw,90px) 52px; color: white; background: linear-gradient(120deg,#1a3542,#246458); }
+    .eyebrow { color: #9fe0d3; font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { margin: 14px 0 10px; font-size: clamp(38px,6vw,68px); line-height: 1.02; letter-spacing: -.04em; }
+    .hero p { max-width: 720px; margin: 0; color: #d4e5e2; font-size: 18px; }
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 25px; }
+    .badge { padding: 7px 11px; border: 1px solid rgba(255,255,255,.18); border-radius: 999px; font-size: 12px; }
+    .content { max-width: 1040px; padding: 42px clamp(24px,6vw,76px) 90px; }
+    section { scroll-margin-top: 24px; margin-bottom: 46px; }
+    h2 { margin: 0 0 18px; font-size: 28px; letter-spacing: -.025em; }
+    h3 { margin: 0 0 12px; font-size: 19px; }
+    p { margin: 8px 0 14px; }
+    .lead { font-size: 19px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(230px,1fr)); gap: 15px; }
+    .card { padding: 21px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); box-shadow: var(--shadow); }
+    .card p, .card li { color: var(--muted); }
+    .number { display: grid; place-items: center; width: 34px; height: 34px; margin-bottom: 14px; border-radius: 10px; color: #087269; background: var(--teal-soft); font-weight: 800; }
+    .rule { padding: 22px 24px; border-left: 5px solid var(--teal); border-radius: 0 var(--radius) var(--radius) 0; background: var(--teal-soft); }
+    ul, ol { padding-left: 21px; }
+    li { margin: 7px 0; }
+    table { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 14px; background: var(--panel); box-shadow: var(--shadow); }
+    th, td { padding: 13px 15px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: white; background: var(--navy); }
+    tr:last-child td { border: 0; }
+    .empty { padding: 30px; border: 1px dashed #c8bfae; border-radius: var(--radius); text-align: center; background: rgba(255,255,255,.45); }
+    .empty strong { display: block; margin-bottom: 5px; font-size: 19px; }
+    .empty span { color: var(--muted); }
+    details { margin-top: 16px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); box-shadow: var(--shadow); }
+    summary { padding: 19px 22px; cursor: pointer; color: var(--navy); font-weight: 800; }
+    .template { padding: 0 22px 22px; }
+    .template h4 { margin: 20px 0 8px; color: var(--teal); }
+    footer { padding: 20px clamp(24px,6vw,76px); color: var(--muted); border-top: 1px solid var(--line); font-size: 12px; }
+    @media (max-width: 760px) {
+      .sidebar { position: static; width: auto; padding: 18px; }
+      .sidebar nav { display: flex; gap: 4px; overflow-x: auto; }
+      .sidebar nav a { white-space: nowrap; }
+      .sync { display: none; }
+      main { margin-left: 0; }
+      .hero { padding-top: 42px; }
+      table { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><strong>GestionCyE v2.0</strong><span>Alcance por hitos</span></div>
+    <nav>
+      <a href="#criterio">Criterio</a>
+      <a href="#documentacion">Documentación</a>
+      <a href="#estructura">Estructura</a>
+      <a href="#estados">Estados</a>
+      <a href="#sprints">Sprints</a>
+    </nav>
+    <div class="sync">Fuente humana. Debe mantenerse sincronizada con <strong>SPRINTS.md</strong>.</div>
+  </aside>
+
+  <main>
+    <header class="hero">
+      <div class="eyebrow">Definición vigente · 30/07/2026</div>
+      <h1>Sprints por hitos</h1>
+      <p>El trabajo se organiza por resultados funcionales terminados, no por semanas ni fechas artificiales.</p>
+      <div class="badges">
+        <span class="badge">Alcance corto</span>
+        <span class="badge">Resultado demostrable</span>
+        <span class="badge">Cierre verificable</span>
+      </div>
+    </header>
+
+    <div class="content">
+      <section id="criterio">
+        <h2>Qué significa sprint</h2>
+        <div class="rule">
+          <strong>Un sprint es un hito funcional entregable.</strong>
+          No tiene una duración fija: termina cuando cumple sus criterios de aceptación.
+        </div>
+        <div class="grid" style="margin-top:16px">
+          <article class="card"><div class="number">1</div><h3>Sin tiempo artificial</h3><p>No se asumen ciclos semanales o quincenales. Las fechas solo existen si son necesarias y explícitas.</p></article>
+          <article class="card"><div class="number">2</div><h3>Alcance cerrado</h3><p>Cada hito debe ser corto, concreto y estar limitado antes de comenzar el desarrollo.</p></article>
+          <article class="card"><div class="number">3</div><h3>Cierre real</h3><p>El avance se mide por resultados demostrables terminados, no por tiempo dedicado.</p></article>
+        </div>
+      </section>
+
+      <section id="documentacion">
+        <h2>Regla de documentación</h2>
+        <p class="lead">Toda definición acordada en este chat debe quedar registrada, en la misma intervención, en los dos archivos.</p>
+        <div class="grid">
+          <article class="card"><h3>SPRINTS.html</h3><p>Vista interactiva, ordenada y fácil de consultar por personas.</p></article>
+          <article class="card"><h3>SPRINTS.md</h3><p>Fuente operativa para que Codex desarrolle respetando las definiciones.</p></article>
+        </div>
+        <ul>
+          <li>Una propuesta no ingresa al alcance sin confirmación explícita.</li>
+          <li>Las contradicciones con decisiones anteriores deben señalarse antes de documentarlas.</li>
+          <li>Ambos archivos deben conservar el mismo contenido funcional.</li>
+          <li>Lo expresamente excluido no debe implementarse.</li>
+        </ul>
+      </section>
+
+      <section id="estructura">
+        <h2>Contenido obligatorio</h2>
+        <div class="grid">
+          <article class="card"><h3>Identidad</h3><p>Número, nombre, estado, hito y objetivo.</p></article>
+          <article class="card"><h3>Uso</h3><p>Resultado demostrable, usuarios y casos de uso.</p></article>
+          <article class="card"><h3>Límites</h3><p>Qué está incluido y qué queda expresamente excluido.</p></article>
+          <article class="card"><h3>Cierre</h3><p>Criterios de aceptación verificables.</p></article>
+          <article class="card"><h3>Condiciones</h3><p>Dependencias y decisiones funcionales o técnicas.</p></article>
+          <article class="card"><h3>Incertidumbre</h3><p>Preguntas pendientes que todavía no son alcance.</p></article>
+        </div>
+      </section>
+
+      <section id="estados">
+        <h2>Estados permitidos</h2>
+        <table>
+          <thead><tr><th>Estado</th><th>Significado</th></tr></thead>
+          <tbody>
+            <tr><td>Propuesto</td><td>Existe como idea; su alcance no está aprobado.</td></tr>
+            <tr><td>Definido</td><td>Alcance y criterios de aceptación aprobados.</td></tr>
+            <tr><td>En desarrollo</td><td>Implementación iniciada.</td></tr>
+            <tr><td>Bloqueado</td><td>Existe un impedimento concreto documentado.</td></tr>
+            <tr><td>En validación</td><td>Implementación terminada, pendiente de comprobación.</td></tr>
+            <tr><td>Terminado</td><td>Cumple todos los criterios de aceptación.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="sprints">
+        <h2>Sprints</h2>
+        <article class="card">
+          <div class="badges" style="margin:0 0 16px">
+            <span class="badge" style="color:#087269;border-color:#9bcfc8;background:var(--teal-soft)">Sprint 1</span>
+            <span class="badge" style="color:#087269;border-color:#9bcfc8;background:var(--teal-soft)">Definido</span>
+          </div>
+          <h2 style="font-size:25px">Mapa de datos e integración ISIS</h2>
+          <p><strong>Hito:</strong> primera infraestructura de integración funcionando y estrategia de datos respaldada por mediciones reales.</p>
+          <p><strong>Objetivo:</strong> determinar qué información útil o potencialmente útil puede aportar ISIS, qué utilizará GestionCyE y cómo obtenerla, almacenarla y actualizarla sin frenar la aplicación.</p>
+          <p><strong>Resultado demostrable:</strong> una interfaz técnica mínima permite ejecutar las consultas seleccionadas, observar su rendimiento, guardar los datos definidos en una base local y comprobar su actualización.</p>
+        </article>
+
+        <details open>
+          <summary>Criterio de selección</summary>
+          <div class="template">
+            <p>No se relevarán indiscriminadamente todos los endpoints. Datos identificará aproximadamente entre <strong>20 y 30 consultas</strong>, sin convertir la estimación en una cuota obligatoria.</p>
+            <ul>
+              <li><strong>Útil confirmada:</strong> necesaria para un proceso identificado.</li>
+              <li><strong>Posiblemente útil:</strong> puede aportar información y requiere evaluación.</li>
+              <li><strong>Descartada:</strong> sin utilidad identificada, duplicada o no funcional; se registra el motivo.</li>
+            </ul>
+            <p>La evidencia puede incorporar o quitar consultas. El objetivo es cubrir información relevante, no alcanzar una cantidad.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Casos de uso</summary>
+          <div class="template">
+            <ol>
+              <li><strong>Explorar:</strong> ejecutar una consulta sin exponer credenciales y observar disponibilidad, duración, volumen, errores y una muestra.</li>
+              <li><strong>Evaluar:</strong> analizar campos, identificadores, filtros, relaciones y utilidad.</li>
+              <li><strong>Persistir:</strong> guardar una entidad y comprobar altas y modificaciones sin duplicaciones.</li>
+              <li><strong>Comparar:</strong> medir consulta directa, lectura local y alternativas de actualización.</li>
+              <li><strong>Definir propiedad:</strong> determinar si cada dato viene de ISIS o lo genera GestionCyE, y cómo se accede.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details>
+          <summary>Alcance incluido</summary>
+          <div class="template">
+            <ul>
+              <li>Inventario dirigido de endpoints útiles y posiblemente útiles.</li>
+              <li>Pruebas reales de disponibilidad, parámetros, filtros, paginación y respuestas.</li>
+              <li>Análisis de campos, claves, relaciones y dependencias.</li>
+              <li>Medición de duración, volumen, errores y comportamiento.</li>
+              <li>Base local, integración e interfaz técnica mínimas.</li>
+              <li>Pruebas de guardado, actualización e idempotencia.</li>
+              <li>Clasificación de datos de ISIS y datos propios de GestionCyE.</li>
+              <li>Estrategia de actualización específica por entidad.</li>
+              <li>Registro de riesgos, restricciones, faltantes y preguntas.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>Laboratorio técnico mínimo</summary>
+          <div class="template">
+            <p>Un único proyecto con Laravel, React, TypeScript e Inertia, PostgreSQL como base local y credenciales configuradas por entorno.</p>
+            <p>La interfaz de diagnóstico debe permitir seleccionar una consulta, validar parámetros, ejecutarla, ver duración, registros y errores, inspeccionar una muestra, persistir cuando corresponda y comparar ISIS con la lectura local.</p>
+            <p>Se medirán por separado la API de ISIS, el procesamiento y guardado local, y el tiempo percibido desde la interfaz.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>Matriz de datos</summary>
+          <div class="template">
+            <table>
+              <thead><tr><th>Definición</th><th>Contenido</th></tr></thead>
+              <tbody>
+                <tr><td>Fuente de verdad</td><td>ISIS o GestionCyE.</td></tr>
+                <tr><td>Uso</td><td>Necesidad confirmada o posible.</td></tr>
+                <tr><td>Acceso</td><td>Directo, réplica local o híbrido.</td></tr>
+                <tr><td>Actualización</td><td>Interactiva, periódica, barrido o bajo demanda.</td></tr>
+                <tr><td>Identidad</td><td>Clave externa y clave local.</td></tr>
+                <tr><td>Detección de cambios</td><td>Fecha, identificador, comparación, hash u otro mecanismo comprobado.</td></tr>
+                <tr><td>Riesgo</td><td>Lentitud, filtros, datos incompletos, duplicación u otra limitación.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details>
+          <summary>Fuera de alcance</summary>
+          <div class="template">
+            <ul>
+              <li>Endpoints sin utilidad identificada.</li>
+              <li>Módulos operativos para usuarios finales y diseño visual definitivo.</li>
+              <li>Sincronización de producción y migración histórica completa.</li>
+              <li>Escritura, modificación o eliminación de datos en ISIS.</li>
+              <li>Automatizaciones definitivas de producción.</li>
+              <li>Reglas funcionales sin evidencia o validación.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>Entregables</summary>
+          <div class="template">
+            <ol>
+              <li>Laboratorio técnico ejecutable.</li>
+              <li>Base local mínima y migraciones reproducibles.</li>
+              <li>Catálogo clasificado de consultas.</li>
+              <li>Diccionario de campos y mapa de relaciones.</li>
+              <li>Informe de mediciones reproducibles.</li>
+              <li>Matriz de propiedad y actualización.</li>
+              <li>Estrategia de sincronización por entidad.</li>
+              <li>Registro de descartes, limitaciones y preguntas.</li>
+              <li>Propuesta fundada del sprint siguiente.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details>
+          <summary>Criterios de aceptación</summary>
+          <div class="template">
+            <ol>
+              <li>Consultas confirmadas y candidatas relevantes identificadas y clasificadas.</li>
+              <li>Pruebas y mediciones reproducibles para cada consulta incorporada.</li>
+              <li>Campos utilizados documentados o marcados explícitamente como pendientes.</li>
+              <li>Ciclo local de alta y actualización demostrado sin duplicaciones.</li>
+              <li>Interfaz técnica capaz de ejecutar, observar y comparar sin bloquear toda la aplicación.</li>
+              <li>Estrategia de acceso y actualización fundada para cada entidad prioritaria.</li>
+              <li>Separación clara entre datos de ISIS y datos propios.</li>
+              <li>Ausencia de credenciales y datos sensibles en código, documentación, interfaz y registros.</li>
+              <li>Riesgos y dudas visibles, sin presentarlos como hechos.</li>
+              <li>Información suficiente para definir el siguiente hito sin suposiciones sobre ISIS.</li>
+            </ol>
+          </div>
+        </details>
+
+        <details>
+          <summary>Dependencias y preguntas pendientes</summary>
+          <div class="template">
+            <h4>Dependencias</h4>
+            <ul>
+              <li>Acceso funcional a la API y al esquema OpenAPI.</li>
+              <li>Decisiones vigentes de Arquitectura.</li>
+              <li>Selección e interpretación de consultas realizada por Datos.</li>
+              <li>Validación del responsable cuando el significado no pueda demostrarse.</li>
+            </ul>
+            <h4>Pendientes</h4>
+            <ul>
+              <li>Lista definitiva de consultas.</li>
+              <li>Volumen histórico representativo.</li>
+              <li>Umbrales aceptables de duración.</li>
+              <li>Mecanismos de detección de cambios por entidad.</li>
+              <li>Datos que deben ocultarse en diagnóstico y registros.</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>Ver plantilla de un sprint</summary>
+          <div class="template">
+            <h3>Sprint N — Nombre</h3>
+            <p><strong>Estado:</strong> Propuesto</p>
+            <p><strong>Hito · Objetivo · Resultado demostrable · Usuarios involucrados</strong></p>
+            <h4>Casos de uso</h4><p>Pendiente de definir.</p>
+            <h4>Incluido</h4><p>Pendiente de definir.</p>
+            <h4>Excluido</h4><p>Pendiente de definir.</p>
+            <h4>Criterios de aceptación</h4><p>Pendiente de definir.</p>
+            <h4>Dependencias y decisiones</h4><p>Pendiente de definir.</p>
+            <h4>Preguntas pendientes</h4><p>Pendiente de definir.</p>
+          </div>
+        </details>
+      </section>
+    </div>
+    <footer>GestionCyE v2.0 · Definición de sprints · Última actualización: 30/07/2026</footer>
+  </main>
+
+  <script>
+    const links = [...document.querySelectorAll("nav a")];
+    const sections = links.map(link => document.querySelector(link.hash));
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        links.forEach(link => link.classList.toggle("active", link.hash === `#${entry.target.id}`));
+      });
+    }, { rootMargin: "-20% 0px -70%" });
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>

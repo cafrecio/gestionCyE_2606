@@ -17,6 +17,64 @@ Gran parte del seguimiento operativo se realiza por mail. Esto genera mucho volu
 
 ## Objetivo del modulo
 
+### Primera entrega acotada, decision vigente
+
+El usuario limita la primera entrega a la pantalla de pedidos y sus lineas,
+con cliente, articulo, cantidad, vendedor, stock y documentos FC, REM y RC.
+Los estados de Taller y Entrega se cargan manualmente.
+
+Un pedido termina cuando tiene al menos una factura, un remito y un recibo
+asociados, y se confirma manualmente que esta entregado. Deben cumplirse las
+cuatro condiciones. El estado de Taller no agrega una condicion de cierre.
+No se requiere calcular saldos ni cantidades cubiertas por documentos para
+aplicar esta regla inicial.
+
+El pedido terminado y todas sus lineas desaparecen de la lista activa, sin
+borrarse del historial. La especificacion de datos y cierre vigente esta en
+`08-estructura-isis-primeras-pantallas.md`, seccion Alcance.
+
+Los modulos, solicitudes, comunicaciones, certificados, OT y demas capacidades
+descritas abajo son vision futura. No son requisitos para esta primera entrega.
+
+### Vision integral y crecimiento por modulos
+
+El usuario confirma que GestionCyE sera un sistema de seguimiento integral de
+las actividades que ISIS no termina de resolver. La pantalla de pedidos reune
+el avance de varios modulos; cada modulo permite ejecutar su trabajo y generar
+solicitudes para otros usuarios.
+
+Capacidades previstas, pendientes de detallar sus flujos y etapas:
+
+- Taller: solicitar o generar OT y solicitar la carga de ensayos.
+- Calidad: solicitar y emitir certificados de calidad. Su ubicacion como modulo
+  independiente o dentro de Taller queda por definir.
+- Logistica: solicitar la preparacion del pedido para entrega.
+- Comunicacion externa: informar al fletero la guia e informar a los clientes
+  que el pedido esta listo para retirar o incluido en el recorrido del dia.
+- Uso desde celulares: firmar OT y confirmar los lotes utilizados mediante una
+  interfaz adaptada a esas tareas. No se definio una app nativa ni modo offline.
+- Vistas por usuario: informacion y acciones segun responsabilidades y permisos,
+  con solicitudes y avisos vinculados al trabajo correspondiente.
+
+Contexto de operacion confirmado: aproximadamente 10 usuarios, despliegue en
+VPS y seguridad como requisito prioritario desde el inicio.
+
+Implicancias a contemplar en el diseno:
+
+- Vincular OT, ensayos, certificados y preparaciones con los pedidos y las
+  lineas que correspondan, conservando responsables e historial.
+- Definir permisos por accion, cuentas individuales, proteccion de credenciales,
+  acceso cifrado, auditoria y copias de seguridad con recuperacion verificada.
+  Las medidas concretas y la autenticacion reforzada quedan por especificar.
+- Definir quien puede firmar una OT y sobre que version del documento; una
+  firma capturada en pantalla no define por si sola su alcance legal.
+- Definir canal, destinatarios, autorizacion y disparadores de avisos externos,
+  conservando su historial de envio. No se eligio email, WhatsApp ni otro canal.
+
+Estas capacidades describen la vision del producto. No implican desarrollar
+todos los modulos en la primera etapa. La tarea actual sigue siendo cerrar la
+estructura de datos ISIS necesaria para las primeras pantallas.
+
 El primer modulo del nuevo sistema sera un tablero de control y seguimiento de cotizaciones y pedidos.
 
 La idea principal es que cada usuario tenga en una sola pantalla:
@@ -187,4 +245,3 @@ Cada sector deberia ver principalmente lo que necesita para trabajar:
 - Indicadores relevantes.
 
 La informacion deberia actualizarse por eventos reales del proceso, como creacion de remito, factura, confirmacion de pago, preparacion del pedido, generacion de OT o cierre de entrega.
-

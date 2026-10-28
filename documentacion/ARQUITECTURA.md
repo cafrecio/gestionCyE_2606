@@ -45,6 +45,10 @@ componentes y mecanismos de ejecución.
 - ISIS continúa siendo el sistema base.
 - GestionCyE será un sistema web complementario.
 - GestionCyE tomará información de la API de ISIS y generará información propia.
+- Todo dato administrado por ISIS se replica como espejo y no se mantiene con un
+  ABM paralelo en GestionCyE.
+- GestionCyE puede agregar información que ISIS no administra, almacenándola por
+  separado y vinculándola al registro espejo.
 - Producción se ejecutará en un VPS existente.
 - El desarrollo se realiza inicialmente en un entorno local.
 
@@ -133,9 +137,11 @@ Entidades confirmadas como necesarias:
 
 Estrategia preliminar:
 
-- Detectar y descargar nuevos registros.
+- Detectar y descargar automáticamente nuevos registros mediante tareas
+  recurrentes en segundo plano.
 - Releer automáticamente los registros que continúen activos.
-- Actualizar bajo pedido un registro histórico puntual.
+- No depender de una acción del usuario para incorporar pedidos, remitos o
+  facturas.
 
 #### Datos maestros
 
@@ -143,6 +149,7 @@ Entidades confirmadas como necesarias:
 
 - Clientes.
 - Productos.
+- Proveedores.
 
 Son necesarios para que GestionCyE pueda interpretar y operar con los pedidos.
 No se deberá cargar un pedido con referencias inexistentes sin registrar y tratar
@@ -150,7 +157,9 @@ esa inconsistencia.
 
 Restricciones conocidas:
 
-- Clientes, proveedores y productos no poseen códigos autoincrementales.
+- Artículos posee `regisArti`, confirmado como ID interno autonumérico.
+- La identidad y estrategia incremental de clientes y proveedores sigue
+  pendiente de confirmación.
 - Clientes supera los 8.000 registros y una consulta completa demora casi un
   minuto.
 - Por ese costo, no se realizará una consulta completa de clientes cada minuto.
@@ -159,8 +168,59 @@ Restricciones conocidas:
 - Antes de definir la sincronización hay que verificar, por endpoint, qué filtros
   existen realmente y si permiten detectar altas nuevas.
 
-La estrategia incremental concreta para clientes y otros maestros queda pendiente
-del relevamiento realizado en **Datos**.
+Estrategia decidida para maestros:
+
+- Barrido general nocturno.
+- Cuando un documento nuevo referencia un maestro faltante, obtenerlo
+  automáticamente por su código.
+- Para clientes, incorporarlo sólo si supera los controles de validez definidos;
+  un CUIT inválido no genera un cliente local.
+- Permitir actualización puntual bajo demanda para un cliente, artículo o
+  proveedor existente que haya cambiado.
+- La incorporación de un maestro nuevo referenciado por un documento nunca
+  depende de una acción manual.
+
+Catálogos ISIS:
+
+- Condiciones de pago.
+- Listas de precios.
+- Monedas.
+- Vendedores.
+- Tipos de comprobante.
+
+Se mantendrán como espejos locales pequeños, sin edición desde GestionCyE. Se
+actualizarán completamente durante el barrido nocturno y también cuando un
+documento informe un código todavía desconocido.
+
+Las consultas operativas V2 `ISIS_API_*` de presupuestos, pedidos, ventas,
+remitos y compras fueron probadas el 04/08/2026. Responden HTTP 200 pero devuelven
+listas vacías, por lo que no se consideran fuentes habilitadas. Para el alcance
+actual se evaluarán los endpoints V1 separados de cabecera y detalle.
+
+Datos propios de GestionCyE para clientes y proveedores:
+
+- Contactos.
+- Rubros y productos relacionados.
+- CBU y alias bancarios.
+
+Estos datos no se sincronizan desde ISIS. Se administran localmente y quedan
+separados de los campos que GestionCyE replica como espejo del ERP.
+Rubros, productos relacionados, CBU y alias quedan para una etapa posterior.
+Contactos y sucursales de clientes forman parte del flujo inicial de pedidos.
+
+GestionCyE mantendrá su propio maestro operativo de contactos y sucursales. Al
+cargar un pedido, si el cliente todavía no tiene estos datos completos, el
+usuario deberá completarlos antes de continuar. La información quedará guardada
+para pedidos posteriores, por lo que el maestro crecerá incrementalmente con el
+uso.
+
+No se utilizarán endpoints ISIS para contactos ni sucursales. El pedido conservará
+una copia del contacto y destino confirmados para no alterar su historial si el
+maestro local cambia después.
+
+Para incorporar un proveedor al maestro local se exigirá un CUIT real y válido,
+siguiendo el mismo criterio aplicado a Clientes. `estadoProve` no será suficiente
+por sí solo para considerarlo activo.
 
 ### VPS de producción
 
